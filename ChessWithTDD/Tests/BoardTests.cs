@@ -279,21 +279,6 @@ namespace ChessWithTDD
             Assert.False(isValidMove);
         }
 
-        [TestCase(1, 1, 2, 2)]
-        [TestCase(5, 3, 7, 7)]
-        [Test]
-        public void MoveWhereFromSquareContainsPieceIsValid(int rowFrom, int colFrom, int rowTo, int colTo)
-        {
-            IBoard board = new Board();
-            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom);
-            ISquare toSquare = CommonTestMethods.MockSquareWithoutPiece(rowTo, colTo);
-            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
-
-            bool isValidMove = board.IsValidMove(move);
-
-            Assert.True(isValidMove);
-        }
-
         [TestCase(1, 1, 9, 5)]
         [TestCase(5, 3, 6, 8)]
         [TestCase(7, 8, 2, 2)]
@@ -334,6 +319,40 @@ namespace ChessWithTDD
             IBoard board = new Board();
             ISquare square = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom);
             IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(square, square);
+
+            bool isValidMove = board.IsValidMove(move);
+
+            Assert.False(isValidMove);
+        }
+
+        [TestCase(1, 1, 2, 2)]
+        [TestCase(5, 3, 7, 7)]
+        [Test]
+        public void MoveWherePieceInFromSquareCanMoveIsValid(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IBoard board = new Board();
+            IPiece piece = CommonTestMethods.MockPiece();
+            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare toSquare = CommonTestMethods.MockSquareWithoutPiece(rowTo, colTo);
+            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            piece = CommonTestMethods.StubPieceCanMoveForSpecificMove(piece, true, move);
+
+            bool isValidMove = board.IsValidMove(move);
+
+            Assert.True(isValidMove);
+        }
+
+        [TestCase(1, 2, 1, 2)]
+        [TestCase(5, 3, 5, 3)]
+        [Test]
+        public void MoveWherePieceInFromSquareCannotMoveIsNotValid(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IBoard board = new Board();
+            IPiece piece = CommonTestMethods.MockPiece();
+            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare toSquare = CommonTestMethods.MockSquareWithoutPiece(rowTo, colTo);
+            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            piece = CommonTestMethods.StubPieceCanMoveForSpecificMove(piece, false, move);
 
             bool isValidMove = board.IsValidMove(move);
 

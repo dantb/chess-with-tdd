@@ -33,9 +33,14 @@ namespace ChessWithTDD
             return theSquare;
         }
 
+        internal static IMove MockMove()
+        {
+            return MockRepository.GenerateMock<IMove>();
+        }
+
         internal static IMove MockMoveWithFromSquareAndToSquare(ISquare fromSquare, ISquare toSquare)
         {
-            IMove move = MockRepository.GenerateMock<IMove>();
+            IMove move = MockMove();
             move.Stub(m => m.FromSquare).Return(fromSquare);
             move.Stub(m => m.ToSquare).Return(toSquare);
             return move;
@@ -43,7 +48,7 @@ namespace ChessWithTDD
 
         internal static IPiece MockPieceWithColour(Colour theColour)
         {
-            IPiece piece = MockRepository.GenerateMock<IPiece>();
+            IPiece piece = MockPiece();
             piece.Stub(b => b.Colour).Return(theColour);
             return piece;
         }
@@ -51,6 +56,20 @@ namespace ChessWithTDD
         internal static IPiece MockPiece()
         {
             return MockRepository.GenerateMock<IPiece>();
+        }
+
+        internal static IPiece MockPieceWithCanMove(bool canMove, IMove aMove = null)
+        {
+            IPiece piece = MockPiece();
+            IMove move = aMove ?? MockMove();
+            piece.Stub(p => p.CanMove(move)).Return(canMove);
+            return piece;
+        }
+
+        internal static IPiece StubPieceCanMoveForSpecificMove(IPiece piece, bool canMove, IMove aMove)
+        {
+            piece.Stub(p => p.CanMove(aMove)).Return(canMove);
+            return piece;
         }
     }
 }

@@ -75,7 +75,7 @@ namespace ChessWithTDD
             {
                 return false;
             }
-            return true;
+            return move.FromSquare.Piece.CanMove(move);
         }
 
         public void SetSquare(ISquare square)
