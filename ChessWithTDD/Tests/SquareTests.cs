@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Rhino.Mocks;
+using static ChessWithTDD.CommonTestMethods;
 
 namespace ChessWithTDD
 {
@@ -17,7 +17,7 @@ namespace ChessWithTDD
         [Test]
         public void SquareContainsPieceAfterCallingAddPiece()
         {
-            IPiece thePiece = MockRepository.GenerateMock<IPiece>();
+            IPiece thePiece = MockPiece();
             Square square = new Square(0, 0);
 
             square.AddPiece(thePiece);

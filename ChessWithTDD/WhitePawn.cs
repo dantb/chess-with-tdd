@@ -14,21 +14,21 @@
             }
         }
 
-        public override bool CanMove(IMove theMove)
+        public override bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
             //Normal move, one place up the board
-            if (theMove.ToSquare.Row == theMove.FromSquare.Row + 1
-                    && theMove.ToSquare.Col == theMove.FromSquare.Col)
+            if (toSquare.Row == fromSquare.Row + 1
+                    && toSquare.Col == fromSquare.Col)
             {
-                return base.CanMove(theMove) && !BlackPieceInSquare(theMove.ToSquare);
+                return base.CanMove(fromSquare, toSquare) && !BlackPieceInSquare(toSquare);
             }
 
             //Moving diagonally upwards
-            if (theMove.ToSquare.Row == theMove.FromSquare.Row + 1
-                    && ((theMove.ToSquare.Col == theMove.FromSquare.Col - 1)
-                    || theMove.ToSquare.Col == theMove.FromSquare.Col + 1))
+            if (toSquare.Row == fromSquare.Row + 1
+                    && ((toSquare.Col == fromSquare.Col - 1)
+                    || toSquare.Col == fromSquare.Col + 1))
             {
-                return theMove.ToSquare.ContainsPiece && base.CanMove(theMove);
+                return toSquare.ContainsPiece && base.CanMove(fromSquare, toSquare);
             }
 
             return false;

@@ -13,7 +13,7 @@
         /// </summary>
         /// <param name="theMove"></param>
         /// <returns></returns>
-        bool CanMove(IMove theMove);
+        bool CanMove(ISquare fromSquare, ISquare toSquare);
     }
 
     public enum Colour

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using static ChessWithTDD.CommonTestMethods;
 
 namespace ChessWithTDD
 {
@@ -11,11 +12,10 @@ namespace ChessWithTDD
         public void WhitePawnCanMoveOneVerticalPositionUpTheBoard(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             WhitePawn pawn = new WhitePawn();
-            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, pawn);
-            ISquare toSquare = CommonTestMethods.MockSquareWithoutPiece(rowTo, colTo);
-            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, pawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
-            bool canPawnMove = pawn.CanMove(move);
+            bool canPawnMove = pawn.CanMove(fromSquare, toSquare);
 
             Assert.True(canPawnMove);
         }
@@ -26,12 +26,11 @@ namespace ChessWithTDD
         public void WhitePawnCannotMoveOneVerticalPositionUpTheBoardIfBlackPieceThere(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             WhitePawn pawn = new WhitePawn();
-            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, pawn);
-            IPiece blackPiece = CommonTestMethods.MockPieceWithColour(Colour.Black);
-            ISquare toSquare = CommonTestMethods.MockSquareWithPiece(rowTo, colTo, blackPiece);
-            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, pawn);
+            IPiece blackPiece = MockPieceWithColour(Colour.Black);
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, blackPiece);
 
-            bool canPawnMove = pawn.CanMove(move);
+            bool canPawnMove = pawn.CanMove(fromSquare, toSquare);
 
             Assert.False(canPawnMove);
         }
@@ -42,12 +41,11 @@ namespace ChessWithTDD
         public void WhitePawnCannotMoveOneVerticalPositionUpTheBoardIfWhitePieceThere(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             WhitePawn pawn = new WhitePawn();
-            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, pawn);
-            IPiece whitePiece = CommonTestMethods.MockPieceWithColour(Colour.White);
-            ISquare toSquare = CommonTestMethods.MockSquareWithPiece(rowTo, colTo, whitePiece);
-            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, pawn);
+            IPiece whitePiece = MockPieceWithColour(Colour.White);
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, whitePiece);
 
-            bool canPawnMove = pawn.CanMove(move);
+            bool canPawnMove = pawn.CanMove(fromSquare, toSquare);
 
             Assert.False(canPawnMove);
         }
@@ -58,11 +56,10 @@ namespace ChessWithTDD
         public void WhitePawnCannotMoveOneHorizontalPositionAcrossTheBoard(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             WhitePawn pawn = new WhitePawn();
-            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, pawn);
-            ISquare toSquare = CommonTestMethods.MockSquareWithoutPiece(rowTo, colTo);
-            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, pawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
-            bool canPawnMove = pawn.CanMove(move);
+            bool canPawnMove = pawn.CanMove(fromSquare, toSquare);
 
             Assert.False(canPawnMove);
         }
@@ -72,11 +69,10 @@ namespace ChessWithTDD
         public void WhitePawnCannotMoveOneVerticalPositionDownTheBoard(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             WhitePawn pawn = new WhitePawn();
-            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, pawn);
-            ISquare toSquare = CommonTestMethods.MockSquareWithoutPiece(rowTo, colTo);
-            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, pawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
-            bool canPawnMove = pawn.CanMove(move);
+            bool canPawnMove = pawn.CanMove(fromSquare, toSquare);
 
             Assert.False(canPawnMove);
         }
@@ -87,12 +83,11 @@ namespace ChessWithTDD
         public void WhitePawnCanMoveDiagonallyUpTheBoardIfBlackPieceThere(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             WhitePawn pawn = new WhitePawn();
-            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, pawn);
-            IPiece blackPiece = CommonTestMethods.MockPieceWithColour(Colour.Black);
-            ISquare toSquare = CommonTestMethods.MockSquareWithPiece(rowTo, colTo, blackPiece);
-            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, pawn);
+            IPiece blackPiece = MockPieceWithColour(Colour.Black);
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, blackPiece);
 
-            bool canPawnMove = pawn.CanMove(move);
+            bool canPawnMove = pawn.CanMove(fromSquare, toSquare);
 
             Assert.True(canPawnMove);
         }
@@ -103,12 +98,11 @@ namespace ChessWithTDD
         public void WhitePawnCannotMoveDiagonallyUpTheBoardIfWhitePieceThere(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             WhitePawn pawn = new WhitePawn();
-            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, pawn);
-            IPiece blackPiece = CommonTestMethods.MockPieceWithColour(Colour.White);
-            ISquare toSquare = CommonTestMethods.MockSquareWithPiece(rowTo, colTo, blackPiece);
-            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, pawn);
+            IPiece blackPiece = MockPieceWithColour(Colour.White);
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, blackPiece);
 
-            bool canPawnMove = pawn.CanMove(move);
+            bool canPawnMove = pawn.CanMove(fromSquare, toSquare);
 
             Assert.False(canPawnMove);
         }
@@ -120,11 +114,10 @@ namespace ChessWithTDD
         public void WhitePawnCannotMoveDiagonallyUpTheBoardIfNoPieceThere(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             WhitePawn pawn = new WhitePawn();
-            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, pawn);
-            ISquare toSquare = CommonTestMethods.MockSquareWithoutPiece(rowTo, colTo);
-            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, pawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
-            bool canPawnMove = pawn.CanMove(move);
+            bool canPawnMove = pawn.CanMove(fromSquare, toSquare);
 
             Assert.False(canPawnMove);
         }

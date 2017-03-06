@@ -1,4 +1,5 @@
 ﻿using Rhino.Mocks;
+using static Rhino.Mocks.MockRepository;
 
 namespace ChessWithTDD
 {
@@ -6,15 +7,23 @@ namespace ChessWithTDD
     {
         internal static IBoard MockBoardWithCorrectDimensions()
         {
-            IBoard theBoard = MockRepository.GenerateMock<IBoard>();
+            IBoard theBoard = GenerateMock<IBoard>();
             theBoard.Stub(b => b.RowCount).Return(8);
             theBoard.Stub(b => b.ColCount).Return(8);
             return theBoard;
         }
 
+        internal static IBoard MockBoardWithFromSquareAndToSquare(ISquare fromSquare, ISquare toSquare)
+        {
+            IBoard theBoard = GenerateMock<IBoard>();
+            theBoard.Stub(b => b.GetSquare(fromSquare.Row, fromSquare.Col)).Return(fromSquare);
+            theBoard.Stub(b => b.GetSquare(toSquare.Row, toSquare.Col)).Return(toSquare);
+            return theBoard;
+        }
+
         internal static ISquare MockSquareWithoutPiece(int row, int col)
         {
-            ISquare theSquare = MockRepository.GenerateMock<ISquare>();
+            ISquare theSquare = GenerateMock<ISquare>();
             theSquare.Stub(s => s.Row).Return(row);
             theSquare.Stub(s => s.Col).Return(col);
             theSquare.Stub(s => s.Piece).Return(null);
@@ -24,8 +33,8 @@ namespace ChessWithTDD
 
         internal static ISquare MockSquareWithPiece(int row, int col, IPiece aPiece = null)
         {
-            ISquare theSquare = MockRepository.GenerateMock<ISquare>();
-            IPiece thePiece = aPiece ?? MockRepository.GenerateMock<IPiece>();
+            ISquare theSquare = GenerateMock<ISquare>();
+            IPiece thePiece = aPiece ?? GenerateMock<IPiece>();
             theSquare.Stub(s => s.Row).Return(row);
             theSquare.Stub(s => s.Col).Return(col);
             theSquare.Stub(s => s.Piece).Return(thePiece);
@@ -35,14 +44,16 @@ namespace ChessWithTDD
 
         internal static IMove MockMove()
         {
-            return MockRepository.GenerateMock<IMove>();
+            return GenerateMock<IMove>();
         }
 
         internal static IMove MockMoveWithFromSquareAndToSquare(ISquare fromSquare, ISquare toSquare)
         {
             IMove move = MockMove();
-            move.Stub(m => m.FromSquare).Return(fromSquare);
-            move.Stub(m => m.ToSquare).Return(toSquare);
+            move.Stub(m => m.FromRow).Return(fromSquare.Row);
+            move.Stub(m => m.FromCol).Return(fromSquare.Col);
+            move.Stub(m => m.ToRow).Return(toSquare.Row);
+            move.Stub(m => m.ToCol).Return(toSquare.Col);
             return move;
         }
 
@@ -55,20 +66,12 @@ namespace ChessWithTDD
 
         internal static IPiece MockPiece()
         {
-            return MockRepository.GenerateMock<IPiece>();
+            return GenerateMock<IPiece>();
         }
 
-        internal static IPiece MockPieceWithCanMove(bool canMove, IMove aMove = null)
+        internal static IPiece StubPieceCanMoveForSpecificSquares(IPiece piece, bool canMove, ISquare fromSquare, ISquare toSquare)
         {
-            IPiece piece = MockPiece();
-            IMove move = aMove ?? MockMove();
-            piece.Stub(p => p.CanMove(move)).Return(canMove);
-            return piece;
-        }
-
-        internal static IPiece StubPieceCanMoveForSpecificMove(IPiece piece, bool canMove, IMove aMove)
-        {
-            piece.Stub(p => p.CanMove(aMove)).Return(canMove);
+            piece.Stub(p => p.CanMove(fromSquare, toSquare)).Return(canMove);
             return piece;
         }
     }

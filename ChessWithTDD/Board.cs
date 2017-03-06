@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ChessWithTDD
@@ -56,26 +57,26 @@ namespace ChessWithTDD
             return squares[row][col];
         }
 
-        public bool IsValidMove(IMove move)
+        public bool IsValidMove(ISquare fromSquare, ISquare toSquare)
         {
-            if (move.FromSquare.Row >= RowCount || move.FromSquare.Col >= ColCount
-                || move.ToSquare.Row >= RowCount || move.ToSquare.Col >= ColCount)
+            if (fromSquare.Row >= RowCount || fromSquare.Col >= ColCount
+                || toSquare.Row >= RowCount || toSquare.Col >= ColCount)
             {
                 return false;
             }
-            else if (!move.FromSquare.ContainsPiece)
+            else if (!fromSquare.ContainsPiece)
             {
                 return false;
             }
-            else if (move.ToSquare.Equals(move.FromSquare))
+            else if (toSquare.Equals(fromSquare))
             {
                 return false;
             }
-            else if (move.FromSquare.Piece.Colour == Colour.Invalid)
+            else if (fromSquare.Piece.Colour == Colour.Invalid)
             {
                 return false;
             }
-            return move.FromSquare.Piece.CanMove(move);
+            return fromSquare.Piece.CanMove(fromSquare, toSquare);
         }
 
         public void SetSquare(ISquare square)
@@ -211,6 +212,14 @@ namespace ChessWithTDD
             {
                 SetSquare(square);
             }
+        }
+
+        public void Apply(ISquare fromSquare, ISquare toSquare)
+        {
+            GetSquare(toSquare.Row, toSquare.Col).Piece = fromSquare.Piece;
+            GetSquare(toSquare.Row, toSquare.Col).ContainsPiece = true;
+            GetSquare(fromSquare.Row, fromSquare.Col).Piece = null;
+            GetSquare(fromSquare.Row, fromSquare.Col).ContainsPiece = false;
         }
     }
 }

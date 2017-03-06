@@ -1,6 +1,6 @@
 ﻿namespace ChessWithTDD
 {
-    public class Square : ISquare
+    internal class Square : ISquare
     {
         public Square(int row, int col)
         {

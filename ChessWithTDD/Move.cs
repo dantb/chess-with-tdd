@@ -2,21 +2,17 @@
 {
     public class Move : IMove
     {
-        public Move(ISquare fromSquare, ISquare toSquare)
+        public Move(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            FromSquare = fromSquare;
-            ToSquare = toSquare;
+            FromRow = rowFrom;
+            FromCol = colFrom;
+            ToRow = rowTo;
+            ToCol = colTo;
         }
 
-        public ISquare FromSquare { get; set; }
-        public ISquare ToSquare { get; set; }
-
-        public void ApplyToBoard(IBoard board)
-        {
-            board.GetSquare(FromSquare.Row, FromSquare.Col).ContainsPiece = false;
-            board.GetSquare(ToSquare.Row, ToSquare.Col).Piece = board.GetSquare(FromSquare.Row, FromSquare.Col).Piece;
-            board.GetSquare(FromSquare.Row, FromSquare.Col).Piece = null;
-            board.GetSquare(ToSquare.Row, ToSquare.Col).ContainsPiece = true;
-        }
+        public int FromRow { get; private set; }
+        public int FromCol { get; private set; }
+        public int ToRow { get; private set; }
+        public int ToCol { get; private set; }
     }
 }

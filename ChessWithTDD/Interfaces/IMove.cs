@@ -2,8 +2,9 @@
 {
     public interface IMove
     {
-        ISquare FromSquare { get; set; }
-        ISquare ToSquare { get; set; }
-        bool Equals(object obj);
+        int FromRow { get; }
+        int FromCol { get; }
+        int ToRow { get; }
+        int ToCol { get; }
     }
 }

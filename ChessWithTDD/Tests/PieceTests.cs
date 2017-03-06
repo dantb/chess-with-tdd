@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using static ChessWithTDD.CommonTestMethods;
 
 namespace ChessWithTDD
 {
@@ -19,13 +20,13 @@ namespace ChessWithTDD
         {
             Piece piece = new Piece();
             Colour pieceColour = piece.Colour;
-            ISquare fromSquare = CommonTestMethods.MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
             //Want the mock piece's colour to be the same as our real piece under test
-            IPiece pieceColourInvalid = CommonTestMethods.MockPieceWithColour(Colour.Invalid);
-            ISquare toSquare = CommonTestMethods.MockSquareWithPiece(rowTo, colTo, pieceColourInvalid);
-            IMove move = CommonTestMethods.MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
+            IPiece pieceColourInvalid = MockPieceWithColour(Colour.Invalid);
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, pieceColourInvalid);
+            IMove move = MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
 
-            bool canMove = piece.CanMove(move);
+            bool canMove = piece.CanMove(fromSquare, toSquare);
 
             Assert.False(canMove);
         }
