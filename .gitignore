@@ -2,7 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/packages
 /ChessWithTDD/obj/Debug/ChessWithTDD.pdb
 /ChessWithTDD/obj/Debug/ChessWithTDD.csproj.FileListAbsolute.txt
 /ChessWithTDD/obj/Debug/ChessWithTDD.csprojResolveAssemblyReference.cache
