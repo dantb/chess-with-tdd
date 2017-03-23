@@ -1,24 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using static ChessWithTDD.BoardConstants;
 
 namespace ChessWithTDD
 {
     public class Board : IBoard
     {
-        private const int BOARD_DIMENSION = 8;
-        private const int WHITE_BACK_ROW = 0;
-        private const int BLACK_BACK_ROW = 7;
-        private const int LEFT_ROOK_COL = 0;
-        private const int RIGHT_ROOK_COL = 7;
-        private const int LEFT_KNIGHT_COL = 1;
-        private const int RIGHT_KNIGHT_COL = 6;
-        private const int LEFT_BISHOP_COL = 2;
-        private const int RIGHT_BISHOP_COL = 5;
-        private const int QUEEN_COLUMN = 3;
-        private const int KING_COLUMN = 4;
-        private const int WHITE_PAWN_INITAL_ROW = 1;
-        private const int BLACK_PAWN_INITAL_ROW = 6;
         private List<List<ISquare>> squares;
 
         public Board()
@@ -59,8 +46,14 @@ namespace ChessWithTDD
 
         public bool IsValidMove(ISquare fromSquare, ISquare toSquare)
         {
-            if (fromSquare.Row >= RowCount || fromSquare.Col >= ColCount
-                || toSquare.Row >= RowCount || toSquare.Col >= ColCount)
+            if (fromSquare.Row >= BOARD_DIMENSION || fromSquare.Col >= BOARD_DIMENSION
+                || toSquare.Row >= BOARD_DIMENSION || toSquare.Col >= BOARD_DIMENSION)
+            {
+
+                return false;
+            }
+            else if (fromSquare.Row < BOARD_LOWER_DIMENSION || fromSquare.Col < BOARD_LOWER_DIMENSION
+                || toSquare.Row < BOARD_LOWER_DIMENSION || toSquare.Col < BOARD_LOWER_DIMENSION)
             {
                 return false;
             }
@@ -216,10 +209,37 @@ namespace ChessWithTDD
 
         public void Apply(ISquare fromSquare, ISquare toSquare)
         {
+            if (fromSquare.Piece is IPawn)
+            {
+                IPawn pawn = fromSquare.Piece as IPawn;
+                if (!pawn.HasMoved)
+                {
+                    pawn.HasMoved = true;
+                }
+            }
+
             GetSquare(toSquare.Row, toSquare.Col).Piece = fromSquare.Piece;
             GetSquare(toSquare.Row, toSquare.Col).ContainsPiece = true;
             GetSquare(fromSquare.Row, fromSquare.Col).Piece = null;
             GetSquare(fromSquare.Row, fromSquare.Col).ContainsPiece = false;
         }
+    }
+
+    internal static class BoardConstants
+    {
+        internal const int BOARD_LOWER_DIMENSION = 0;
+        internal const int BOARD_DIMENSION = 8;
+        internal const int WHITE_BACK_ROW = 0;
+        internal const int BLACK_BACK_ROW = 7;
+        internal const int LEFT_ROOK_COL = 0;
+        internal const int RIGHT_ROOK_COL = 7;
+        internal const int LEFT_KNIGHT_COL = 1;
+        internal const int RIGHT_KNIGHT_COL = 6;
+        internal const int LEFT_BISHOP_COL = 2;
+        internal const int RIGHT_BISHOP_COL = 5;
+        internal const int QUEEN_COLUMN = 3;
+        internal const int KING_COLUMN = 4;
+        internal const int WHITE_PAWN_INITAL_ROW = 1;
+        internal const int BLACK_PAWN_INITAL_ROW = 6;
     }
 }

@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
+using Rhino.Mocks;
 using System.Collections.Generic;
-using static ChessWithTDD.CommonTestMethods;
+using static ChessWithTDD.Tests.CommonTestMethods;
 
-namespace ChessWithTDD
+namespace ChessWithTDD.Tests
 {
     [TestFixture]
     class BoardTests
@@ -283,12 +284,18 @@ namespace ChessWithTDD
         [TestCase(5, 3, 6, 8)]
         [TestCase(7, 8, 2, 2)]
         [TestCase(9, 1, 2, 2)]
+        [TestCase(1, 1, -1, 5)]
+        [TestCase(5, 3, 6, -1)]
+        [TestCase(7, -1, 2, 2)]
+        [TestCase(-1, 1, 2, 2)]
         [Test]
         public void MoveWhereFromSquareOrToSquareIsOffTheBoardIsNotValid(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             IBoard board = new Board();
-            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom);
+            IPiece pieceWithColour = MockPieceWithColour(Colour.White);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, pieceWithColour);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            pieceWithColour = StubPieceCanMoveForSpecificSquares(pieceWithColour, true, fromSquare, toSquare);
 
             bool isValidMove = board.IsValidMove(fromSquare, toSquare);
 
@@ -370,6 +377,22 @@ namespace ChessWithTDD
             Assert.That(!board.GetSquare(rowFrom, colFrom).ContainsPiece && board.GetSquare(rowFrom, colFrom).Piece == null);
             Assert.That(board.GetSquare(rowTo, colTo).ContainsPiece && board.GetSquare(rowTo, colTo).Piece == thePiece);
             Assert.IsNotNull(board.GetSquare(rowTo, colTo).Piece);
+        }
+
+        [TestCase(2, 4, 4, 4)]
+        [TestCase(3, 3, 5, 3)]
+        [Test]
+        public void ApplyMoveOnPawnWhereHasMovedIsFalseSetsHasMovedToTrue(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPawn thePawn = MockPawnWithHasMoved(false);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            IBoard board = new Board();
+
+            board.Apply(fromSquare, toSquare);
+
+            thePawn.AssertWasCalled(p => p.HasMoved = true);
         }
     }
 }

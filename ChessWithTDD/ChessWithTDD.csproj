@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BlackPawn.cs" />
     <Compile Include="Bishop.cs" />
+    <Compile Include="Interfaces\IPawn.cs" />
     <Compile Include="Tests\BlackPawnTests.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Tests\BoardTests.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Rook.cs" />
     <Compile Include="King.cs" />
     <Compile Include="Queen.cs" />
+    <Compile Include="Tests\KnightTests.cs" />
     <Compile Include="Tests\PieceTests.cs" />
     <Compile Include="Tests\TestHelpers\CommonTestMethods.cs" />
     <Compile Include="Interfaces\IBoard.cs" />
@@ -67,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="UnitTestingMetrics\GenerateUnitTestMetrics.bat" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

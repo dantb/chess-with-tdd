@@ -21,7 +21,17 @@ namespace ChessWithTDD
 
         public override bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
-            throw new NotImplementedException();
+            if (MoveIsLShaped(fromSquare, toSquare))
+            {
+                return base.CanMove(fromSquare, toSquare);
+            }
+            return false;
+        }
+
+        private bool MoveIsLShaped(ISquare fromSquare, ISquare toSquare)
+        {
+            return (Math.Abs(fromSquare.Row - toSquare.Row) == 2 && Math.Abs(fromSquare.Col - toSquare.Col) == 1)
+                || (Math.Abs(fromSquare.Row - toSquare.Row) == 1 && Math.Abs(fromSquare.Col - toSquare.Col) == 2);
         }
     }
 }

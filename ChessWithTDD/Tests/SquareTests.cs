@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using static ChessWithTDD.CommonTestMethods;
+using static ChessWithTDD.Tests.CommonTestMethods;
 
-namespace ChessWithTDD
+namespace ChessWithTDD.Tests
 {
     [TestFixture]
     public class SquareTests

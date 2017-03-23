@@ -1,4 +1,6 @@
-﻿namespace ChessWithTDD
+﻿using static ChessWithTDD.BoardConstants;
+
+namespace ChessWithTDD
 {
     /// <summary>
     /// Generic piece class, contains logic common to all types of piece.
@@ -27,6 +29,11 @@
         {
             if (toSquare.ContainsPiece
                 && toSquare.Piece.Colour == Colour)
+            {
+                return false;
+            }
+            else if (toSquare.Row < BOARD_LOWER_DIMENSION || toSquare.Col < BOARD_LOWER_DIMENSION
+                || toSquare.Row >= BOARD_DIMENSION || toSquare.Col >= BOARD_DIMENSION)
             {
                 return false;
             }

@@ -6,7 +6,7 @@ namespace ChessWithTDD
     /// A black pawn. The black team are at the top of the board in this model, occupying rows 6 and 7 intially.
     /// TODO - when it reaches end of board should be swappable. Not sure where this logic will go yet.
     /// </summary>
-    internal class BlackPawn : Piece
+    internal class BlackPawn : Piece, IPawn
     {
         public override Colour Colour
         {
@@ -15,6 +15,8 @@ namespace ChessWithTDD
                 return Colour.Black;
             }
         }
+
+        public bool HasMoved { get; set; }
 
         public override bool CanMove(ISquare fromSquare, ISquare toSquare)
         {

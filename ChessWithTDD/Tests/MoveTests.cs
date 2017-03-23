@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace ChessWithTDD
+namespace ChessWithTDD.Tests
 {
     [TestFixture]
     public class MoveTests

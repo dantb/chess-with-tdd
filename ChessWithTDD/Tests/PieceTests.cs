@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using static ChessWithTDD.CommonTestMethods;
+using static ChessWithTDD.Tests.CommonTestMethods;
 
-namespace ChessWithTDD
+namespace ChessWithTDD.Tests
 {
     [TestFixture]
     public class PieceTests
@@ -22,9 +22,8 @@ namespace ChessWithTDD
             Colour pieceColour = piece.Colour;
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
             //Want the mock piece's colour to be the same as our real piece under test
-            IPiece pieceColourInvalid = MockPieceWithColour(Colour.Invalid);
+            IPiece pieceColourInvalid = MockPieceWithColour(pieceColour);
             ISquare toSquare = MockSquareWithPiece(rowTo, colTo, pieceColourInvalid);
-            IMove move = MockMoveWithFromSquareAndToSquare(fromSquare, toSquare);
 
             bool canMove = piece.CanMove(fromSquare, toSquare);
 

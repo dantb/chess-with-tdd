@@ -4,7 +4,7 @@
     /// A white pawn. The white team are at the bottom of the board in this model, occupying rows 0 and 1 initially.
     /// TODO - when it reaches end of board should be swappable. Not sure where this logic will go yet.
     /// </summary>
-    internal class WhitePawn : Piece
+    internal class WhitePawn : Piece, IPawn
     {
         public override Colour Colour
         {
@@ -13,6 +13,8 @@
                 return Colour.White;
             }
         }
+
+        public bool HasMoved { get; set; }
 
         public override bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
@@ -29,6 +31,20 @@
                     || toSquare.Col == fromSquare.Col + 1))
             {
                 return toSquare.ContainsPiece && base.CanMove(fromSquare, toSquare);
+            }
+
+            //Moving two spaces up the board
+            if (toSquare.Row == fromSquare.Row + 2
+                && toSquare.Col == fromSquare.Col)
+            {
+                if (!HasMoved && !toSquare.ContainsPiece)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             return false;

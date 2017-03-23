@@ -1,7 +1,7 @@
 ﻿using Rhino.Mocks;
 using static Rhino.Mocks.MockRepository;
 
-namespace ChessWithTDD
+namespace ChessWithTDD.Tests
 {
     internal static class CommonTestMethods
     {
@@ -67,6 +67,18 @@ namespace ChessWithTDD
         internal static IPiece MockPiece()
         {
             return GenerateMock<IPiece>();
+        }
+
+        internal static IPawn MockPawn()
+        {
+            return GenerateMock<IPawn>();
+        }
+
+        internal static IPawn MockPawnWithHasMoved(bool hasMoved)
+        {
+            IPawn pawn = GenerateMock<IPawn>();
+            pawn.Stub(p => p.HasMoved).Return(hasMoved);
+            return pawn;
         }
 
         internal static IPiece StubPieceCanMoveForSpecificSquares(IPiece piece, bool canMove, ISquare fromSquare, ISquare toSquare)
