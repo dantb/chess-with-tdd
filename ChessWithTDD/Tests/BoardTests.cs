@@ -24,7 +24,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardIsInitialisedWithCorrectDimensions()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             Assert.True(board.RowCount == 8 && board.ColCount == 8);
         }
@@ -32,7 +32,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardWhitePawnRowSetupCorrectly()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             HashSet<IPiece> setOfPieces = new HashSet<IPiece>();
 
@@ -54,7 +54,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardBlackPawnRowSetupCorrectly()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             HashSet<IPiece> setOfPieces = new HashSet<IPiece>();
 
@@ -76,7 +76,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardWhiteRooksSetupCorrectly()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             ISquare leftRookSquare = board.GetSquare(WhiteBackRow, LeftRookColumn);
             ISquare rightRookSquare = board.GetSquare(WhiteBackRow, RightRookColumn);
@@ -99,7 +99,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardBlackRooksSetupCorrectly()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             ISquare leftRookSquare = board.GetSquare(BlackBackRow, LeftRookColumn);
             ISquare rightRookSquare = board.GetSquare(BlackBackRow, RightRookColumn);
@@ -122,7 +122,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardWhiteKnightsSetupCorrectly()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             ISquare leftKnightSquare = board.GetSquare(WhiteBackRow, LeftKnightColumn);
             ISquare rightKnightSquare = board.GetSquare(WhiteBackRow, RightKnightColumn);
@@ -145,7 +145,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardBlackKnightsSetupCorrectly()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             ISquare leftKnightSquare = board.GetSquare(BlackBackRow, LeftKnightColumn);
             ISquare rightKnightSquare = board.GetSquare(BlackBackRow, RightKnightColumn);
@@ -168,7 +168,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardWhiteBishopsSetupCorrectly()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             ISquare leftBishopSquare = board.GetSquare(WhiteBackRow, LeftBishopColumn);
             ISquare rightBishopSquare = board.GetSquare(WhiteBackRow, RightBishopColumn);
@@ -191,7 +191,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardBlackBishopsSetupCorrectly()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             ISquare leftBishopSquare = board.GetSquare(BlackBackRow, LeftBishopColumn);
             ISquare rightBishopSquare = board.GetSquare(BlackBackRow, RightBishopColumn);
@@ -214,7 +214,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardQueensSetupCorrectly()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             ISquare whiteQueenSquare = board.GetSquare(WhiteBackRow, QueenColumn);
             ISquare blackQueenSquare = board.GetSquare(BlackBackRow, QueenColumn);
@@ -237,7 +237,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardKingsSetupCorrectly()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             ISquare whiteKingSquare = board.GetSquare(WhiteBackRow, KingColumn);
             ISquare blackKingSquare = board.GetSquare(BlackBackRow, KingColumn);
@@ -260,7 +260,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void SquareAtPositionFiveSixOnBoardHasRowFiveAndColSix()
         {
-            Board board = new Board();
+            IBoard board = new Board();
 
             Assert.True(board.GetSquare(5, 6).Row == 5 && board.GetSquare(5, 6).Col == 6);
         }
@@ -361,6 +361,25 @@ namespace ChessWithTDD.Tests
             Assert.False(isValidMove);
         }
 
+        [TestCase(1, 2, 1, 2, Colour.White)]
+        [TestCase(5, 3, 5, 3, Colour.Black)]
+        [TestCase(5, 3, 5, 3, Colour.Invalid)]
+        [Test]
+        public void MoveWherePieceInToSquareIsOfSameColourAsMovingPieceIsInvalid(int rowFrom, int colFrom, int rowTo, int colTo, Colour theColour)
+        {
+            IBoard board = new Board();
+            IPiece piece = MockPieceWithColour(theColour);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
+            IPiece toSquarePiece = MockPieceWithColour(theColour);
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, toSquarePiece);
+            //the piece can move if we ask it
+            piece = StubPieceCanMoveForSpecificSquares(piece, true, fromSquare, toSquare);
+
+            bool isValidMove = board.IsValidMove(fromSquare, toSquare);
+
+            Assert.False(isValidMove);
+        }
+
         [TestCase(2, 4, 6, 7)]
         [TestCase(3, 3, 1, 1)]
         [TestCase(1, 3, 1, 5)]
@@ -393,6 +412,22 @@ namespace ChessWithTDD.Tests
             board.Apply(fromSquare, toSquare);
 
             thePawn.AssertWasCalled(p => p.HasMoved = true);
+        }
+
+        [TestCase(2, 4, 4, 4)]
+        [TestCase(3, 3, 5, 3)]
+        [Test]
+        public void ApplyMoveOnPawnWhereHasMovedIsTrueDoesNothing(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPawn thePawn = MockPawnWithHasMoved(true);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            IBoard board = new Board();
+
+            board.Apply(fromSquare, toSquare);
+
+            thePawn.AssertWasNotCalled(p => p.HasMoved = true);
         }
     }
 }

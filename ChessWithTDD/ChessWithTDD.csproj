@@ -53,14 +53,12 @@
     <Compile Include="King.cs" />
     <Compile Include="Queen.cs" />
     <Compile Include="Tests\KnightTests.cs" />
-    <Compile Include="Tests\PieceTests.cs" />
     <Compile Include="Tests\TestHelpers\CommonTestMethods.cs" />
     <Compile Include="Interfaces\IBoard.cs" />
     <Compile Include="Interfaces\IPiece.cs" />
     <Compile Include="Interfaces\ISquare.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Tests\MoveTests.cs" />
-    <Compile Include="Piece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="Tests\SquareTests.cs" />

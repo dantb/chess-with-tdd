@@ -57,38 +57,5 @@ namespace ChessWithTDD.Tests
 
             Assert.False(canKnightMove);
         }
-
-        [TestCase(1, 2, 3, 1)]
-        [TestCase(2, 3, 0, 4)]
-        [TestCase(1, 2, 0, 4)]
-        [TestCase(2, 3, 3, 1)]
-        [Test]
-        public void KnightCannotMoveIfLShapedAndToSquareContainsPieceOfSameColour(int rowFrom, int colFrom, int rowTo, int colTo)
-        {
-            Knight knight = new Knight(Colour.Invalid);
-            IPiece piece = MockPieceWithColour(Colour.Invalid);
-            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, knight);
-            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, piece);
-
-            bool canKnightMove = knight.CanMove(fromSquare, toSquare);
-
-            Assert.False(canKnightMove);
-        }
-
-        [TestCase(1, 2, -1, 1)]
-        [TestCase(2, 7, 0, 8)]
-        [TestCase(0, 2, -1, 0)]
-        [TestCase(2, 6, 3, 8)]
-        [Test]
-        public void KnightCannotMoveIfLShapedAndToSquareOffTheBoard(int rowFrom, int colFrom, int rowTo, int colTo)
-        {
-            Knight knight = new Knight(Colour.Invalid);
-            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, knight);
-            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
-
-            bool canKnightMove = knight.CanMove(fromSquare, toSquare);
-
-            Assert.False(canKnightMove);
-        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ChessWithTDD
 {
-    internal class Knight : Piece
+    public class Knight : IPiece
     {
         private Colour _colour;
 
@@ -11,7 +11,7 @@ namespace ChessWithTDD
             _colour = colour;
         }
 
-        public override Colour Colour
+        public Colour Colour
         {
             get
             {
@@ -19,11 +19,11 @@ namespace ChessWithTDD
             }
         }
 
-        public override bool CanMove(ISquare fromSquare, ISquare toSquare)
+        public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
             if (MoveIsLShaped(fromSquare, toSquare))
             {
-                return base.CanMove(fromSquare, toSquare);
+                return true;
             }
             return false;
         }

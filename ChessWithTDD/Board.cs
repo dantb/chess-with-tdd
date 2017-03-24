@@ -49,7 +49,6 @@ namespace ChessWithTDD
             if (fromSquare.Row >= BOARD_DIMENSION || fromSquare.Col >= BOARD_DIMENSION
                 || toSquare.Row >= BOARD_DIMENSION || toSquare.Col >= BOARD_DIMENSION)
             {
-
                 return false;
             }
             else if (fromSquare.Row < BOARD_LOWER_DIMENSION || fromSquare.Col < BOARD_LOWER_DIMENSION
@@ -69,7 +68,11 @@ namespace ChessWithTDD
             {
                 return false;
             }
-            return fromSquare.Piece.CanMove(fromSquare, toSquare);
+            else if (toSquare.ContainsPiece && toSquare.Piece.Colour == fromSquare.Piece.Colour)
+            {
+                return false;
+            }
+            return fromSquare.Piece.CanMove(fromSquare as ISquare, toSquare as ISquare);
         }
 
         public void SetSquare(ISquare square)

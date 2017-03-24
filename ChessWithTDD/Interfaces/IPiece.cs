@@ -8,8 +8,9 @@
         }
 
         /// <summary>
-        /// Indicates whether this piece can execute a given move. This is independent of the board and so does not 
-        /// care, for example, if there is an obstruction to the move for a specific board.
+        /// Indicates whether this piece can execute a given move. This is independent of the board and only blocks moves 
+        /// on the basis of them having already passed board validation. For that reason, this should never be called directly
+        /// from an external component. The board's validation is all that's required.
         /// </summary>
         /// <param name="theMove"></param>
         /// <returns></returns>

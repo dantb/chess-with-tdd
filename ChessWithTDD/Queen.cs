@@ -2,7 +2,7 @@
 
 namespace ChessWithTDD
 {
-    internal class Queen : Piece
+    public class Queen : IPiece
     {
         private Colour _colour;
 
@@ -11,7 +11,7 @@ namespace ChessWithTDD
             _colour = colour;
         }
 
-        public override Colour Colour
+        public Colour Colour
         {
             get
             {
@@ -19,7 +19,7 @@ namespace ChessWithTDD
             }
         }
 
-        public override bool CanMove(ISquare fromSquare, ISquare toSquare)
+        public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
             throw new NotImplementedException();
         }
