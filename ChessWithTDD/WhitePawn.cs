@@ -26,9 +26,7 @@
             }
 
             //Moving diagonally upwards
-            if (toSquare.Row == fromSquare.Row + 1
-                    && ((toSquare.Col == fromSquare.Col - 1)
-                    || toSquare.Col == fromSquare.Col + 1))
+            if (MoveIsDiagonallyUpwards(fromSquare, toSquare))
             {
                 return toSquare.ContainsPiece || toSquare.HasEnPassantMark;
             }
@@ -45,6 +43,12 @@
             }
 
             return false;
+        }
+
+        internal static bool MoveIsDiagonallyUpwards(ISquare fromSquare, ISquare toSquare)
+        {
+            return toSquare.Row == fromSquare.Row + 1
+                    && ((toSquare.Col == fromSquare.Col - 1) || (toSquare.Col == fromSquare.Col + 1));
         }
 
         private bool BlackPieceInSquare(ISquare theSquare)

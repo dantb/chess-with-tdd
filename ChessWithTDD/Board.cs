@@ -80,23 +80,7 @@ namespace ChessWithTDD
         {
             if (fromSquare.Piece is IPawn)
             {
-                if (toSquare.Row == fromSquare.Row + 2)
-                {
-                    ISquare squareToMark = GetSquareInternal(fromSquare.Row + 1, fromSquare.Col);
-                    squareToMark.HasEnPassantMark = true;
-                    _squaresMarkedWithEnPassantKeyedByTurn.Add(TurnCounter, squareToMark);
-                }
-                else if (toSquare.Row == fromSquare.Row - 2)
-                {
-                    ISquare squareToMark = GetSquareInternal(fromSquare.Row - 1, fromSquare.Col);
-                    squareToMark.HasEnPassantMark = true;
-                    _squaresMarkedWithEnPassantKeyedByTurn.Add(TurnCounter, squareToMark);
-                }
-                IPawn pawn = fromSquare.Piece as IPawn;
-                if (!pawn.HasMoved)
-                {
-                    pawn.HasMoved = true;
-                }
+                MakePawnSpecificAmendments(fromSquare, toSquare);
             }
 
             if (_squaresMarkedWithEnPassantKeyedByTurn.ContainsKey(TurnCounter - 2))
@@ -112,6 +96,57 @@ namespace ChessWithTDD
             GetSquareInternal(fromSquare.Row, fromSquare.Col).ContainsPiece = false;
 
             TurnCounter++;
+        }
+
+        private void MakePawnSpecificAmendments(ISquare fromSquare, ISquare toSquare)
+        {
+            MarkSquareWithEnPassantIfApplicable(fromSquare, toSquare);
+            IPawn pawn = fromSquare.Piece as IPawn;
+            if (!pawn.HasMoved)
+            {
+                pawn.HasMoved = true;
+            }
+            CapturePieceThroughEnPassantIfApplicable(fromSquare, toSquare);
+        }
+
+        private void CapturePieceThroughEnPassantIfApplicable(ISquare fromSquare, ISquare toSquare)
+        {
+            if (toSquare.HasEnPassantMark && BlackPawn.MoveIsDiagonallyDownwards(fromSquare, toSquare))
+            {
+                CapturePieceThroughEnPassantAndUnmarkSquare(toSquare.Row + 1, toSquare.Col, toSquare.Row);
+            }
+            else if (toSquare.HasEnPassantMark && WhitePawn.MoveIsDiagonallyUpwards(fromSquare, toSquare))
+            {
+                CapturePieceThroughEnPassantAndUnmarkSquare(toSquare.Row - 1, toSquare.Col, toSquare.Row);
+            }
+        }
+
+        private void MarkSquareWithEnPassantIfApplicable(ISquare fromSquare, ISquare toSquare)
+        {
+            if (toSquare.Row == fromSquare.Row + 2)
+            {
+                MarkSquareWithEnPassantAndAddToDictionary(fromSquare.Row + 1, fromSquare.Col);
+            }
+            else if (toSquare.Row == fromSquare.Row - 2)
+            {
+                MarkSquareWithEnPassantAndAddToDictionary(fromSquare.Row - 1, fromSquare.Col);
+            }
+        }
+
+        private void MarkSquareWithEnPassantAndAddToDictionary(int rowToMark, int coltoMark)
+        {
+            ISquare squareToMark = GetSquareInternal(rowToMark, coltoMark);
+            squareToMark.HasEnPassantMark = true;
+            _squaresMarkedWithEnPassantKeyedByTurn.Add(TurnCounter, squareToMark);
+        }
+
+        private void CapturePieceThroughEnPassantAndUnmarkSquare(int rowOfPiece, int colOfPiece, int rowOfMarkedSquare)
+        {
+            ISquare squareOfPieceThatPassed = GetSquareInternal(rowOfPiece, colOfPiece);
+            squareOfPieceThatPassed.Piece = null;
+            squareOfPieceThatPassed.ContainsPiece = false;
+            //unmark square to on this board
+            GetSquareInternal(rowOfMarkedSquare, colOfPiece).HasEnPassantMark = false;
         }
 
         internal void SetSquare(ISquare square)

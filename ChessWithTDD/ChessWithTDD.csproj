@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BlackPawn.cs" />
     <Compile Include="Bishop.cs" />
+    <Compile Include="BoardInitialiser.cs" />
     <Compile Include="Interfaces\IPawn.cs" />
     <Compile Include="Tests\BlackPawnTests.cs" />
     <Compile Include="Board.cs" />
