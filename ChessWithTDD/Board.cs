@@ -73,6 +73,61 @@ namespace ChessWithTDD
             {
                 return false;
             }
+
+            if (toSquare.Row == fromSquare.Row && Math.Abs(toSquare.Col - fromSquare.Col) >= 2)
+            {
+                //moving multiple horizontally
+                if (toSquare.Col > fromSquare.Col)
+                {
+                    //moving east
+                    for (int i = fromSquare.Col + 1; i < toSquare.Col; i++)
+                    {
+                        if (GetSquareInternal(toSquare.Row, i).ContainsPiece)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else if (toSquare.Col < fromSquare.Col)
+                {
+                    //moving east
+                    for (int i = fromSquare.Col - 1; i > toSquare.Col; i--)
+                    {
+                        if (GetSquareInternal(toSquare.Row, i).ContainsPiece)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            if (toSquare.Col == fromSquare.Col && Math.Abs(toSquare.Row - fromSquare.Row) >= 2)
+            {
+                //moving multiple vertically
+                if (toSquare.Row > fromSquare.Row)
+                {
+                    //moving up
+                    for (int i = fromSquare.Row + 1; i < toSquare.Row; i++)
+                    {
+                        if (GetSquareInternal(i, toSquare.Col).ContainsPiece)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else if (toSquare.Row < fromSquare.Row)
+                {
+                    //moving down
+                    for (int i = fromSquare.Row - 1; i > toSquare.Row; i--)
+                    {
+                        if (GetSquareInternal(i, toSquare.Col).ContainsPiece)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
             return fromSquare.Piece.CanMove(fromSquare, toSquare);
         }
 
