@@ -41,7 +41,7 @@ namespace ChessWithTDD.Tests
 
             for (int i = 0; i < board.ColCount; i++)
             {
-                ISquare pawnSquare = board.GetSquareInternal(WhitePawnInitialRow, i);
+                ISquare pawnSquare = board.GetSquare(WhitePawnInitialRow, i);
                 Assert.That(pawnSquare.ContainsPiece
                     && pawnSquare.Piece is WhitePawn
                     && pawnSquare.Row == WhitePawnInitialRow
@@ -63,7 +63,7 @@ namespace ChessWithTDD.Tests
 
             for (int i = 0; i < board.ColCount; i++)
             {
-                ISquare pawnSquare = board.GetSquareInternal(BlackPawnInitialRow, i);
+                ISquare pawnSquare = board.GetSquare(BlackPawnInitialRow, i);
                 Assert.That(pawnSquare.ContainsPiece
                     && pawnSquare.Piece is BlackPawn
                     && pawnSquare.Row == BlackPawnInitialRow
@@ -81,8 +81,8 @@ namespace ChessWithTDD.Tests
         {
             Board board = new Board();
 
-            ISquare leftRookSquare = board.GetSquareInternal(WhiteBackRow, LeftRookColumn);
-            ISquare rightRookSquare = board.GetSquareInternal(WhiteBackRow, RightRookColumn);
+            ISquare leftRookSquare = board.GetSquare(WhiteBackRow, LeftRookColumn);
+            ISquare rightRookSquare = board.GetSquare(WhiteBackRow, RightRookColumn);
 
             Assert.That(leftRookSquare.ContainsPiece
                 && leftRookSquare.Piece is Rook
@@ -104,8 +104,8 @@ namespace ChessWithTDD.Tests
         {
             Board board = new Board();
 
-            ISquare leftRookSquare = board.GetSquareInternal(BlackBackRow, LeftRookColumn);
-            ISquare rightRookSquare = board.GetSquareInternal(BlackBackRow, RightRookColumn);
+            ISquare leftRookSquare = board.GetSquare(BlackBackRow, LeftRookColumn);
+            ISquare rightRookSquare = board.GetSquare(BlackBackRow, RightRookColumn);
 
             Assert.That(leftRookSquare.ContainsPiece
                 && leftRookSquare.Piece is Rook
@@ -127,8 +127,8 @@ namespace ChessWithTDD.Tests
         {
             Board board = new Board();
 
-            ISquare leftKnightSquare = board.GetSquareInternal(WhiteBackRow, LeftKnightColumn);
-            ISquare rightKnightSquare = board.GetSquareInternal(WhiteBackRow, RightKnightColumn);
+            ISquare leftKnightSquare = board.GetSquare(WhiteBackRow, LeftKnightColumn);
+            ISquare rightKnightSquare = board.GetSquare(WhiteBackRow, RightKnightColumn);
 
             Assert.That(leftKnightSquare.ContainsPiece
                 && leftKnightSquare.Piece is Knight
@@ -150,8 +150,8 @@ namespace ChessWithTDD.Tests
         {
             Board board = new Board();
 
-            ISquare leftKnightSquare = board.GetSquareInternal(BlackBackRow, LeftKnightColumn);
-            ISquare rightKnightSquare = board.GetSquareInternal(BlackBackRow, RightKnightColumn);
+            ISquare leftKnightSquare = board.GetSquare(BlackBackRow, LeftKnightColumn);
+            ISquare rightKnightSquare = board.GetSquare(BlackBackRow, RightKnightColumn);
 
             Assert.That(leftKnightSquare.ContainsPiece
                 && leftKnightSquare.Piece is Knight
@@ -173,8 +173,8 @@ namespace ChessWithTDD.Tests
         {
             Board board = new Board();
 
-            ISquare leftBishopSquare = board.GetSquareInternal(WhiteBackRow, LeftBishopColumn);
-            ISquare rightBishopSquare = board.GetSquareInternal(WhiteBackRow, RightBishopColumn);
+            ISquare leftBishopSquare = board.GetSquare(WhiteBackRow, LeftBishopColumn);
+            ISquare rightBishopSquare = board.GetSquare(WhiteBackRow, RightBishopColumn);
 
             Assert.That(leftBishopSquare.ContainsPiece
                 && leftBishopSquare.Piece is Bishop
@@ -196,8 +196,8 @@ namespace ChessWithTDD.Tests
         {
             Board board = new Board();
 
-            ISquare leftBishopSquare = board.GetSquareInternal(BlackBackRow, LeftBishopColumn);
-            ISquare rightBishopSquare = board.GetSquareInternal(BlackBackRow, RightBishopColumn);
+            ISquare leftBishopSquare = board.GetSquare(BlackBackRow, LeftBishopColumn);
+            ISquare rightBishopSquare = board.GetSquare(BlackBackRow, RightBishopColumn);
 
             Assert.That(leftBishopSquare.ContainsPiece
                 && leftBishopSquare.Piece is Bishop
@@ -219,8 +219,8 @@ namespace ChessWithTDD.Tests
         {
             Board board = new Board();
 
-            ISquare whiteQueenSquare = board.GetSquareInternal(WhiteBackRow, QueenColumn);
-            ISquare blackQueenSquare = board.GetSquareInternal(BlackBackRow, QueenColumn);
+            ISquare whiteQueenSquare = board.GetSquare(WhiteBackRow, QueenColumn);
+            ISquare blackQueenSquare = board.GetSquare(BlackBackRow, QueenColumn);
 
             Assert.That(whiteQueenSquare.ContainsPiece
                 && whiteQueenSquare.Piece is Queen
@@ -242,8 +242,8 @@ namespace ChessWithTDD.Tests
         {
             Board board = new Board();
 
-            ISquare whiteKingSquare = board.GetSquareInternal(WhiteBackRow, KingColumn);
-            ISquare blackKingSquare = board.GetSquareInternal(BlackBackRow, KingColumn);
+            ISquare whiteKingSquare = board.GetSquare(WhiteBackRow, KingColumn);
+            ISquare blackKingSquare = board.GetSquare(BlackBackRow, KingColumn);
 
             Assert.That(whiteKingSquare.ContainsPiece
                 && whiteKingSquare.Piece is King
@@ -265,7 +265,7 @@ namespace ChessWithTDD.Tests
         {
             Board board = new Board();
 
-            Assert.True(board.GetSquareInternal(5, 6).Row == 5 && board.GetSquareInternal(5, 6).Col == 6);
+            Assert.True(board.GetSquare(5, 6).Row == 5 && board.GetSquare(5, 6).Col == 6);
         }
 
         #endregion Board initialisation
@@ -405,8 +405,8 @@ namespace ChessWithTDD.Tests
             piece = StubPieceCanMoveForSpecificSquares(piece, true, fromSquare, toSquare);
             Board board = new Board();
             //obstruction in column just before to col
-            board.GetSquareInternal(rowFrom, colTo - 1).Piece = obstructionPiece;
-            board.GetSquareInternal(rowFrom, colTo - 1).ContainsPiece = true;
+            board.GetSquare(rowFrom, colTo - 1).Piece = obstructionPiece;
+            board.GetSquare(rowFrom, colTo - 1).ContainsPiece = true;
 
             bool isValidMove = board.IsValidMove(fromSquare, toSquare);
 
@@ -424,8 +424,8 @@ namespace ChessWithTDD.Tests
             piece = StubPieceCanMoveForSpecificSquares(piece, true, fromSquare, toSquare);
             Board board = new Board();
             //obstruction in column just before to col
-            board.GetSquareInternal(rowFrom, colTo + 1).Piece = obstructionPiece;
-            board.GetSquareInternal(rowFrom, colTo + 1).ContainsPiece = true;
+            board.GetSquare(rowFrom, colTo + 1).Piece = obstructionPiece;
+            board.GetSquare(rowFrom, colTo + 1).ContainsPiece = true;
 
             bool isValidMove = board.IsValidMove(fromSquare, toSquare);
 
@@ -460,8 +460,8 @@ namespace ChessWithTDD.Tests
             piece = StubPieceCanMoveForSpecificSquares(piece, true, fromSquare, toSquare);
             Board board = new Board();
             //obstruction in row just before to row
-            board.GetSquareInternal(rowTo - 1, colFrom).Piece = obstructionPiece;
-            board.GetSquareInternal(rowTo - 1, colFrom).ContainsPiece = true;
+            board.GetSquare(rowTo - 1, colFrom).Piece = obstructionPiece;
+            board.GetSquare(rowTo - 1, colFrom).ContainsPiece = true;
 
             bool isValidMove = board.IsValidMove(fromSquare, toSquare);
 
@@ -479,8 +479,8 @@ namespace ChessWithTDD.Tests
             piece = StubPieceCanMoveForSpecificSquares(piece, true, fromSquare, toSquare);
             Board board = new Board();
             //obstruction in row just before to row
-            board.GetSquareInternal(rowTo + 1, colFrom).Piece = obstructionPiece;
-            board.GetSquareInternal(rowTo + 1, colFrom).ContainsPiece = true;
+            board.GetSquare(rowTo + 1, colFrom).Piece = obstructionPiece;
+            board.GetSquare(rowTo + 1, colFrom).ContainsPiece = true;
 
             bool isValidMove = board.IsValidMove(fromSquare, toSquare);
 
@@ -522,9 +522,9 @@ namespace ChessWithTDD.Tests
 
             board.Apply(fromSquare, toSquare);
 
-            Assert.That(!board.GetSquareInternal(rowFrom, colFrom).ContainsPiece && board.GetSquareInternal(rowFrom, colFrom).Piece == null);
-            Assert.That(board.GetSquareInternal(rowTo, colTo).ContainsPiece && board.GetSquareInternal(rowTo, colTo).Piece == thePiece);
-            Assert.IsNotNull(board.GetSquareInternal(rowTo, colTo).Piece);
+            Assert.That(!board.GetSquare(rowFrom, colFrom).ContainsPiece && board.GetSquare(rowFrom, colFrom).Piece == null);
+            Assert.That(board.GetSquare(rowTo, colTo).ContainsPiece && board.GetSquare(rowTo, colTo).Piece == thePiece);
+            Assert.IsNotNull(board.GetSquare(rowTo, colTo).Piece);
         }
 
         [TestCase(2, 4, 4, 4)]
@@ -572,7 +572,7 @@ namespace ChessWithTDD.Tests
 
             board.Apply(fromSquare, toSquare);
 
-            Assert.True(board.GetSquareInternal(rowFrom + 1, colFrom).HasEnPassantMark);
+            Assert.True(board.GetSquare(rowFrom + 1, colFrom).HasEnPassantMark);
         }
 
         [TestCase(6, 4, 4, 4)]
@@ -588,7 +588,7 @@ namespace ChessWithTDD.Tests
 
             board.Apply(fromSquare, toSquare);
 
-            Assert.True(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
+            Assert.True(board.GetSquare(rowFrom - 1, colFrom).HasEnPassantMark);
         }
 
         /// <summary>
@@ -607,7 +607,7 @@ namespace ChessWithTDD.Tests
 
             board.Apply(fromSquare, toSquare);
 
-            Assert.False(board.GetSquareInternal(rowFrom + 1, colFrom).HasEnPassantMark);
+            Assert.False(board.GetSquare(rowFrom + 1, colFrom).HasEnPassantMark);
         }
 
         /// <summary>
@@ -626,7 +626,7 @@ namespace ChessWithTDD.Tests
 
             board.Apply(fromSquare, toSquare);
 
-            Assert.False(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
+            Assert.False(board.GetSquare(rowFrom - 1, colFrom).HasEnPassantMark);
         }
 
         [TestCase(2, 4, 3, 4)]
@@ -642,7 +642,7 @@ namespace ChessWithTDD.Tests
 
             board.Apply(fromSquare, toSquare);
 
-            Assert.False(board.GetSquareInternal(rowFrom + 1, colFrom).HasEnPassantMark);
+            Assert.False(board.GetSquare(rowFrom + 1, colFrom).HasEnPassantMark);
         }
 
         [TestCase(6, 4, 5, 4)]
@@ -658,7 +658,7 @@ namespace ChessWithTDD.Tests
 
             board.Apply(fromSquare, toSquare);
 
-            Assert.False(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
+            Assert.False(board.GetSquare(rowFrom - 1, colFrom).HasEnPassantMark);
         }
 
         /// <summary>
@@ -687,7 +687,7 @@ namespace ChessWithTDD.Tests
             //Unmark of our specific square should happen here
             board.Apply(square3, square4);
 
-            Assert.False(board.GetSquareInternal(rowFrom + 1, colFrom).HasEnPassantMark);
+            Assert.False(board.GetSquare(rowFrom + 1, colFrom).HasEnPassantMark);
         }
 
         /// <summary>
@@ -716,7 +716,7 @@ namespace ChessWithTDD.Tests
             //Unmark of our specific square should happen here
             board.Apply(square3, square4);
 
-            Assert.False(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
+            Assert.False(board.GetSquare(rowFrom - 1, colFrom).HasEnPassantMark);
         }
 
         [TestCase(6, 4, 5, 3)]
@@ -731,10 +731,10 @@ namespace ChessWithTDD.Tests
             //board must have a pawn in square above to square
             Board board = new Board();
             //mark actual square
-            ISquare actualBoardMarkedSquare = board.GetSquareInternal(rowTo, colTo);
+            ISquare actualBoardMarkedSquare = board.GetSquare(rowTo, colTo);
             actualBoardMarkedSquare.HasEnPassantMark = true;
             //give board a piece in square to remove it from
-            ISquare actualBoardSquareToTakePawnFrom = board.GetSquareInternal(rowTo + 1, colTo);
+            ISquare actualBoardSquareToTakePawnFrom = board.GetSquare(rowTo + 1, colTo);
             actualBoardSquareToTakePawnFrom.ContainsPiece = true;
             actualBoardSquareToTakePawnFrom.Piece = mockPawnToTake;
 
@@ -757,10 +757,10 @@ namespace ChessWithTDD.Tests
             //board must have a pawn in square above to square
             Board board = new Board();
             //mark actual square
-            ISquare actualBoardMarkedSquare = board.GetSquareInternal(rowTo, colTo);
+            ISquare actualBoardMarkedSquare = board.GetSquare(rowTo, colTo);
             actualBoardMarkedSquare.HasEnPassantMark = false;
             //give board a piece in square to remove it from
-            ISquare actualBoardSquareToTakePawnFrom = board.GetSquareInternal(rowTo + 1, colTo);
+            ISquare actualBoardSquareToTakePawnFrom = board.GetSquare(rowTo + 1, colTo);
             actualBoardSquareToTakePawnFrom.ContainsPiece = true;
             actualBoardSquareToTakePawnFrom.Piece = mockPieceToNotBeTaken;
 
@@ -782,10 +782,10 @@ namespace ChessWithTDD.Tests
             //board must have a pawn in square above to square
             Board board = new Board();
             //mark actual square
-            ISquare actualBoardMarkedSquare = board.GetSquareInternal(rowTo, colTo);
+            ISquare actualBoardMarkedSquare = board.GetSquare(rowTo, colTo);
             actualBoardMarkedSquare.HasEnPassantMark = true;
             //give board a piece in square to remove it from
-            ISquare actualBoardSquareToTakePawnFrom = board.GetSquareInternal(rowTo - 1, colTo);
+            ISquare actualBoardSquareToTakePawnFrom = board.GetSquare(rowTo - 1, colTo);
             actualBoardSquareToTakePawnFrom.ContainsPiece = true;
             actualBoardSquareToTakePawnFrom.Piece = mockPawnToTake;
 
@@ -808,10 +808,10 @@ namespace ChessWithTDD.Tests
             //board must have a pawn in square above to square
             Board board = new Board();
             //mark actual square
-            ISquare actualBoardMarkedSquare = board.GetSquareInternal(rowTo, colTo);
+            ISquare actualBoardMarkedSquare = board.GetSquare(rowTo, colTo);
             actualBoardMarkedSquare.HasEnPassantMark = false;
             //give board a piece in square to remove it from
-            ISquare actualBoardSquareToTakePawnFrom = board.GetSquareInternal(rowTo - 1, colTo);
+            ISquare actualBoardSquareToTakePawnFrom = board.GetSquare(rowTo - 1, colTo);
             actualBoardSquareToTakePawnFrom.ContainsPiece = true;
             actualBoardSquareToTakePawnFrom.Piece = mockPieceToNotBeTaken;
 

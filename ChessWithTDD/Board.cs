@@ -37,11 +37,6 @@ namespace ChessWithTDD
 
         public ISquare GetSquare(int row, int col)
         {
-            return (ISquare) _squares[row][col];//.Clone();
-        }
-
-        internal ISquare GetSquareInternal(int row, int col)
-        {
             return _squares[row][col];
         }
 
@@ -82,7 +77,7 @@ namespace ChessWithTDD
                     //moving east
                     for (int i = fromSquare.Col + 1; i < toSquare.Col; i++)
                     {
-                        if (GetSquareInternal(toSquare.Row, i).ContainsPiece)
+                        if (GetSquare(toSquare.Row, i).ContainsPiece)
                         {
                             return false;
                         }
@@ -93,7 +88,7 @@ namespace ChessWithTDD
                     //moving east
                     for (int i = fromSquare.Col - 1; i > toSquare.Col; i--)
                     {
-                        if (GetSquareInternal(toSquare.Row, i).ContainsPiece)
+                        if (GetSquare(toSquare.Row, i).ContainsPiece)
                         {
                             return false;
                         }
@@ -109,7 +104,7 @@ namespace ChessWithTDD
                     //moving up
                     for (int i = fromSquare.Row + 1; i < toSquare.Row; i++)
                     {
-                        if (GetSquareInternal(i, toSquare.Col).ContainsPiece)
+                        if (GetSquare(i, toSquare.Col).ContainsPiece)
                         {
                             return false;
                         }
@@ -120,7 +115,7 @@ namespace ChessWithTDD
                     //moving down
                     for (int i = fromSquare.Row - 1; i > toSquare.Row; i--)
                     {
-                        if (GetSquareInternal(i, toSquare.Col).ContainsPiece)
+                        if (GetSquare(i, toSquare.Col).ContainsPiece)
                         {
                             return false;
                         }
@@ -145,10 +140,10 @@ namespace ChessWithTDD
                 _squaresMarkedWithEnPassantKeyedByTurn.Remove(TurnCounter - 2);
             }
 
-            GetSquareInternal(toSquare.Row, toSquare.Col).Piece = fromSquare.Piece;
-            GetSquareInternal(toSquare.Row, toSquare.Col).ContainsPiece = true;
-            GetSquareInternal(fromSquare.Row, fromSquare.Col).Piece = null;
-            GetSquareInternal(fromSquare.Row, fromSquare.Col).ContainsPiece = false;
+            GetSquare(toSquare.Row, toSquare.Col).Piece = fromSquare.Piece;
+            GetSquare(toSquare.Row, toSquare.Col).ContainsPiece = true;
+            GetSquare(fromSquare.Row, fromSquare.Col).Piece = null;
+            GetSquare(fromSquare.Row, fromSquare.Col).ContainsPiece = false;
 
             TurnCounter++;
         }
@@ -190,18 +185,18 @@ namespace ChessWithTDD
 
         private void MarkSquareWithEnPassantAndAddToDictionary(int rowToMark, int coltoMark)
         {
-            ISquare squareToMark = GetSquareInternal(rowToMark, coltoMark);
+            ISquare squareToMark = GetSquare(rowToMark, coltoMark);
             squareToMark.HasEnPassantMark = true;
             _squaresMarkedWithEnPassantKeyedByTurn.Add(TurnCounter, squareToMark);
         }
 
         private void CapturePieceThroughEnPassantAndUnmarkSquare(int rowOfPiece, int colOfPiece, int rowOfMarkedSquare)
         {
-            ISquare squareOfPieceThatPassed = GetSquareInternal(rowOfPiece, colOfPiece);
+            ISquare squareOfPieceThatPassed = GetSquare(rowOfPiece, colOfPiece);
             squareOfPieceThatPassed.Piece = null;
             squareOfPieceThatPassed.ContainsPiece = false;
             //unmark square to on this board
-            GetSquareInternal(rowOfMarkedSquare, colOfPiece).HasEnPassantMark = false;
+            GetSquare(rowOfMarkedSquare, colOfPiece).HasEnPassantMark = false;
         }
 
         internal void SetSquare(ISquare square)
