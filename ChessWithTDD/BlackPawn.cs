@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ChessWithTDD
+﻿namespace ChessWithTDD
 {
     /// <summary>
     /// A black pawn. The black team are at the top of the board in this model, occupying rows 6 and 7 intially.
@@ -32,7 +30,18 @@ namespace ChessWithTDD
                     && ((toSquare.Col == fromSquare.Col - 1)
                     || toSquare.Col == fromSquare.Col + 1))
             {
-                return toSquare.ContainsPiece;
+                return toSquare.ContainsPiece || toSquare.HasEnPassantMark;
+            }
+
+            //Moving two spaces up the board
+            if (toSquare.Row == fromSquare.Row - 2
+                && toSquare.Col == fromSquare.Col)
+            {
+                if (HasMoved || toSquare.ContainsPiece)
+                {
+                    return false;
+                }
+                return true;
             }
 
             return false;

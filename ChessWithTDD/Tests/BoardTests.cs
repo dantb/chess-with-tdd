@@ -21,10 +21,13 @@ namespace ChessWithTDD.Tests
         private const int WhitePawnInitialRow = 1;
         private const int BlackPawnInitialRow = 6;
 
+
+        #region Board initialisation
+
         [Test]
         public void BoardIsInitialisedWithCorrectDimensions()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
             Assert.True(board.RowCount == 8 && board.ColCount == 8);
         }
@@ -32,14 +35,14 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardWhitePawnRowSetupCorrectly()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
             HashSet<IPiece> setOfPieces = new HashSet<IPiece>();
 
             for (int i = 0; i < board.ColCount; i++)
             {
-                ISquare pawnSquare = board.GetSquare(WhitePawnInitialRow, i);
-                Assert.That(pawnSquare.ContainsPiece 
+                ISquare pawnSquare = board.GetSquareInternal(WhitePawnInitialRow, i);
+                Assert.That(pawnSquare.ContainsPiece
                     && pawnSquare.Piece is WhitePawn
                     && pawnSquare.Row == WhitePawnInitialRow
                     && pawnSquare.Col == i);
@@ -54,13 +57,13 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardBlackPawnRowSetupCorrectly()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
             HashSet<IPiece> setOfPieces = new HashSet<IPiece>();
 
             for (int i = 0; i < board.ColCount; i++)
             {
-                ISquare pawnSquare = board.GetSquare(BlackPawnInitialRow, i);
+                ISquare pawnSquare = board.GetSquareInternal(BlackPawnInitialRow, i);
                 Assert.That(pawnSquare.ContainsPiece
                     && pawnSquare.Piece is BlackPawn
                     && pawnSquare.Row == BlackPawnInitialRow
@@ -76,12 +79,12 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardWhiteRooksSetupCorrectly()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
-            ISquare leftRookSquare = board.GetSquare(WhiteBackRow, LeftRookColumn);
-            ISquare rightRookSquare = board.GetSquare(WhiteBackRow, RightRookColumn);
+            ISquare leftRookSquare = board.GetSquareInternal(WhiteBackRow, LeftRookColumn);
+            ISquare rightRookSquare = board.GetSquareInternal(WhiteBackRow, RightRookColumn);
 
-            Assert.That(leftRookSquare.ContainsPiece 
+            Assert.That(leftRookSquare.ContainsPiece
                 && leftRookSquare.Piece is Rook
                 && leftRookSquare.Piece.Colour == Colour.White
                 && leftRookSquare.Row == WhiteBackRow
@@ -99,10 +102,10 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardBlackRooksSetupCorrectly()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
-            ISquare leftRookSquare = board.GetSquare(BlackBackRow, LeftRookColumn);
-            ISquare rightRookSquare = board.GetSquare(BlackBackRow, RightRookColumn);
+            ISquare leftRookSquare = board.GetSquareInternal(BlackBackRow, LeftRookColumn);
+            ISquare rightRookSquare = board.GetSquareInternal(BlackBackRow, RightRookColumn);
 
             Assert.That(leftRookSquare.ContainsPiece
                 && leftRookSquare.Piece is Rook
@@ -122,10 +125,10 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardWhiteKnightsSetupCorrectly()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
-            ISquare leftKnightSquare = board.GetSquare(WhiteBackRow, LeftKnightColumn);
-            ISquare rightKnightSquare = board.GetSquare(WhiteBackRow, RightKnightColumn);
+            ISquare leftKnightSquare = board.GetSquareInternal(WhiteBackRow, LeftKnightColumn);
+            ISquare rightKnightSquare = board.GetSquareInternal(WhiteBackRow, RightKnightColumn);
 
             Assert.That(leftKnightSquare.ContainsPiece
                 && leftKnightSquare.Piece is Knight
@@ -145,10 +148,10 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardBlackKnightsSetupCorrectly()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
-            ISquare leftKnightSquare = board.GetSquare(BlackBackRow, LeftKnightColumn);
-            ISquare rightKnightSquare = board.GetSquare(BlackBackRow, RightKnightColumn);
+            ISquare leftKnightSquare = board.GetSquareInternal(BlackBackRow, LeftKnightColumn);
+            ISquare rightKnightSquare = board.GetSquareInternal(BlackBackRow, RightKnightColumn);
 
             Assert.That(leftKnightSquare.ContainsPiece
                 && leftKnightSquare.Piece is Knight
@@ -168,10 +171,10 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardWhiteBishopsSetupCorrectly()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
-            ISquare leftBishopSquare = board.GetSquare(WhiteBackRow, LeftBishopColumn);
-            ISquare rightBishopSquare = board.GetSquare(WhiteBackRow, RightBishopColumn);
+            ISquare leftBishopSquare = board.GetSquareInternal(WhiteBackRow, LeftBishopColumn);
+            ISquare rightBishopSquare = board.GetSquareInternal(WhiteBackRow, RightBishopColumn);
 
             Assert.That(leftBishopSquare.ContainsPiece
                 && leftBishopSquare.Piece is Bishop
@@ -191,10 +194,10 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardBlackBishopsSetupCorrectly()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
-            ISquare leftBishopSquare = board.GetSquare(BlackBackRow, LeftBishopColumn);
-            ISquare rightBishopSquare = board.GetSquare(BlackBackRow, RightBishopColumn);
+            ISquare leftBishopSquare = board.GetSquareInternal(BlackBackRow, LeftBishopColumn);
+            ISquare rightBishopSquare = board.GetSquareInternal(BlackBackRow, RightBishopColumn);
 
             Assert.That(leftBishopSquare.ContainsPiece
                 && leftBishopSquare.Piece is Bishop
@@ -214,10 +217,10 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardQueensSetupCorrectly()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
-            ISquare whiteQueenSquare = board.GetSquare(WhiteBackRow, QueenColumn);
-            ISquare blackQueenSquare = board.GetSquare(BlackBackRow, QueenColumn);
+            ISquare whiteQueenSquare = board.GetSquareInternal(WhiteBackRow, QueenColumn);
+            ISquare blackQueenSquare = board.GetSquareInternal(BlackBackRow, QueenColumn);
 
             Assert.That(whiteQueenSquare.ContainsPiece
                 && whiteQueenSquare.Piece is Queen
@@ -237,10 +240,10 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardKingsSetupCorrectly()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
-            ISquare whiteKingSquare = board.GetSquare(WhiteBackRow, KingColumn);
-            ISquare blackKingSquare = board.GetSquare(BlackBackRow, KingColumn);
+            ISquare whiteKingSquare = board.GetSquareInternal(WhiteBackRow, KingColumn);
+            ISquare blackKingSquare = board.GetSquareInternal(BlackBackRow, KingColumn);
 
             Assert.That(whiteKingSquare.ContainsPiece
                 && whiteKingSquare.Piece is King
@@ -256,21 +259,26 @@ namespace ChessWithTDD.Tests
 
             Assert.AreNotEqual(whiteKingSquare.Piece, blackKingSquare.Piece);
         }
-     
+
         [Test]
         public void SquareAtPositionFiveSixOnBoardHasRowFiveAndColSix()
         {
-            IBoard board = new Board();
+            Board board = new Board();
 
-            Assert.True(board.GetSquare(5, 6).Row == 5 && board.GetSquare(5, 6).Col == 6);
+            Assert.True(board.GetSquareInternal(5, 6).Row == 5 && board.GetSquareInternal(5, 6).Col == 6);
         }
+
+        #endregion Board initialisation
+
+
+        #region Move validation
 
         [TestCase(1, 1, 2, 2)]
         [TestCase(5, 3, 7, 7)]
         [Test]
         public void MoveWhereFromSquarePieceDoesNotHaveAValidColourIsNotValid(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            IBoard board = new Board();
+            Board board = new Board();
             IPiece thePiece = MockPieceWithColour(Colour.Invalid);
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
@@ -291,7 +299,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveWhereFromSquareOrToSquareIsOffTheBoardIsNotValid(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            IBoard board = new Board();
+            Board board = new Board();
             IPiece pieceWithColour = MockPieceWithColour(Colour.White);
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, pieceWithColour);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
@@ -307,7 +315,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveWhereFromSquareDoesNotContainPieceIsNotValid(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            IBoard board = new Board();
+            Board board = new Board();
             ISquare fromSquare = MockSquareWithoutPiece(rowFrom, colFrom);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
@@ -319,12 +327,18 @@ namespace ChessWithTDD.Tests
         [TestCase(1, 2, 1, 2)]
         [TestCase(5, 3, 5, 3)]
         [Test]
-        public void MoveWhereFromSquareIsSameAsToSquareIsNotValid(int rowFrom, int colFrom, int rowTo, int colTo)
+        public void MoveWhereFromSquareIsSameAsToSquareButWithDifferentPiecesIsNotValid(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            IBoard board = new Board();
-            ISquare square = MockSquareWithPiece(rowFrom, colFrom);
+            Board board = new Board();
+            IPiece piece1 = MockPieceWithColour(Colour.White);            
+            ISquare square1 = MockSquareWithPiece(rowFrom, colFrom, piece1);
+            IPiece piece2 = MockPieceWithColour(Colour.Black);
+            ISquare square2 = MockSquareWithPiece(rowFrom, colFrom, piece2);
+            //Make sure piece can move
+            StubPieceCanMoveForSpecificSquares(piece1, true, square1, square2);
 
-            bool isValidMove = board.IsValidMove(square, square);
+
+            bool isValidMove = board.IsValidMove(square1, square2);
 
             Assert.False(isValidMove);
         }
@@ -334,7 +348,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveWherePieceInFromSquareCanMoveIsValid(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            IBoard board = new Board();
+            Board board = new Board();
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
@@ -350,7 +364,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveWherePieceInFromSquareCannotMoveIsNotValid(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            IBoard board = new Board();
+            Board board = new Board();
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
@@ -367,7 +381,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveWherePieceInToSquareIsOfSameColourAsMovingPieceIsInvalid(int rowFrom, int colFrom, int rowTo, int colTo, Colour theColour)
         {
-            IBoard board = new Board();
+            Board board = new Board();
             IPiece piece = MockPieceWithColour(theColour);
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
             IPiece toSquarePiece = MockPieceWithColour(theColour);
@@ -380,6 +394,11 @@ namespace ChessWithTDD.Tests
             Assert.False(isValidMove);
         }
 
+        #endregion Move validation
+
+
+        #region Applying moves
+
         [TestCase(2, 4, 6, 7)]
         [TestCase(3, 3, 1, 1)]
         [TestCase(1, 3, 1, 5)]
@@ -389,13 +408,13 @@ namespace ChessWithTDD.Tests
             IPiece thePiece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
             ISquare toSquare = MockSquareWithPiece(rowTo, colTo, thePiece);
-            IBoard board = new Board();
+            Board board = new Board();
 
             board.Apply(fromSquare, toSquare);
 
-            Assert.That(!board.GetSquare(rowFrom, colFrom).ContainsPiece && board.GetSquare(rowFrom, colFrom).Piece == null);
-            Assert.That(board.GetSquare(rowTo, colTo).ContainsPiece && board.GetSquare(rowTo, colTo).Piece == thePiece);
-            Assert.IsNotNull(board.GetSquare(rowTo, colTo).Piece);
+            Assert.That(!board.GetSquareInternal(rowFrom, colFrom).ContainsPiece && board.GetSquareInternal(rowFrom, colFrom).Piece == null);
+            Assert.That(board.GetSquareInternal(rowTo, colTo).ContainsPiece && board.GetSquareInternal(rowTo, colTo).Piece == thePiece);
+            Assert.IsNotNull(board.GetSquareInternal(rowTo, colTo).Piece);
         }
 
         [TestCase(2, 4, 4, 4)]
@@ -407,7 +426,7 @@ namespace ChessWithTDD.Tests
             IPawn thePawn = MockPawnWithHasMoved(false);
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
-            IBoard board = new Board();
+            Board board = new Board();
 
             board.Apply(fromSquare, toSquare);
 
@@ -423,11 +442,207 @@ namespace ChessWithTDD.Tests
             IPawn thePawn = MockPawnWithHasMoved(true);
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
-            IBoard board = new Board();
+            Board board = new Board();
 
             board.Apply(fromSquare, toSquare);
 
             thePawn.AssertWasNotCalled(p => p.HasMoved = true);
         }
+
+        [TestCase(2, 4, 4, 4)]
+        [TestCase(1, 3, 3, 3)]
+        [Test]
+        public void ApplyMoveOnPawnMovingTwoSquaresUpMarksPassedSquareWithEnPassantMark(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPawn thePawn = MockPawn();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board board = new Board();
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.True(board.GetSquareInternal(rowFrom + 1, colFrom).HasEnPassantMark);
+        }
+
+        [TestCase(6, 4, 4, 4)]
+        [TestCase(5, 3, 3, 3)]
+        [Test]
+        public void ApplyMoveOnPawnMovingTwoSquaresDownMarksPassedSquareWithEnPassantMark(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPawn thePawn = MockPawn();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board board = new Board();
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.True(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
+        }
+
+        /// <summary>
+        /// En Passant marking should only happen for IPawn pieces, not general pieces
+        /// </summary>
+        [TestCase(2, 4, 4, 4)]
+        [TestCase(1, 3, 3, 3)]
+        [Test]
+        public void ApplyMoveOnGeneralPieceMovingTwoSquaresUpDoesNotMarkPassedSquareWithEnPassantMark(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPiece thePawn = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board board = new Board();
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.False(board.GetSquareInternal(rowFrom + 1, colFrom).HasEnPassantMark);
+        }
+
+        /// <summary>
+        /// En Passant marking should only happen for IPawn pieces, not general pieces
+        /// </summary>
+        [TestCase(6, 4, 4, 4)]
+        [TestCase(5, 3, 3, 3)]
+        [Test]
+        public void ApplyMoveOnGeneralPieceMovingTwoSquaresDownDoesNotMarkPassedSquareWithEnPassantMark(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPiece thePawn = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board board = new Board();
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.False(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
+        }
+
+        [TestCase(2, 4, 3, 4)]
+        [TestCase(1, 3, 2, 3)]
+        [Test]
+        public void ApplyMoveOnPawnMovingOneSquareUpDoesNotMarkToSquareWithEnPassantMark(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPawn thePawn = MockPawn();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board board = new Board();
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.False(board.GetSquareInternal(rowFrom + 1, colFrom).HasEnPassantMark);
+        }
+
+        [TestCase(6, 4, 5, 4)]
+        [TestCase(5, 3, 4, 3)]
+        [Test]
+        public void ApplyMoveOnPawnMovingOneSquareDownDoesNotMarkToSquareWithEnPassantMark(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPawn thePawn = MockPawn();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board board = new Board();
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.False(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
+        }
+
+        /// <summary>
+        /// Integration test to ensure that the en passant mark is removed after two more turns.
+        /// Going up the board.
+        /// </summary>
+        [TestCase(2, 4, 4, 4)]
+        [TestCase(1, 3, 3, 3)]
+        [Test]
+        public void AfterTheSecondApplySinceAnUpEnPassantMarkTheMarkIsRemovedForSpecificSquare(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPawn thePawn = MockPawn();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board board = new Board();
+            ISquare square1 = MockSquareWithoutPiece(0, 0);
+            ISquare square2 = MockSquareWithoutPiece(1, 1);
+            ISquare square3 = MockSquareWithoutPiece(0, 0);
+            ISquare square4 = MockSquareWithoutPiece(1, 1);
+
+            //mark
+            board.Apply(fromSquare, toSquare);
+            //random move
+            board.Apply(square1, square2);
+            //Unmark of our specific square should happen here
+            board.Apply(square3, square4);
+
+            Assert.False(board.GetSquareInternal(rowFrom + 1, colFrom).HasEnPassantMark);
+        }
+
+        /// <summary>
+        /// Integration test to ensure that the en passant mark is removed after two more turns.
+        /// Going down the board.
+        /// </summary>
+        [TestCase(6, 4, 4, 4)]
+        [TestCase(5, 3, 3, 3)]
+        [Test]
+        public void AfterTheSecondApplySinceADownEnPassantMarkTheMarkIsRemovedForSpecificSquare(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPawn thePawn = MockPawn();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board board = new Board();
+            ISquare square1 = MockSquareWithoutPiece(0, 0);
+            ISquare square2 = MockSquareWithoutPiece(1, 1);
+            ISquare square3 = MockSquareWithoutPiece(0, 0);
+            ISquare square4 = MockSquareWithoutPiece(1, 1);
+
+            //mark
+            board.Apply(fromSquare, toSquare);
+            //random move
+            board.Apply(square1, square2);
+            //Unmark of our specific square should happen here
+            board.Apply(square3, square4);
+
+            Assert.False(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
+        }
+
+        [TestCase(2, 4, 3, 5)]
+        [TestCase(1, 3, 2, 4)]
+        [Test]
+        public void ApplyMoveOnPawnMovingDiagonallyUpWhereToSquareContainsNoPieceRemovesEnPassantMark(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPawn thePawn = MockPawn();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board board = new Board();
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.False(board.GetSquareInternal(rowFrom + 1, colFrom).HasEnPassantMark);
+        }
+
+        [TestCase(6, 4, 5, 3)]
+        [TestCase(5, 3, 4, 2)]
+        [Test]
+        public void ApplyMoveOnPawnMovingDiagonallyDownWhereToSquareContainsNoPieceRemovesEnPassantMark(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            //In a game this only happens when moving two squares forward, but the board doesn't care about that
+            IPawn thePawn = MockPawn();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board board = new Board();
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.False(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
+        }
+
+        #endregion Applying moves
+
+
     }
 }

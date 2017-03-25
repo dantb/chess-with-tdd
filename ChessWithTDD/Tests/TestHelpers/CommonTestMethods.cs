@@ -5,22 +5,6 @@ namespace ChessWithTDD.Tests
 {
     internal static class CommonTestMethods
     {
-        internal static IBoard MockBoardWithCorrectDimensions()
-        {
-            IBoard theBoard = GenerateMock<IBoard>();
-            theBoard.Stub(b => b.RowCount).Return(8);
-            theBoard.Stub(b => b.ColCount).Return(8);
-            return theBoard;
-        }
-
-        internal static IBoard MockBoardWithFromSquareAndToSquare(ISquare fromSquare, ISquare toSquare)
-        {
-            IBoard theBoard = GenerateMock<IBoard>();
-            theBoard.Stub(b => b.GetSquare(fromSquare.Row, fromSquare.Col)).Return(fromSquare);
-            theBoard.Stub(b => b.GetSquare(toSquare.Row, toSquare.Col)).Return(toSquare);
-            return theBoard;
-        }
-
         internal static ISquare MockSquareWithoutPiece(int row, int col)
         {
             ISquare theSquare = GenerateMock<ISquare>();
@@ -28,6 +12,17 @@ namespace ChessWithTDD.Tests
             theSquare.Stub(s => s.Col).Return(col);
             theSquare.Stub(s => s.Piece).Return(null);
             theSquare.Stub(s => s.ContainsPiece).Return(false);
+            return theSquare;
+        }
+
+        internal static ISquare MockSquareWithHasEnPassantMark(int row, int col, bool hasEnPassantMark)
+        {
+            ISquare theSquare = GenerateMock<ISquare>();
+            theSquare.Stub(s => s.Row).Return(row);
+            theSquare.Stub(s => s.Col).Return(col);
+            theSquare.Stub(s => s.Piece).Return(null);
+            theSquare.Stub(s => s.ContainsPiece).Return(false);
+            theSquare.Stub(s => s.HasEnPassantMark).Return(hasEnPassantMark);
             return theSquare;
         }
 

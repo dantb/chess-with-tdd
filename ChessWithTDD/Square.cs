@@ -8,6 +8,8 @@
             Col = col;
         }
 
+        public bool HasEnPassantMark { get; set; }
+
         public bool ContainsPiece { get; set; }
 
         public IPiece Piece { get; set; }
@@ -20,16 +22,6 @@
         {
             ContainsPiece = true;
             Piece = piece;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is Square)
-            {
-                Square objAsSquare = obj as Square;
-                return objAsSquare.Row == Row && objAsSquare.Col == Col;
-            }
-            return base.Equals(obj);
         }
     }
 }

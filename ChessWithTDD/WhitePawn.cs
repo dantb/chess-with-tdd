@@ -30,21 +30,18 @@
                     && ((toSquare.Col == fromSquare.Col - 1)
                     || toSquare.Col == fromSquare.Col + 1))
             {
-                return toSquare.ContainsPiece;
+                return toSquare.ContainsPiece || toSquare.HasEnPassantMark;
             }
 
             //Moving two spaces up the board
             if (toSquare.Row == fromSquare.Row + 2
                 && toSquare.Col == fromSquare.Col)
             {
-                if (!HasMoved && !toSquare.ContainsPiece)
-                {
-                    return true;
-                }
-                else
+                if (HasMoved || toSquare.ContainsPiece)
                 {
                     return false;
                 }
+                return true;
             }
 
             return false;
