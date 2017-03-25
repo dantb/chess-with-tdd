@@ -609,36 +609,106 @@ namespace ChessWithTDD.Tests
             Assert.False(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
         }
 
-        [TestCase(2, 4, 3, 5)]
-        [TestCase(1, 3, 2, 4)]
+        [TestCase(6, 4, 5, 3)]
+        [TestCase(5, 3, 4, 4)]
         [Test]
-        public void ApplyMoveOnPawnMovingDiagonallyUpWhereToSquareContainsNoPieceRemovesEnPassantMark(int rowFrom, int colFrom, int rowTo, int colTo)
+        public void ApplyMoveOnPawnMovingDiagonallyDownWhereToSquareIsMarkedRemovesMarkAndTakesPieceOneAboveToSquare(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            //In a game this only happens when moving two squares forward, but the board doesn't care about that
             IPawn thePawn = MockPawn();
+            IPawn mockPawnToTake = MockPawn();
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
-            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            ISquare toSquare = MockSquareWithHasEnPassantMark(rowTo, colTo, true); 
+            //board must have a pawn in square above to square
             Board board = new Board();
+            //mark actual square
+            ISquare actualBoardMarkedSquare = board.GetSquareInternal(rowTo, colTo);
+            actualBoardMarkedSquare.HasEnPassantMark = true;
+            //give board a piece in square to remove it from
+            ISquare actualBoardSquareToTakePawnFrom = board.GetSquareInternal(rowTo + 1, colTo);
+            actualBoardSquareToTakePawnFrom.ContainsPiece = true;
+            actualBoardSquareToTakePawnFrom.Piece = mockPawnToTake;
 
             board.Apply(fromSquare, toSquare);
 
-            Assert.False(board.GetSquareInternal(rowFrom + 1, colFrom).HasEnPassantMark);
+            Assert.False(actualBoardMarkedSquare.HasEnPassantMark);
+            Assert.False(actualBoardSquareToTakePawnFrom.ContainsPiece);
+            Assert.IsNull(actualBoardSquareToTakePawnFrom.Piece);
         }
 
         [TestCase(6, 4, 5, 3)]
-        [TestCase(5, 3, 4, 2)]
+        [TestCase(5, 3, 4, 4)]
         [Test]
-        public void ApplyMoveOnPawnMovingDiagonallyDownWhereToSquareContainsNoPieceRemovesEnPassantMark(int rowFrom, int colFrom, int rowTo, int colTo)
+        public void ApplyMoveOnPawnMovingDiagonallyDownWhereToSquareIsNotMarkedDoesNotTakePieceOneAboveToSquare(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            //In a game this only happens when moving two squares forward, but the board doesn't care about that
             IPawn thePawn = MockPawn();
+            IPiece mockPieceToNotBeTaken = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
-            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            ISquare toSquare = MockSquareWithHasEnPassantMark(rowTo, colTo, false);
+            //board must have a pawn in square above to square
             Board board = new Board();
+            //mark actual square
+            ISquare actualBoardMarkedSquare = board.GetSquareInternal(rowTo, colTo);
+            actualBoardMarkedSquare.HasEnPassantMark = false;
+            //give board a piece in square to remove it from
+            ISquare actualBoardSquareToTakePawnFrom = board.GetSquareInternal(rowTo + 1, colTo);
+            actualBoardSquareToTakePawnFrom.ContainsPiece = true;
+            actualBoardSquareToTakePawnFrom.Piece = mockPieceToNotBeTaken;
 
             board.Apply(fromSquare, toSquare);
 
-            Assert.False(board.GetSquareInternal(rowFrom - 1, colFrom).HasEnPassantMark);
+            Assert.True(actualBoardSquareToTakePawnFrom.ContainsPiece);
+            Assert.That(actualBoardSquareToTakePawnFrom.Piece == mockPieceToNotBeTaken);
+        }
+
+        [TestCase(2, 4, 3, 5)]
+        [TestCase(1, 3, 2, 2)]
+        [Test]
+        public void ApplyMoveOnPawnMovingDiagonallyUpWhereToSquareIsMarkedRemovesMarkAndTakesPieceOneBelowToSquare(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPawn thePawn = MockPawn();
+            IPawn mockPawnToTake = MockPawn();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithHasEnPassantMark(rowTo, colTo, true);
+            //board must have a pawn in square above to square
+            Board board = new Board();
+            //mark actual square
+            ISquare actualBoardMarkedSquare = board.GetSquareInternal(rowTo, colTo);
+            actualBoardMarkedSquare.HasEnPassantMark = true;
+            //give board a piece in square to remove it from
+            ISquare actualBoardSquareToTakePawnFrom = board.GetSquareInternal(rowTo - 1, colTo);
+            actualBoardSquareToTakePawnFrom.ContainsPiece = true;
+            actualBoardSquareToTakePawnFrom.Piece = mockPawnToTake;
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.False(actualBoardMarkedSquare.HasEnPassantMark);
+            Assert.False(actualBoardSquareToTakePawnFrom.ContainsPiece);
+            Assert.IsNull(actualBoardSquareToTakePawnFrom.Piece);
+        }
+
+        [TestCase(2, 4, 3, 5)]
+        [TestCase(1, 3, 2, 2)]
+        [Test]
+        public void ApplyMoveOnPawnMovingDiagonallyUpWhereToSquareIsNotMarkedDoesNotTakePieceOneBelowToSquare(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPawn thePawn = MockPawn();
+            IPiece mockPieceToNotBeTaken = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePawn);
+            ISquare toSquare = MockSquareWithHasEnPassantMark(rowTo, colTo, false);
+            //board must have a pawn in square above to square
+            Board board = new Board();
+            //mark actual square
+            ISquare actualBoardMarkedSquare = board.GetSquareInternal(rowTo, colTo);
+            actualBoardMarkedSquare.HasEnPassantMark = false;
+            //give board a piece in square to remove it from
+            ISquare actualBoardSquareToTakePawnFrom = board.GetSquareInternal(rowTo - 1, colTo);
+            actualBoardSquareToTakePawnFrom.ContainsPiece = true;
+            actualBoardSquareToTakePawnFrom.Piece = mockPieceToNotBeTaken;
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.True(actualBoardSquareToTakePawnFrom.ContainsPiece);
+            Assert.That(actualBoardSquareToTakePawnFrom.Piece == mockPieceToNotBeTaken);
         }
 
         #endregion Applying moves
