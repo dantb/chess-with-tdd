@@ -42,6 +42,21 @@ namespace ChessWithTDD
 
         public bool IsValidMove(ISquare fromSquare, ISquare toSquare)
         {
+            if (!GenericBoardMoveValidationPasses(fromSquare, toSquare))
+            {
+                return false;
+            }
+
+            if (MultiSquareMoveIsBlockedByAnObstacle(fromSquare, toSquare))
+            {
+                return false;
+            }
+
+            return fromSquare.Piece.CanMove(fromSquare, toSquare);
+        }
+
+        private bool GenericBoardMoveValidationPasses(ISquare fromSquare, ISquare toSquare)
+        {
             if (fromSquare.Row >= BOARD_DIMENSION || fromSquare.Col >= BOARD_DIMENSION
                 || toSquare.Row >= BOARD_DIMENSION || toSquare.Col >= BOARD_DIMENSION)
             {
@@ -68,13 +83,7 @@ namespace ChessWithTDD
             {
                 return false;
             }
-
-            if (MultiSquareMoveIsBlockedByAnObstacle(fromSquare, toSquare))
-            {
-                return false;
-            }
-
-            return fromSquare.Piece.CanMove(fromSquare, toSquare);
+            return true;
         }
 
         private bool MultiSquareMoveIsBlockedByAnObstacle(ISquare fromSquare, ISquare toSquare)
