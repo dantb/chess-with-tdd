@@ -41,19 +41,21 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlackPawn.cs" />
-    <Compile Include="Bishop.cs" />
+    <Compile Include="Pieces\BlackPawn.cs" />
+    <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="BoardInitialiser.cs" />
     <Compile Include="Interfaces\IPawn.cs" />
+    <Compile Include="Tests\BishopTests.cs" />
     <Compile Include="Tests\BlackPawnTests.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Tests\BoardTests.cs" />
     <Compile Include="Interfaces\IMove.cs" />
-    <Compile Include="Knight.cs" />
-    <Compile Include="Rook.cs" />
-    <Compile Include="King.cs" />
-    <Compile Include="Queen.cs" />
+    <Compile Include="Pieces\Knight.cs" />
+    <Compile Include="Pieces\Rook.cs" />
+    <Compile Include="Pieces\King.cs" />
+    <Compile Include="Pieces\Queen.cs" />
     <Compile Include="Tests\KnightTests.cs" />
+    <Compile Include="Tests\RookTests.cs" />
     <Compile Include="Tests\TestHelpers\CommonTestMethods.cs" />
     <Compile Include="Interfaces\IBoard.cs" />
     <Compile Include="Interfaces\IPiece.cs" />
@@ -63,7 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="Tests\SquareTests.cs" />
-    <Compile Include="WhitePawn.cs" />
+    <Compile Include="Pieces\WhitePawn.cs" />
     <Compile Include="Tests\WhitePawnTests.cs" />
   </ItemGroup>
   <ItemGroup>
