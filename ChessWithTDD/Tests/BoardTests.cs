@@ -343,8 +343,8 @@ namespace ChessWithTDD.Tests
             Assert.False(isValidMove);
         }
 
-        [TestCase(1, 1, 2, 2)]
-        [TestCase(5, 3, 7, 7)]
+        [TestCase(2, 2, 2, 3)]
+        [TestCase(5, 3, 6, 3)]
         [Test]
         public void MoveWherePieceInFromSquareCanMoveIsValid(int rowFrom, int colFrom, int rowTo, int colTo)
         {
@@ -359,7 +359,7 @@ namespace ChessWithTDD.Tests
             Assert.True(isValidMove);
         }
 
-        [TestCase(1, 2, 1, 2)]
+        [TestCase(3, 2, 3, 2)]
         [TestCase(5, 3, 5, 3)]
         [Test]
         public void MoveWherePieceInFromSquareCannotMoveIsNotValid(int rowFrom, int colFrom, int rowTo, int colTo)
@@ -375,9 +375,9 @@ namespace ChessWithTDD.Tests
             Assert.False(isValidMove);
         }
 
-        [TestCase(1, 2, 1, 2, Colour.White)]
-        [TestCase(5, 3, 5, 3, Colour.Black)]
-        [TestCase(5, 3, 5, 3, Colour.Invalid)]
+        [TestCase(2, 2, 3, 2, Colour.White)]
+        [TestCase(5, 3, 4, 3, Colour.Black)]
+        [TestCase(5, 3, 4, 3, Colour.Invalid)]
         [Test]
         public void MoveWherePieceInToSquareIsOfSameColourAsMovingPieceIsInvalid(int rowFrom, int colFrom, int rowTo, int colTo, Colour theColour)
         {
@@ -449,6 +449,23 @@ namespace ChessWithTDD.Tests
             Assert.True(isValidMove);
         }
 
+        [TestCase(2, 6, 2, 0)]
+        [TestCase(2, 2, 2, 7)]
+        [Test]
+        public void MoveMultipleSquaresHorizontallyIsNotValidIfThereAreNoObstructionsAndCanMoveOfPieceIsFalse(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPiece piece = MockPiece();
+            IPiece obstructionPiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            piece = StubPieceCanMoveForSpecificSquares(piece, false, fromSquare, toSquare);
+            Board board = new Board();
+
+            bool isValidMove = board.IsValidMove(fromSquare, toSquare);
+
+            Assert.False(isValidMove);
+        }
+
         [TestCase(2, 2, 6, 2)]
         [Test]
         public void MoveMultipleSquaresVerticallyUpIsNotValidIfThereAreObstructions(int rowFrom, int colFrom, int rowTo, int colTo)
@@ -468,7 +485,7 @@ namespace ChessWithTDD.Tests
             Assert.False(isValidMove);
         }
 
-        [TestCase(6, 2, 2, 2)]
+        [TestCase(5, 2, 2, 2)]
         [Test]
         public void MoveMultipleSquaresVerticallyDownIsNotValidIfThereAreObstructions(int rowFrom, int colFrom, int rowTo, int colTo)
         {
@@ -487,8 +504,8 @@ namespace ChessWithTDD.Tests
             Assert.False(isValidMove);
         }
 
-        [TestCase(6, 2, 2, 2)]
-        [TestCase(2, 2, 6, 2)]
+        [TestCase(5, 2, 2, 2)]
+        [TestCase(2, 2, 5, 2)]
         [Test]
         public void MoveMultipleSquaresVerticallyIsValidIfThereAreNoObstructionsAndCanMoveOfPieceIsTrue(int rowFrom, int colFrom, int rowTo, int colTo)
         {
@@ -502,6 +519,137 @@ namespace ChessWithTDD.Tests
             bool isValidMove = board.IsValidMove(fromSquare, toSquare);
 
             Assert.True(isValidMove);
+        }
+
+        [TestCase(5, 2, 2, 2)]
+        [TestCase(2, 2, 5, 2)]
+        [Test]
+        public void MoveMultipleSquaresVerticallyIsNotValidIfThereAreNoObstructionsAndCanMoveOfPieceIsFalse(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPiece piece = MockPiece();
+            IPiece obstructionPiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            piece = StubPieceCanMoveForSpecificSquares(piece, false, fromSquare, toSquare);
+            Board board = new Board();
+
+            bool isValidMove = board.IsValidMove(fromSquare, toSquare);
+
+            Assert.False(isValidMove);
+        }
+
+        [TestCase(2, 5, 5, 2)]
+        [Test]
+        public void MoveMultipleSquaresNorthWestIsNotValidIfThereAreObstructions(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPiece piece = MockPiece();
+            IPiece obstructionPiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            piece = StubPieceCanMoveForSpecificSquares(piece, true, fromSquare, toSquare);
+            Board board = new Board();
+            //obstruction in row just before to row
+            board.GetSquare(rowTo - 1, colTo + 1).Piece = obstructionPiece;
+            board.GetSquare(rowTo - 1, colTo + 1).ContainsPiece = true;
+
+            bool isValidMove = board.IsValidMove(fromSquare, toSquare);
+
+            Assert.False(isValidMove);
+        }
+
+        [TestCase(2, 3, 5, 6)]
+        [Test]
+        public void MoveMultipleSquaresNorthEastIsNotValidIfThereAreObstructions(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPiece piece = MockPiece();
+            IPiece obstructionPiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            piece = StubPieceCanMoveForSpecificSquares(piece, true, fromSquare, toSquare);
+            Board board = new Board();
+            //obstruction in row just before to row
+            board.GetSquare(rowTo - 1, colTo - 1).Piece = obstructionPiece;
+            board.GetSquare(rowTo - 1, colTo - 1).ContainsPiece = true;
+
+            bool isValidMove = board.IsValidMove(fromSquare, toSquare);
+
+            Assert.False(isValidMove);
+        }
+
+        [TestCase(5, 5, 2, 2)]
+        [Test]
+        public void MoveMultipleSquaresSouthhWestIsNotValidIfThereAreObstructions(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPiece piece = MockPiece();
+            IPiece obstructionPiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            piece = StubPieceCanMoveForSpecificSquares(piece, true, fromSquare, toSquare);
+            Board board = new Board();
+            //obstruction in row just before to row
+            board.GetSquare(rowTo + 1, colTo + 1).Piece = obstructionPiece;
+            board.GetSquare(rowTo + 1, colTo + 1).ContainsPiece = true;
+
+            bool isValidMove = board.IsValidMove(fromSquare, toSquare);
+
+            Assert.False(isValidMove);
+        }
+
+        [TestCase(5, 2, 2, 5)]
+        [Test]
+        public void MoveMultipleSquaresSouthEastIsNotValidIfThereAreObstructions(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPiece piece = MockPiece();
+            IPiece obstructionPiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            piece = StubPieceCanMoveForSpecificSquares(piece, true, fromSquare, toSquare);
+            Board board = new Board();
+            //obstruction in row just before to row
+            board.GetSquare(rowTo + 1, colTo - 1).Piece = obstructionPiece;
+            board.GetSquare(rowTo + 1, colTo - 1).ContainsPiece = true;
+
+            bool isValidMove = board.IsValidMove(fromSquare, toSquare);
+
+            Assert.False(isValidMove);
+        }
+
+        [TestCase(2, 5, 5, 2)]
+        [TestCase(2, 3, 5, 6)]
+        [TestCase(5, 5, 2, 2)]
+        [TestCase(5, 2, 2, 5)]
+        [Test]
+        public void MoveMultipleSquaresDiagonallyIsValidIfThereAreNoObstructionsAndCanMoveOfPieceIsTrue(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPiece piece = MockPiece();
+            IPiece obstructionPiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            piece = StubPieceCanMoveForSpecificSquares(piece, true, fromSquare, toSquare);
+            Board board = new Board();
+
+            bool isValidMove = board.IsValidMove(fromSquare, toSquare);
+
+            Assert.True(isValidMove);
+        }
+
+        [TestCase(2, 5, 5, 2)]
+        [TestCase(2, 3, 5, 6)]
+        [TestCase(5, 5, 2, 2)]
+        [TestCase(5, 2, 2, 5)]
+        [Test]
+        public void MoveMultipleSquaresDiagonallyIsNotValidIfThereAreNoObstructionsAndCanMoveOfPieceIsFalse(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPiece piece = MockPiece();
+            IPiece obstructionPiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, piece);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            piece = StubPieceCanMoveForSpecificSquares(piece, false, fromSquare, toSquare);
+            Board board = new Board();
+
+            bool isValidMove = board.IsValidMove(fromSquare, toSquare);
+
+            Assert.False(isValidMove);
         }
 
         #endregion Move validation

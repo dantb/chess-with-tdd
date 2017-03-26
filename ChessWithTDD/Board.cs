@@ -69,6 +69,16 @@ namespace ChessWithTDD
                 return false;
             }
 
+            if (MultiSquareMoveIsBlockedByAnObstacle(fromSquare, toSquare))
+            {
+                return false;
+            }
+
+            return fromSquare.Piece.CanMove(fromSquare, toSquare);
+        }
+
+        private bool MultiSquareMoveIsBlockedByAnObstacle(ISquare fromSquare, ISquare toSquare)
+        {
             if (toSquare.Row == fromSquare.Row && Math.Abs(toSquare.Col - fromSquare.Col) >= 2)
             {
                 //moving multiple horizontally
@@ -79,24 +89,23 @@ namespace ChessWithTDD
                     {
                         if (GetSquare(toSquare.Row, i).ContainsPiece)
                         {
-                            return false;
+                            return true;
                         }
                     }
                 }
                 else if (toSquare.Col < fromSquare.Col)
                 {
-                    //moving east
+                    //moving west
                     for (int i = fromSquare.Col - 1; i > toSquare.Col; i--)
                     {
                         if (GetSquare(toSquare.Row, i).ContainsPiece)
                         {
-                            return false;
+                            return true;
                         }
                     }
                 }
             }
-
-            if (toSquare.Col == fromSquare.Col && Math.Abs(toSquare.Row - fromSquare.Row) >= 2)
+            else if (toSquare.Col == fromSquare.Col && Math.Abs(toSquare.Row - fromSquare.Row) >= 2)
             {
                 //moving multiple vertically
                 if (toSquare.Row > fromSquare.Row)
@@ -106,7 +115,7 @@ namespace ChessWithTDD
                     {
                         if (GetSquare(i, toSquare.Col).ContainsPiece)
                         {
-                            return false;
+                            return true;
                         }
                     }
                 }
@@ -117,13 +126,65 @@ namespace ChessWithTDD
                     {
                         if (GetSquare(i, toSquare.Col).ContainsPiece)
                         {
-                            return false;
+                            return true;
                         }
                     }
                 }
             }
+            else if (toSquare.Row - fromSquare.Row >= 2 && fromSquare.Col - toSquare.Col >= 2)
+            {
+                //north west
+                int initialCol = fromSquare.Col - 1;
+                for (int i = fromSquare.Row + 1; i < toSquare.Row; i++)
+                {
+                    if (GetSquare(i, initialCol).ContainsPiece)
+                    {
+                        return true;
+                    }
+                    initialCol--;
+                }
+            }
+            else if (toSquare.Row - fromSquare.Row >= 2 && toSquare.Col - fromSquare.Col >= 2)
+            {
+                //north east
+                int initialCol = fromSquare.Col + 1;
+                for (int i = fromSquare.Row + 1; i < toSquare.Row; i++)
+                {
+                    if (GetSquare(i, initialCol).ContainsPiece)
+                    {
+                        return true;
+                    }
+                    initialCol++;
+                }
+            }
+            else if (fromSquare.Row - toSquare.Row >= 2 && fromSquare.Col - toSquare.Col >= 2)
+            {
+                //south west
+                int initialCol = fromSquare.Col - 1;
+                for (int i = fromSquare.Row - 1; i > toSquare.Row; i--)
+                {
+                    if (GetSquare(i, initialCol).ContainsPiece)
+                    {
+                        return true;
+                    }
+                    initialCol--;
+                }
+            }
+            else if (fromSquare.Row - toSquare.Row >= 2 && toSquare.Col - fromSquare.Col >= 2)
+            {
+                //south east
+                int initialCol = fromSquare.Col + 1;
+                for (int i = fromSquare.Row - 1; i > toSquare.Row; i--)
+                {
+                    if (GetSquare(i, initialCol).ContainsPiece)
+                    {
+                        return true;
+                    }
+                    initialCol++;
+                }
+            }
 
-            return fromSquare.Piece.CanMove(fromSquare, toSquare);
+            return false;
         }
 
         public void Apply(ISquare fromSquare, ISquare toSquare)
