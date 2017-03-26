@@ -4,7 +4,7 @@
     /// A white pawn. The white team are at the bottom of the board in this model, occupying rows 0 and 1 initially.
     /// TODO - when it reaches end of board should be swappable. Not sure where this logic will go yet.
     /// </summary>
-    public class WhitePawn : IPiece, IPawn
+    public class WhitePawn : IPawn
     {
         public Colour Colour
         {

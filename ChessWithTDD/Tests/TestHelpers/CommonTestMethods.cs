@@ -59,6 +59,18 @@ namespace ChessWithTDD.Tests
             return piece;
         }
 
+        internal static IKing MockKingWithColour(Colour theColour)
+        {
+            IKing king = MockKing();
+            king.Stub(b => b.Colour).Return(theColour);
+            return king;
+        }
+
+        internal static IKing MockKing()
+        {
+            return GenerateMock<IKing>();
+        }
+
         internal static IPiece MockPiece()
         {
             return GenerateMock<IPiece>();

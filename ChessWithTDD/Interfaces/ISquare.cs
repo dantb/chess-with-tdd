@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace ChessWithTDD
+﻿namespace ChessWithTDD
 {
     public interface ISquare
     {

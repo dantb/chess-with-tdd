@@ -2,7 +2,7 @@
 
 namespace ChessWithTDD
 {
-    public class King : IPiece
+    public class King : IKing
     {
         private Colour _colour;
 
@@ -18,6 +18,8 @@ namespace ChessWithTDD
                 return _colour;
             }
         }
+
+        public bool InCheckState { get; set; } = false;
 
         public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
