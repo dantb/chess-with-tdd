@@ -21,7 +21,13 @@ namespace ChessWithTDD
 
         public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
-            throw new NotImplementedException();
+            int rowDifference = Math.Abs(fromSquare.Row - toSquare.Row);
+            int colDifference = Math.Abs(fromSquare.Col - toSquare.Col);
+            if (rowDifference <= 1 && colDifference <= 1)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

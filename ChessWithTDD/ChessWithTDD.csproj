@@ -54,7 +54,9 @@
     <Compile Include="Pieces\Rook.cs" />
     <Compile Include="Pieces\King.cs" />
     <Compile Include="Pieces\Queen.cs" />
+    <Compile Include="Tests\KingTests.cs" />
     <Compile Include="Tests\KnightTests.cs" />
+    <Compile Include="Tests\QueenTests.cs" />
     <Compile Include="Tests\RookTests.cs" />
     <Compile Include="Tests\TestHelpers\CommonTestMethods.cs" />
     <Compile Include="Interfaces\IBoard.cs" />
