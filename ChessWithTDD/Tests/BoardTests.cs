@@ -273,6 +273,8 @@ namespace ChessWithTDD.Tests
 
         #region Move validation
 
+        #region General move validation
+
         [TestCase(1, 1, 2, 2)]
         [TestCase(5, 3, 7, 7)]
         [Test]
@@ -393,6 +395,10 @@ namespace ChessWithTDD.Tests
 
             Assert.False(isValidMove);
         }
+
+        #endregion General move validation
+
+        #region Board blocks obstructions
 
         [TestCase(3, 2, 3, 7)]
         [Test]
@@ -652,6 +658,8 @@ namespace ChessWithTDD.Tests
             Assert.False(isValidMove);
         }
 
+        #endregion Board blocks obstructions
+
         #endregion Move validation
 
 
@@ -664,8 +672,9 @@ namespace ChessWithTDD.Tests
         public void ApplyMoveToBoardChangesBoardStateCorrectly(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             IPiece thePiece = MockPiece();
+            IPiece capturedPiece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
-            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, thePiece);
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, capturedPiece);
             Board board = new Board();
 
             board.Apply(fromSquare, toSquare);
@@ -674,6 +683,8 @@ namespace ChessWithTDD.Tests
             Assert.That(board.GetSquare(rowTo, colTo).ContainsPiece && board.GetSquare(rowTo, colTo).Piece == thePiece);
             Assert.IsNotNull(board.GetSquare(rowTo, colTo).Piece);
         }
+
+        #region Pawn initial move
 
         [TestCase(2, 4, 4, 4)]
         [TestCase(3, 3, 5, 3)]
@@ -706,6 +717,10 @@ namespace ChessWithTDD.Tests
 
             thePawn.AssertWasNotCalled(p => p.HasMoved = true);
         }
+
+        #endregion Pawn initial move
+
+        #region Pawn en passant capture
 
         [TestCase(2, 4, 4, 4)]
         [TestCase(1, 3, 3, 3)]
@@ -968,6 +983,140 @@ namespace ChessWithTDD.Tests
             Assert.True(actualBoardSquareToTakePawnFrom.ContainsPiece);
             Assert.That(actualBoardSquareToTakePawnFrom.Piece == mockPieceToNotBeTaken);
         }
+
+        #endregion Pawn en passant capture
+
+
+        #region Check state evaluation
+
+        [TestCase(2, 2, 6, 3, BlackBackRow, KingColumn)]
+        public void IfWhitePieceMovedToCheckTheBlackKingThenBoardAndBlackKingPutInCheckState(int rowFrom, int colFrom, int rowTo, int colTo, int kingRow, int kingCol)
+        {
+            IPiece movingPiece = MockPieceWithColour(Colour.White);            
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, movingPiece);
+            //Give the two square the same piece so the check state can be evaluated
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, movingPiece);
+            Board board = new Board();
+            //make sure board isn't in check state
+            board.InCheckState = false;
+            //make sure the moving piece can take the king after the move is applied
+            StubPieceCanMoveForSpecificSquares(movingPiece, true, toSquare, board.GetSquare(kingRow, kingCol));
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.True(board.InCheckState);
+            Assert.True((board.GetSquare(kingRow, kingCol).Piece as IKing).InCheckState);
+        }
+
+        [TestCase(3, 3, 4, 5, 4, 4)]
+        public void IfWhitePieceMovedToCheckTheBlackKingAndBlackKingHasMovedFromInitialPositionThenBoardAndBlackKingPutInCheckState(int rowFrom, int colFrom, int rowTo, int colTo, int kingRow, int kingCol)
+        {
+            IPiece movingPiece = MockPieceWithColour(Colour.White);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, movingPiece);
+            //Give the two square the same piece so the check state can be evaluated
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, movingPiece);
+            IKing theKing = MockKingWithColour(Colour.Black);
+            ISquare squareWithKingInCheck = MockSquareWithPiece(kingRow, kingCol, theKing);
+            Board board = new Board();
+            //give board cache our square
+            board.BoardCache[BoardCacheEnum.BlackKing] = squareWithKingInCheck;
+            //make sure board isn't in check state
+            board.InCheckState = false;
+            //make sure the moving piece can take the king after the move is applied
+            StubPieceCanMoveForSpecificSquares(movingPiece, true, toSquare, squareWithKingInCheck);
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.True(board.InCheckState);
+            theKing.AssertWasCalled(k => k.InCheckState = true);
+        }
+
+        [TestCase(2, 2, 6, 3, WhiteBackRow, KingColumn)]
+        public void IfBlackPieceMovedToCheckTheWhiteKingThenBoardAndWhiteKingPutInCheckState(int rowFrom, int colFrom, int rowTo, int colTo, int kingRow, int kingCol)
+        {
+            IPiece movingPiece = MockPieceWithColour(Colour.Black);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, movingPiece);
+            //Give the two square the same piece so the check state can be evaluated
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, movingPiece);
+            Board board = new Board();
+            //make sure board isn't in check state
+            board.InCheckState = false;
+            //make sure the moving piece can take the king after the move is applied
+            StubPieceCanMoveForSpecificSquares(movingPiece, true, toSquare, board.GetSquare(kingRow, kingCol));
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.True(board.InCheckState);
+            Assert.True((board.GetSquare(kingRow, kingCol).Piece as IKing).InCheckState);
+        }
+
+        [TestCase(3, 3, 4, 5, 4, 4)]
+        public void IfBlackPieceMovedToCheckTheWhiteKingAndWhiteKingHasMovedFromInitialPositionThenBoardAndWhiteKingPutInCheckState(int rowFrom, int colFrom, int rowTo, int colTo, int kingRow, int kingCol)
+        {
+            IPiece movingPiece = MockPieceWithColour(Colour.Black);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, movingPiece);
+            //Give the two square the same piece so the check state can be evaluated
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, movingPiece);
+            IKing theKing = MockKingWithColour(Colour.White);
+            ISquare squareWithKingInCheck = MockSquareWithPiece(kingRow, kingCol, theKing);
+            Board board = new Board();
+            //give board cache our square
+            board.BoardCache[BoardCacheEnum.WhiteKing] = squareWithKingInCheck;
+            //make sure board isn't in check state
+            board.InCheckState = false;
+            //make sure the moving piece can take the king after the move is applied
+            StubPieceCanMoveForSpecificSquares(movingPiece, true, toSquare, squareWithKingInCheck);
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.True(board.InCheckState);
+            theKing.AssertWasCalled(k => k.InCheckState = true);
+        }
+
+        [TestCase(3, 3, 3, 4)]
+        public void BlackKingIsSavedInBoardCacheAfterMovingIsApplied(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IKing blackKing = MockKingWithColour(Colour.Black);
+            ISquare kingSquareBefore = MockSquareWithPiece(rowFrom, rowTo, blackKing);
+            //to square must also have black king as it would have been applied had this been a real square
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, blackKing);
+            Board theBoard = new Board();
+            //make actual square's king be correct position
+            theBoard.SetSquare(kingSquareBefore);
+
+            theBoard.Apply(kingSquareBefore, toSquare);
+
+            Assert.That(theBoard.BoardCache[BoardCacheEnum.BlackKing] == theBoard.GetSquare(rowTo, colTo));
+            Assert.That(theBoard.BoardCache[BoardCacheEnum.BlackKing].Piece == blackKing);
+        }
+
+        [TestCase(3, 3, 3, 4)]
+        public void WhiteKingIsSavedInBoardCacheAfterMovingIsApplied(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IKing whiteKing = MockKingWithColour(Colour.White);
+            ISquare kingSquareBefore = MockSquareWithPiece(rowFrom, rowTo, whiteKing);
+            //to square must also have white king as it would have been applied had this been a real square
+            ISquare toSquare = MockSquareWithPiece(rowTo, colTo, whiteKing);
+            Board theBoard = new Board();
+            //make actual square's king be correct position
+            theBoard.SetSquare(kingSquareBefore);
+
+            theBoard.Apply(kingSquareBefore, toSquare);
+
+            Assert.That(theBoard.BoardCache[BoardCacheEnum.WhiteKing] == theBoard.GetSquare(rowTo, colTo));
+            Assert.That(theBoard.BoardCache[BoardCacheEnum.WhiteKing].Piece == whiteKing);
+        }
+
+        [Test]
+        public void BoardCacheInitiallyHasKingsInCorrectPositions()
+        {
+            Board theBoard = new Board();
+
+            Assert.That(theBoard.BoardCache[BoardCacheEnum.BlackKing] == theBoard.GetSquare(BlackBackRow, KingColumn));
+            Assert.That(theBoard.BoardCache[BoardCacheEnum.WhiteKing] == theBoard.GetSquare(WhiteBackRow, KingColumn));
+        }
+
+        #endregion Check state evaluation
 
         #endregion Applying moves
 

@@ -15,7 +15,12 @@ namespace ChessWithTDD
         {
             InitialiseBoardDimensions();
             BoardInitialiser.InitialiseBoardPieces(this);
+            BoardCache.Add(BoardCacheEnum.BlackKing, GetSquare(BLACK_BACK_ROW, KING_COLUMN));
+            BoardCache.Add(BoardCacheEnum.WhiteKing, GetSquare(WHITE_BACK_ROW, KING_COLUMN));
         }
+
+        public Dictionary<BoardCacheEnum, ISquare> BoardCache { get; set; } = new Dictionary<BoardCacheEnum, ISquare>();
+        public bool InCheckState { get; set; } = false;
 
         public int TurnCounter { get; set; } = 0;
 
@@ -203,19 +208,76 @@ namespace ChessWithTDD
                 MakePawnSpecificAmendments(fromSquare, toSquare);
             }
 
+            //Squares that had been marked two turns ago should be unmarked
+            UnmarkEnPassantSquares();
+
+            //This is where we actually execute the move
+            ActualApply(fromSquare, toSquare);
+
+            //Update board cache for easy access to pieces
+            UpdateBoardCache(toSquare);
+
+            //Evaluate check states after move has been applied
+            UpdateCheckStates(toSquare);
+
+            TurnCounter++;
+        }
+
+        private void UnmarkEnPassantSquares()
+        {
             if (_squaresMarkedWithEnPassantKeyedByTurn.ContainsKey(TurnCounter - 2))
             {
                 //Unmark the square and remove from dictionary
                 _squaresMarkedWithEnPassantKeyedByTurn[TurnCounter - 2].HasEnPassantMark = false;
                 _squaresMarkedWithEnPassantKeyedByTurn.Remove(TurnCounter - 2);
             }
+        }
 
+        private void ActualApply(ISquare fromSquare, ISquare toSquare)
+        {
             GetSquare(toSquare.Row, toSquare.Col).Piece = fromSquare.Piece;
             GetSquare(toSquare.Row, toSquare.Col).ContainsPiece = true;
             GetSquare(fromSquare.Row, fromSquare.Col).Piece = null;
             GetSquare(fromSquare.Row, fromSquare.Col).ContainsPiece = false;
+        }
 
-            TurnCounter++;
+        private void UpdateBoardCache(ISquare toSquare)
+        {
+            if (toSquare.Piece is IKing)
+            {
+                if (toSquare.Piece.Colour == Colour.Black)
+                {
+                    BoardCache[BoardCacheEnum.BlackKing] = GetSquare(toSquare.Row, toSquare.Col);
+                }
+                else if (toSquare.Piece.Colour == Colour.White)
+                {
+                    BoardCache[BoardCacheEnum.WhiteKing] = GetSquare(toSquare.Row, toSquare.Col);
+                }
+            }
+        }
+
+        private void UpdateCheckStates(ISquare toSquare)
+        {
+            if (toSquare.Piece?.Colour == Colour.White)
+            {
+                ISquare blackKingSquare = BoardCache[BoardCacheEnum.BlackKing];
+                //see if black king is in check
+                if (IsValidMove(toSquare, blackKingSquare))
+                {
+                    InCheckState = true;
+                    (blackKingSquare.Piece as IKing).InCheckState = true;
+                }
+            }
+            else if (toSquare.Piece?.Colour == Colour.Black)
+            {
+                ISquare whtieKingSquare = BoardCache[BoardCacheEnum.WhiteKing];
+                //see if white king is in check
+                if (IsValidMove(toSquare, whtieKingSquare))
+                {
+                    InCheckState = true;
+                    (whtieKingSquare.Piece as IKing).InCheckState = true;
+                }
+            }
         }
 
         private void MakePawnSpecificAmendments(ISquare fromSquare, ISquare toSquare)

@@ -1,10 +1,19 @@
-﻿namespace ChessWithTDD
+﻿using System.Collections.Generic;
+
+namespace ChessWithTDD
 {
     public interface IBoard
     {
         int RowCount { get; }
         int ColCount { get; }
         int TurnCounter { get; set; }
+        bool InCheckState { get; set; }
+
+        /// <summary>
+        /// Cache holds the squares corresponding to specific pieces. For example both kings should be easily
+        /// accessible in order to check for "check" efficiently.
+        /// </summary>
+        Dictionary<BoardCacheEnum, ISquare> BoardCache { get; set; }
 
         /// <summary>
         /// Returns a clone of the square at position (row, col) on the board.
@@ -27,5 +36,11 @@
         /// <param name="fromSquare">Square containing the piece to be moved.</param>
         /// <param name="toSquare">Square the piece will be moved to, capturing pieces as required.</param>
         void Apply(ISquare fromSquare, ISquare toSquare);
+    }
+
+    public enum BoardCacheEnum
+    {
+        BlackKing,
+        WhiteKing
     }
 }
