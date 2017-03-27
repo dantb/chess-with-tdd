@@ -21,7 +21,7 @@ namespace ChessWithTDD
 
         public Dictionary<BoardCacheEnum, ISquare> BoardCache { get; set; } = new Dictionary<BoardCacheEnum, ISquare>();
         public bool InCheckState { get; set; } = false;
-
+        public bool CheckMate { get; set; } = false;
         public int TurnCounter { get; set; } = 0;
 
         public int ColCount
@@ -258,6 +258,12 @@ namespace ChessWithTDD
 
         private void UpdateCheckStates(ISquare toSquare)
         {
+            RemoveCheckStates();
+            AddCheckStates(toSquare);
+        }
+
+        private void AddCheckStates(ISquare toSquare)
+        {
             if (toSquare.Piece?.Colour == Colour.White)
             {
                 ISquare blackKingSquare = BoardCache[BoardCacheEnum.BlackKing];
@@ -277,6 +283,24 @@ namespace ChessWithTDD
                     InCheckState = true;
                     (whtieKingSquare.Piece as IKing).InCheckState = true;
                 }
+            }
+        }
+
+        private void RemoveCheckStates()
+        {
+            if (InCheckState)
+            {
+                //If we get here then we know for sure that a piece of the same colour as the king in check
+                //has just moved to result in the removal of check state (could be the king itself that moved)
+                if ((BoardCache[BoardCacheEnum.BlackKing].Piece as IKing).InCheckState)
+                {
+                    (BoardCache[BoardCacheEnum.BlackKing].Piece as IKing).InCheckState = false;
+                }
+                else if ((BoardCache[BoardCacheEnum.WhiteKing].Piece as IKing).InCheckState)
+                {
+                    (BoardCache[BoardCacheEnum.WhiteKing].Piece as IKing).InCheckState = false;
+                }
+                InCheckState = false;
             }
         }
 

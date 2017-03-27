@@ -1107,6 +1107,42 @@ namespace ChessWithTDD.Tests
             Assert.That(theBoard.BoardCache[BoardCacheEnum.WhiteKing].Piece == whiteKing);
         }
 
+        /// <summary>
+        /// Given that we're in check, the move MUST therefore remove the check. All this tests is that it is 
+        /// removed correctly. This has to happen after board cache update in case the king is what moved.
+        /// </summary>
+        [TestCase(3, 3, 3, 4)]
+        public void IfBoardAndWhiteKingInCheckStateRemoveCheckStatesWhenApplying(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IKing piece = MockKingWithColour(Colour.White);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, rowTo, piece);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board theBoard = new Board();
+            theBoard.InCheckState = true;
+            (theBoard.BoardCache[BoardCacheEnum.WhiteKing].Piece as IKing).InCheckState = true;
+
+            theBoard.Apply(fromSquare, toSquare);
+
+            Assert.False((theBoard.BoardCache[BoardCacheEnum.WhiteKing].Piece as IKing).InCheckState);
+            Assert.False(theBoard.InCheckState);
+        }
+
+        [TestCase(3, 3, 3, 4)]
+        public void IfBoardAndBlackKingInCheckStateRemoveCheckStatesWhenApplying(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            IPiece piece = MockKingWithColour(Colour.Black);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, rowTo, piece);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            Board theBoard = new Board();
+            theBoard.InCheckState = true;
+            (theBoard.BoardCache[BoardCacheEnum.BlackKing].Piece as IKing).InCheckState = true;
+
+            theBoard.Apply(fromSquare, toSquare);
+
+            Assert.False((theBoard.BoardCache[BoardCacheEnum.BlackKing].Piece as IKing).InCheckState);
+            Assert.False(theBoard.InCheckState);
+        }
+
         [Test]
         public void BoardCacheInitiallyHasKingsInCorrectPositions()
         {

@@ -8,6 +8,7 @@ namespace ChessWithTDD
         int ColCount { get; }
         int TurnCounter { get; set; }
         bool InCheckState { get; set; }
+        bool CheckMate { get; set; }
 
         /// <summary>
         /// Cache holds the squares corresponding to specific pieces. For example both kings should be easily
