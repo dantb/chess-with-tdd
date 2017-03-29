@@ -44,10 +44,10 @@
     <Compile Include="Interfaces\IKing.cs" />
     <Compile Include="Pieces\BlackPawn.cs" />
     <Compile Include="Pieces\Bishop.cs" />
-    <Compile Include="BoardInitialiser.cs" />
+    <Compile Include="BoardDependencies\BoardInitialiser.cs" />
     <Compile Include="Interfaces\IPawn.cs" />
-    <Compile Include="Tests\BishopTests.cs" />
-    <Compile Include="Tests\BlackPawnTests.cs" />
+    <Compile Include="Tests\Pieces\BishopTests.cs" />
+    <Compile Include="Tests\Pieces\BlackPawnTests.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Tests\BoardTests.cs" />
     <Compile Include="Interfaces\IMove.cs" />
@@ -55,10 +55,10 @@
     <Compile Include="Pieces\Rook.cs" />
     <Compile Include="Pieces\King.cs" />
     <Compile Include="Pieces\Queen.cs" />
-    <Compile Include="Tests\KingTests.cs" />
-    <Compile Include="Tests\KnightTests.cs" />
-    <Compile Include="Tests\QueenTests.cs" />
-    <Compile Include="Tests\RookTests.cs" />
+    <Compile Include="Tests\Pieces\KingTests.cs" />
+    <Compile Include="Tests\Pieces\KnightTests.cs" />
+    <Compile Include="Tests\Pieces\QueenTests.cs" />
+    <Compile Include="Tests\Pieces\RookTests.cs" />
     <Compile Include="Tests\TestHelpers\CommonTestMethods.cs" />
     <Compile Include="Interfaces\IBoard.cs" />
     <Compile Include="Interfaces\IPiece.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Square.cs" />
     <Compile Include="Tests\SquareTests.cs" />
     <Compile Include="Pieces\WhitePawn.cs" />
-    <Compile Include="Tests\WhitePawnTests.cs" />
+    <Compile Include="Tests\Pieces\WhitePawnTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -78,7 +78,9 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Tests\BoardDependencies\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
