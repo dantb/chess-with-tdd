@@ -15,13 +15,50 @@ set openCoverReportsFolder="%~dp0..\..\OpenCoverReports"
 set openCoverResultsFolder="%~dp0..\..\OpenCoverResults"
 set nunitResultsFolder="%~dp0.\NUnitResults"
 
+
 REM *** Main entry point ***
 call:DeleteFoldersAndContents
 call:CreateFolders
-call:RunOpenCoverUnitTestMetrics
-call:RunLaunchReports
+call:RunAllTestsInChessObjectLibrary
+pause
+call:RunReportGeneratorForEverything
+pause
+call:RunLaunchReport
 GOTO:EOF
 REM *** The End ***
+
+REM *** Main entry point ***
+REM call:DeleteFoldersAndContents
+REM call:CreateFolders
+REM call:RunOpenCoverUnitTestMetrics
+REM call:RunLaunchReports
+REM GOTO:EOF
+REM *** The End ***
+
+:RunAllTestsInChessObjectLibrary
+%openCoverConsole% ^
+-target:%nunitConsole% ^
+-register:user ^
+-targetargs:"%~dp0..\bin\Debug\ChessWithTDD.dll --work=%nunitResultsFolder%" ^
+-output:"%openCoverResultsFolder%\oc_AllChessObjectLibraryClasses_results.xml" ^
+-searchdirs:"%~dp0..\bin\Debug"
+GOTO:EOF
+
+:RunReportGeneratorForEverything
+ECHO ON
+ECHO %openCoverResultsFolder%\ooc_AllChessObjectLibraryClasses_results.xml
+"%~dp0..\..\packages\ReportGenerator.2.5.5\tools\ReportGenerator.exe" ^
+-targetdir:"%openCoverReportsFolder%\ReportForEverything" ^
+-reports:"%openCoverResultsFolder%\oc_AllChessObjectLibraryClasses_results.xml" 
+GOTO:EOF
+
+:RunLaunchReport
+start "Test coverage report" "%openCoverReportsFolder%\ReportForEverything\index.htm"
+GOTO:EOF
+
+REM ------------------------------------------------------------------------
+REM nothing below this point is run currently, running tests for everything
+REM ------------------------------------------------------------------------
 
 :DeleteFoldersAndContents
 if exist %openCoverReportsFolder% rmdir %openCoverReportsFolder% /s /q 

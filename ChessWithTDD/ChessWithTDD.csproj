@@ -41,11 +41,25 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoardDependencies\BoardCache.cs" />
+    <Compile Include="BoardDependencies\CheckManager.cs" />
+    <Compile Include="BoardDependencies\MoveValidator.cs" />
+    <Compile Include="BoardDependencies\PawnManager.cs" />
+    <Compile Include="Interfaces\IBoardCache.cs" />
+    <Compile Include="Interfaces\IBoardInitialiser.cs" />
+    <Compile Include="Interfaces\ICheckManager.cs" />
     <Compile Include="Interfaces\IKing.cs" />
+    <Compile Include="Interfaces\IMoveValidator.cs" />
+    <Compile Include="Interfaces\IPawnManager.cs" />
     <Compile Include="Pieces\BlackPawn.cs" />
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="BoardDependencies\BoardInitialiser.cs" />
     <Compile Include="Interfaces\IPawn.cs" />
+    <Compile Include="Tests\BoardDependencies\BoardCacheTests.cs" />
+    <Compile Include="Tests\BoardDependencies\BoardInitialiserTests.cs" />
+    <Compile Include="Tests\BoardDependencies\CheckManagerTests.cs" />
+    <Compile Include="Tests\BoardDependencies\MoveValidatorTests.cs" />
+    <Compile Include="Tests\BoardDependencies\PawnManagerTests.cs" />
     <Compile Include="Tests\Pieces\BishopTests.cs" />
     <Compile Include="Tests\Pieces\BlackPawnTests.cs" />
     <Compile Include="Board.cs" />
@@ -78,9 +92,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\BoardDependencies\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,10 +1,37 @@
 ﻿using Rhino.Mocks;
 using static Rhino.Mocks.MockRepository;
+using static ChessWithTDD.BoardConstants;
 
 namespace ChessWithTDD.Tests
 {
     internal static class CommonTestMethods
     {
+        internal static IBoard MockBoard()
+        {
+            return GenerateMock<IBoard>();
+        }
+
+        internal static IBoard MockBoardWithGetSquaresMocked()
+        {
+            IBoard board = MockBoard();
+            for (int row = 0; row < BOARD_DIMENSION; row++)
+            {
+                for (int col = 0; col < BOARD_DIMENSION; col++)
+                {
+                    board.Stub(b => b.GetSquare(row, col)).Return(MockSquare());
+                }
+            }
+            return board;
+        }
+
+        internal static IBoard MockBoardWithPieceInSquare(int row, int col, IPiece thePiece)
+        {
+            IBoard board = MockBoardWithGetSquaresMocked();
+            ISquare square = MockSquareWithPiece(row, col, thePiece);
+            board.Stub(b => b.GetSquare(row, col)).Return(square).Repeat.Any();
+            return board;
+        }
+
         internal static ISquare MockSquareWithoutPiece(int row, int col)
         {
             ISquare theSquare = GenerateMock<ISquare>();
@@ -13,6 +40,11 @@ namespace ChessWithTDD.Tests
             theSquare.Stub(s => s.Piece).Return(null);
             theSquare.Stub(s => s.ContainsPiece).Return(false);
             return theSquare;
+        }
+
+        internal static ISquare MockSquare()
+        {
+            return GenerateMock<ISquare>();
         }
 
         internal static ISquare MockSquareWithHasEnPassantMark(int row, int col, bool hasEnPassantMark)
@@ -32,6 +64,15 @@ namespace ChessWithTDD.Tests
             IPiece thePiece = aPiece ?? GenerateMock<IPiece>();
             theSquare.Stub(s => s.Row).Return(row);
             theSquare.Stub(s => s.Col).Return(col);
+            theSquare.Stub(s => s.Piece).Return(thePiece);
+            theSquare.Stub(s => s.ContainsPiece).Return(true);
+            return theSquare;
+        }
+
+        internal static ISquare MockSquareWithPiece(IPiece aPiece = null)
+        {
+            ISquare theSquare = GenerateMock<ISquare>();
+            IPiece thePiece = aPiece ?? GenerateMock<IPiece>();
             theSquare.Stub(s => s.Piece).Return(thePiece);
             theSquare.Stub(s => s.ContainsPiece).Return(true);
             return theSquare;

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static ChessWithTDD.BoardConstants;
+﻿using static ChessWithTDD.BoardConstants;
 
 namespace ChessWithTDD
 {
-    internal static class BoardInitialiser
+    public class BoardInitialiser : IBoardInitialiser
     {
-        internal static void InitialiseBoardPieces(Board theBoard)
+        public void InitialiseBoardPieces(IBoard theBoard)
         {
             InitialiseWhitePawnRow(theBoard);
             InitialiseBlackPawnRow(theBoard);
@@ -20,7 +15,7 @@ namespace ChessWithTDD
             InitialiseKings(theBoard);
         }
 
-        private static void InitialiseWhitePawnRow(Board theBoard)
+        private void InitialiseWhitePawnRow(IBoard theBoard)
         {
             for (int i = 0; i < BOARD_DIMENSION; i++)
             {
@@ -31,7 +26,7 @@ namespace ChessWithTDD
             }
         }
 
-        private static void InitialiseBlackPawnRow(Board theBoard)
+        private void InitialiseBlackPawnRow(IBoard theBoard)
         {
             for (int i = 0; i < BOARD_DIMENSION; i++)
             {
@@ -42,93 +37,91 @@ namespace ChessWithTDD
             }
         }
 
-        private static void InitialiseRooks(Board theBoard)
+        private void InitialiseRooks(IBoard theBoard)
         {
-            Rook whiteRookLeft = new Rook(Colour.White);
-            Square whiteLeftRookSquare = new Square(WHITE_BACK_ROW, LEFT_ROOK_COL);
-            whiteLeftRookSquare.AddPiece(whiteRookLeft);
+            InitialiseRook(Colour.White, WHITE_BACK_ROW, LEFT_ROOK_COL, theBoard);
 
-            Rook whiteRookRight = new Rook(Colour.White);
-            Square whiteRightRookSquare = new Square(WHITE_BACK_ROW, RIGHT_ROOK_COL);
-            whiteRightRookSquare.AddPiece(whiteRookRight);
+            InitialiseRook(Colour.White, WHITE_BACK_ROW, RIGHT_ROOK_COL, theBoard);
 
-            Rook blackRookLeft = new Rook(Colour.Black);
-            Square blackLeftRookSquare = new Square(BLACK_BACK_ROW, LEFT_ROOK_COL);
-            blackLeftRookSquare.AddPiece(blackRookLeft);
+            InitialiseRook(Colour.Black, BLACK_BACK_ROW, LEFT_ROOK_COL, theBoard);
 
-            Rook blackRookRight = new Rook(Colour.Black);
-            Square blackRightRookSquare = new Square(BLACK_BACK_ROW, RIGHT_ROOK_COL);
-            blackRightRookSquare.AddPiece(blackRookRight);
-
-            theBoard.SetSquaresOnBoard(whiteLeftRookSquare, whiteRightRookSquare, blackLeftRookSquare, blackRightRookSquare);
+            InitialiseRook(Colour.Black, BLACK_BACK_ROW, RIGHT_ROOK_COL, theBoard);
         }
 
-        private static void InitialiseKnights(Board theBoard)
+        private void InitialiseRook(Colour theColour, int row, int col, IBoard theBoard)
         {
-            Knight whiteKnightLeft = new Knight(Colour.White);
-            Square whiteLeftKnightSquare = new Square(WHITE_BACK_ROW, LEFT_KNIGHT_COL);
-            whiteLeftKnightSquare.AddPiece(whiteKnightLeft);
-
-            Knight whiteKnightRight = new Knight(Colour.White);
-            Square whiteKnightRightSquare = new Square(WHITE_BACK_ROW, RIGHT_KNIGHT_COL);
-            whiteKnightRightSquare.AddPiece(whiteKnightRight);
-
-            Knight blackKnightLeft = new Knight(Colour.Black);
-            Square blackKnightLeftSquare = new Square(BLACK_BACK_ROW, LEFT_KNIGHT_COL);
-            blackKnightLeftSquare.AddPiece(blackKnightLeft);
-
-            Knight blackKnightRight = new Knight(Colour.Black);
-            Square blackKnightRightSquare = new Square(BLACK_BACK_ROW, RIGHT_KNIGHT_COL);
-            blackKnightRightSquare.AddPiece(blackKnightRight);
-
-            theBoard.SetSquaresOnBoard(whiteLeftKnightSquare, whiteKnightRightSquare, blackKnightLeftSquare, blackKnightRightSquare);
+            Rook rook = new Rook(theColour);
+            Square square = new Square(row, col);
+            square.AddPiece(rook);
+            theBoard.SetSquare(square);
         }
 
-        private static void InitialiseBishops(Board theBoard)
+        private void InitialiseKnights(IBoard theBoard)
         {
-            Bishop whiteBishopLeft = new Bishop(Colour.White);
-            Square whiteBishopLeftSquare = new Square(WHITE_BACK_ROW, LEFT_BISHOP_COL);
-            whiteBishopLeftSquare.AddPiece(whiteBishopLeft);
+            InitialiseKnight(Colour.White, WHITE_BACK_ROW, LEFT_KNIGHT_COL, theBoard);
 
-            Bishop whiteBishopRight = new Bishop(Colour.White);
-            Square whiteBishopRightSquare = new Square(WHITE_BACK_ROW, RIGHT_BISHOP_COL);
-            whiteBishopRightSquare.AddPiece(whiteBishopRight);
+            InitialiseKnight(Colour.White, WHITE_BACK_ROW, RIGHT_KNIGHT_COL, theBoard);
 
-            Bishop blackBishopLeft = new Bishop(Colour.Black);
-            Square blackBishopLeftSquare = new Square(BLACK_BACK_ROW, LEFT_BISHOP_COL);
-            blackBishopLeftSquare.AddPiece(blackBishopLeft);
+            InitialiseKnight(Colour.Black, BLACK_BACK_ROW, LEFT_KNIGHT_COL, theBoard);
 
-            Bishop blackBishopRight = new Bishop(Colour.Black);
-            Square blackBishopRightSquare = new Square(BLACK_BACK_ROW, RIGHT_BISHOP_COL);
-            blackBishopRightSquare.AddPiece(blackBishopRight);
-
-            theBoard.SetSquaresOnBoard(whiteBishopLeftSquare, whiteBishopRightSquare, blackBishopLeftSquare, blackBishopRightSquare);
+            InitialiseKnight(Colour.Black, BLACK_BACK_ROW, RIGHT_KNIGHT_COL, theBoard);
         }
 
-        private static void InitialiseQueens(Board theBoard)
+        private void InitialiseKnight(Colour theColour, int row, int col, IBoard theBoard)
         {
-            Queen whiteQueen = new Queen(Colour.White);
-            Square whiteQueenSquare = new Square(WHITE_BACK_ROW, QUEEN_COLUMN);
-            whiteQueenSquare.AddPiece(whiteQueen);
-
-            Queen blackQueen = new Queen(Colour.Black);
-            Square blackQueenSquare = new Square(BLACK_BACK_ROW, QUEEN_COLUMN);
-            blackQueenSquare.AddPiece(blackQueen);
-
-            theBoard.SetSquaresOnBoard(whiteQueenSquare, blackQueenSquare);
+            Knight knight = new Knight(theColour);
+            Square square = new Square(row, col);
+            square.AddPiece(knight);
+            theBoard.SetSquare(square);
         }
 
-        private static void InitialiseKings(Board theBoard)
+        private void InitialiseBishops(IBoard theBoard)
         {
-            King whiteKing = new King(Colour.White);
-            Square whiteKingSquare = new Square(WHITE_BACK_ROW, KING_COLUMN);
-            whiteKingSquare.AddPiece(whiteKing);
+            InitialiseBishop(Colour.White, WHITE_BACK_ROW, LEFT_BISHOP_COL, theBoard);
 
-            King blackKing = new King(Colour.Black);
-            Square blackKingSquare = new Square(BLACK_BACK_ROW, KING_COLUMN);
-            blackKingSquare.AddPiece(blackKing);
+            InitialiseBishop(Colour.White, WHITE_BACK_ROW, RIGHT_BISHOP_COL, theBoard);
 
-            theBoard.SetSquaresOnBoard(whiteKingSquare, blackKingSquare);
+            InitialiseBishop(Colour.Black, BLACK_BACK_ROW, LEFT_BISHOP_COL, theBoard);
+
+            InitialiseBishop(Colour.Black, BLACK_BACK_ROW, RIGHT_BISHOP_COL, theBoard);
+        }
+
+        private void InitialiseBishop(Colour theColour, int row, int col, IBoard theBoard)
+        {
+            Bishop bishop = new Bishop(theColour);
+            Square square = new Square(row, col);
+            square.AddPiece(bishop);
+            theBoard.SetSquare(square);
+        }
+
+        private void InitialiseQueens(IBoard theBoard)
+        {
+            InitialiseQueen(Colour.White, WHITE_BACK_ROW, QUEEN_COLUMN, theBoard);
+
+            InitialiseQueen(Colour.Black, BLACK_BACK_ROW, QUEEN_COLUMN, theBoard);            
+        }
+
+        private void InitialiseQueen(Colour theColour, int row, int col, IBoard theBoard)
+        {
+            Queen queen = new Queen(theColour);
+            Square square = new Square(row, col);
+            square.AddPiece(queen);
+            theBoard.SetSquare(square);
+        }
+
+        private void InitialiseKings(IBoard theBoard)
+        {
+            InitialiseKing(Colour.White, WHITE_BACK_ROW, KING_COLUMN, theBoard);
+
+            InitialiseKing(Colour.Black, BLACK_BACK_ROW, KING_COLUMN, theBoard);
+        }
+
+        private void InitialiseKing(Colour theColour, int row, int col, IBoard theBoard)
+        {
+            King king = new King(theColour);
+            Square square = new Square(row, col);
+            square.AddPiece(king);
+            theBoard.SetSquare(square);
         }
     }
 
