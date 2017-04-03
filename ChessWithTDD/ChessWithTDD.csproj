@@ -49,6 +49,7 @@
     <Compile Include="Interfaces\IBoardInitialiser.cs" />
     <Compile Include="Interfaces\ICheckManager.cs" />
     <Compile Include="Interfaces\IKing.cs" />
+    <Compile Include="Interfaces\IKnight.cs" />
     <Compile Include="Interfaces\IMoveValidator.cs" />
     <Compile Include="Interfaces\IPawnManager.cs" />
     <Compile Include="Pieces\BlackPawn.cs" />

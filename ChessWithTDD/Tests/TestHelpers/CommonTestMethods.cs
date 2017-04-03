@@ -112,6 +112,11 @@ namespace ChessWithTDD.Tests
             return GenerateMock<IKing>();
         }
 
+        internal static IKnight MockKnight()
+        {
+            return GenerateMock<IKnight>();
+        }
+
         internal static IPiece MockPiece()
         {
             return GenerateMock<IPiece>();

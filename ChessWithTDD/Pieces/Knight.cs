@@ -2,7 +2,7 @@
 
 namespace ChessWithTDD
 {
-    public class Knight : IPiece
+    public class Knight : IKnight
     {
         private Colour _colour;
 

@@ -55,16 +55,21 @@ namespace ChessWithTDD
                 }
                 else
                 {
-                    //no longer cache since the cache is piece driven
-                    _whitePieceSquares.Remove(square);
-                    _blackPieceSquares.Remove(square);
-                    squaresToRemoveFromUpdates.Add(square);
+                    RemoveSquareFromCaches(squaresToRemoveFromUpdates, square);
                 }
             }
             foreach (var square  in squaresToRemoveFromUpdates)
             {
                 _theBoard.PendingUpdates.Remove(square);
             }
+        }
+
+        private void RemoveSquareFromCaches(HashSet<ISquare> squaresToRemoveFromUpdates, ISquare square)
+        {
+            //no longer cache since the cache is piece driven
+            _whitePieceSquares.Remove(square);
+            _blackPieceSquares.Remove(square);
+            squaresToRemoveFromUpdates.Add(square);
         }
 
         private void AddPieceToCache(HashSet<ISquare> squaresToRemoveFromUpdates, ISquare square)
@@ -86,11 +91,13 @@ namespace ChessWithTDD
             if (square.Piece.Colour == Colour.White)
             {
                 _whiteKingSquare = _theBoard.GetSquare(square.Row, square.Col);
+                _whitePieceSquares.Add(square);
                 squaresToRemoveFromUpdates.Add(square);
             }
             else if (square.Piece.Colour == Colour.Black)
             {
                 _blackKingSquare = _theBoard.GetSquare(square.Row, square.Col);
+                _blackPieceSquares.Add(square);
                 squaresToRemoveFromUpdates.Add(square);
             }
         }

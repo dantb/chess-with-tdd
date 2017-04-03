@@ -16,7 +16,7 @@ namespace ChessWithTDD.Tests.BoardDependencies
         public void BlackKingIsSavedToBlackKingSquareIfInPendingUpdatesOfBoardAndUpdatesCleared()
         {
             IKing theKing = MockKingWithColour(Colour.Black);
-            ISquare kingSquare = MockSquareWithPiece(theKing);
+            ISquare kingSquare = MockSquareWithPiece(4, 4, theKing);
             IBoard board = MockBoard();
             List<ISquare> pendingUpdates = new List<ISquare> { kingSquare };
             board.Stub(b => b.PendingUpdates).Return(pendingUpdates);
@@ -28,13 +28,14 @@ namespace ChessWithTDD.Tests.BoardDependencies
 
             Assert.AreEqual(boardCache.BlackKingSquare, kingSquare);
             Assert.AreEqual(pendingUpdates.Count, 0);
+            Assert.True(boardCache.BlackPieceSquares.Contains(kingSquare));
         }
 
         [Test]
-        public void WhiteKingIsSavedToWhiteKingSquareIfInPendingUpdatesOfBoardAndUpdatesCleared()
+        public void WhiteKingIsSavedToWhiteKingSquareAndWhitePiecesIfInPendingUpdatesOfBoardAndUpdatesCleared()
         {
             IKing theKing = MockKingWithColour(Colour.White);
-            ISquare kingSquare = MockSquareWithPiece(theKing);
+            ISquare kingSquare = MockSquareWithPiece(4, 4, theKing);
             IBoard board = MockBoard();
             List<ISquare> pendingUpdates = new List<ISquare> { kingSquare };
             board.Stub(b => b.PendingUpdates).Return(pendingUpdates);
@@ -46,6 +47,7 @@ namespace ChessWithTDD.Tests.BoardDependencies
 
             Assert.AreEqual(boardCache.WhiteKingSquare, kingSquare);
             Assert.AreEqual(pendingUpdates.Count, 0);
+            Assert.True(boardCache.WhitePieceSquares.Contains(kingSquare));
         }
 
         [Test]
