@@ -95,7 +95,8 @@ namespace ChessWithTDD
                         return false;
                     }
 
-                    if (ThreateningPieceIsUnblockable(threateningSquare.Piece))
+                    if (ThreateningPieceIsUnblockable(threateningSquare.Piece) ||
+                        King.MoveIsToAdjacentSquare(threateningSquare, kingSquare))
                     {
                         return true;
                     }
@@ -114,7 +115,8 @@ namespace ChessWithTDD
                         return false;
                     }
 
-                    if (ThreateningPieceIsUnblockable(threateningSquare.Piece))
+                    if (ThreateningPieceIsUnblockable(threateningSquare.Piece) ||
+                        King.MoveIsToAdjacentSquare(threateningSquare, kingSquare))
                     {
                         return true;
                     }

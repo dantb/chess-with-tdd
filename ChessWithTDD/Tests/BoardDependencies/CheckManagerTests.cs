@@ -324,6 +324,43 @@ namespace ChessWithTDD.Tests
             Assert.True(inCheckMate);
         }
 
+        [TestCase(3, 3, 3, 4)]
+        [TestCase(3, 3, 3, 2)]
+        [TestCase(3, 3, 4, 3)]
+        [TestCase(3, 3, 2, 3)]
+        [TestCase(3, 3, 4, 4)]
+        [TestCase(3, 3, 2, 2)]
+        [TestCase(3, 3, 4, 2)]
+        [TestCase(3, 3, 2, 4)]
+        [Test]
+        public void IfWhiteKingAndBoardInCheckAndKingCannotEscapeAndThreateningPieceCannotBeTakenAndIsUnblockableByBeingAdjacentThenCheckMate(int kingRow, int kingCol, int threateningRow, int threateningCol)
+        {
+            //Give board cache mocked white king
+            IKing whiteKing = MockKingWithColour(Colour.White);
+            whiteKing.Stub(wk => wk.InCheckState).Return(true);
+            ISquare whiteKingSquare = MockSquareWithPiece(kingRow, kingCol, whiteKing);
+            IBoardCache boardCache = GenerateMock<IBoardCache>();
+            boardCache.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
+            boardCache.Stub(b => b.WhitePieceSquares).Return(new HashSet<ISquare>());
+
+            //square with threatening piece in
+            IPiece threateningPiece = MockPiece();
+            ISquare threateningSquare = MockSquareWithPiece(threateningRow, threateningCol, threateningPiece);
+
+            //give other king a mocked one in board cache
+            IKing king = MockKing();
+            ISquare otherKingSquare = MockSquareWithPiece(king);
+            boardCache.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
+
+            IBoard board = MockBoard();
+            board.Stub(b => b.InCheck).Return(true);
+
+            CheckMateManager checkMateManager = new CheckMateManager();
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+
+            Assert.True(inCheckMate);
+        }
+
 
         /// <summary>
         /// Instead of making multiple long tests to test the exact same thing, I'm passing the type in and making the mock threatening piece from that.
@@ -361,6 +398,44 @@ namespace ChessWithTDD.Tests
             }
 
             ISquare threateningSquare = MockSquareWithPiece(threateningPiece);
+
+            //give other king a mocked one in board cache
+            IKing king = MockKing();
+            ISquare otherKingSquare = MockSquareWithPiece(king);
+            boardCache.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
+
+            IBoard board = MockBoard();
+            board.Stub(b => b.InCheck).Return(true);
+
+            CheckMateManager checkMateManager = new CheckMateManager();
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+
+            Assert.True(inCheckMate);
+        }
+
+
+        [TestCase(3, 3, 3, 4)]
+        [TestCase(3, 3, 3, 2)]
+        [TestCase(3, 3, 4, 3)]
+        [TestCase(3, 3, 2, 3)]
+        [TestCase(3, 3, 4, 4)]
+        [TestCase(3, 3, 2, 2)]
+        [TestCase(3, 3, 4, 2)]
+        [TestCase(3, 3, 2, 4)]
+        [Test]
+        public void IfBlackKingAndBoardInCheckAndKingCannotEscapeAndThreateningPieceCannotBeTakenAndIsUnblockableByBeingAdjacentThenCheckMate(int kingRow, int kingCol, int threateningRow, int threateningCol)
+        {
+            //Give board cache mocked black king
+            IKing blackKing = MockKingWithColour(Colour.Black);
+            blackKing.Stub(wk => wk.InCheckState).Return(true);
+            ISquare blackKingSquare = MockSquareWithPiece(kingRow, kingCol, blackKing);
+            IBoardCache boardCache = GenerateMock<IBoardCache>();
+            boardCache.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
+            boardCache.Stub(b => b.BlackPieceSquares).Return(new HashSet<ISquare>());
+
+            //square with threatening piece in
+            IPiece threateningPiece = MockPiece();
+            ISquare threateningSquare = MockSquareWithPiece(threateningRow, threateningCol, threateningPiece);
 
             //give other king a mocked one in board cache
             IKing king = MockKing();
