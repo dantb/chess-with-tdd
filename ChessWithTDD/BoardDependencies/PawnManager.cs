@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ChessWithTDD
 {
@@ -55,17 +54,6 @@ namespace ChessWithTDD
             }
         }
 
-        private void CapturePieceThroughEnPassantAndUnmarkSquare(int rowOfPiece, int colOfPiece, int rowOfMarkedSquare, IBoard theBoard)
-        {
-            ISquare squareOfPieceThatPassed = theBoard.GetSquare(rowOfPiece, colOfPiece);
-            squareOfPieceThatPassed.Piece = null;
-            squareOfPieceThatPassed.ContainsPiece = false;
-            //unmark square to on this board
-            theBoard.GetSquare(rowOfMarkedSquare, colOfPiece).HasEnPassantMark = false;
-            //add the square which had the taken pawn to pending updates - it's not the to or from square but needs to be updated
-            theBoard.PendingUpdates.Add(squareOfPieceThatPassed);
-        }
-
         public void MarkSquareWithEnPassantIfApplicable(ISquare fromSquare, ISquare toSquare, IBoard theBoard)
         {
             if (toSquare.Row == fromSquare.Row + 2)
@@ -86,6 +74,17 @@ namespace ChessWithTDD
                 _squaresMarkedWithEnPassantKeyedByTurn[turnCounter - 2].HasEnPassantMark = false;
                 _squaresMarkedWithEnPassantKeyedByTurn.Remove(turnCounter - 2);
             }
+        }
+
+        private void CapturePieceThroughEnPassantAndUnmarkSquare(int rowOfPiece, int colOfPiece, int rowOfMarkedSquare, IBoard theBoard)
+        {
+            ISquare squareOfPieceThatPassed = theBoard.GetSquare(rowOfPiece, colOfPiece);
+            squareOfPieceThatPassed.Piece = null;
+            squareOfPieceThatPassed.ContainsPiece = false;
+            //unmark square to on this board
+            theBoard.GetSquare(rowOfMarkedSquare, colOfPiece).HasEnPassantMark = false;
+            //add the square which had the taken pawn to pending updates - it's not the to or from square but needs to be updated
+            theBoard.PendingUpdates.Add(squareOfPieceThatPassed);
         }
 
         private void MarkSquareWithEnPassantAndAddToDictionary(int rowToMark, int coltoMark, IBoard theBoard)

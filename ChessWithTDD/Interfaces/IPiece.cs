@@ -2,10 +2,7 @@
 {
     public interface IPiece
     {
-        Colour Colour
-        {
-            get;
-        }
+        Colour Colour { get; }
 
         /// <summary>
         /// Indicates whether this piece can execute a given move. This is independent of the board and only blocks moves 

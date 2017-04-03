@@ -6,13 +6,7 @@
     /// </summary>
     internal class BlackPawn : IPawn
     {
-        public Colour Colour
-        {
-            get
-            {
-                return Colour.Black;
-            }
-        }
+        public Colour Colour { get { return Colour.Black; } }
 
         public bool HasMoved { get; set; }
 

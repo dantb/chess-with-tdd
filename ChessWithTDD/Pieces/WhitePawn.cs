@@ -6,13 +6,7 @@
     /// </summary>
     public class WhitePawn : IPawn
     {
-        public Colour Colour
-        {
-            get
-            {
-                return Colour.White;
-            }
-        }
+        public Colour Colour { get { return Colour.White; } }
 
         public bool HasMoved { get; set; }
 

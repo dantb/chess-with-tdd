@@ -11,13 +11,7 @@ namespace ChessWithTDD
             _colour = colour;
         }
 
-        public Colour Colour
-        {
-            get
-            {
-                return _colour;
-            }
-        }
+        public Colour Colour { get { return _colour; } }
 
         public bool InCheckState { get; set; } = false;
 

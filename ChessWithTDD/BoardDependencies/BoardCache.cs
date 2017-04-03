@@ -9,29 +9,11 @@ namespace ChessWithTDD
         private ISquare _whiteKingSquare;
         private IBoard _theBoard;
 
-        public ISquare BlackKingSquare
-        {
-            get
-            {
-                return _blackKingSquare;
-            }
-        }
+        public ISquare BlackKingSquare { get { return _blackKingSquare; } }
 
-        public ISquare WhiteKingSquare
-        {
-            get
-            {
-                return _whiteKingSquare;
-            }
-        }
+        public ISquare WhiteKingSquare { get { return _whiteKingSquare; } }
 
-        public IBoard TheBoard
-        {
-            get
-            {
-                return _theBoard;
-            }
-        }
+        public IBoard TheBoard { get { return _theBoard; } }
 
         public void InitialiseBoardCache(IBoard theBoard)
         {

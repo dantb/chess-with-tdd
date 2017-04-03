@@ -5,9 +5,13 @@ namespace ChessWithTDD
     public interface IBoard
     {
         int RowCount { get; }
+
         int ColCount { get; }
+
         int TurnCounter { get; set; }
+
         bool InCheck { get; set; }
+
         bool CheckMate { get; set; }
 
         /// <summary>
@@ -39,11 +43,5 @@ namespace ChessWithTDD
 
         void SetSquare(ISquare square);
 
-    }
-
-    public enum BoardCacheEnum
-    {
-        BlackKing,
-        WhiteKing
     }
 }

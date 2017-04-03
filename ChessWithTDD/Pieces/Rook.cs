@@ -9,13 +9,7 @@
             _colour = colour;
         }
 
-        public Colour Colour
-        {
-            get
-            {
-                return _colour;
-            }
-        }
+        public Colour Colour { get { return _colour; } }
 
         public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {

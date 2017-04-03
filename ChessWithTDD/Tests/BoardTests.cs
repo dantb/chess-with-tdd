@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Rhino.Mocks;
 using System;
+using System.Collections.Generic;
 using static ChessWithTDD.Tests.CommonTestMethods;
 using static Rhino.Mocks.MockRepository;
 
@@ -391,6 +392,47 @@ namespace ChessWithTDD.Tests
             board.Apply(fromSquare, toSquare);
 
             Assert.AreEqual(board.TurnCounter, turnCounter + 1);
+        }
+
+        /// <summary>
+        /// This tests forces the order of the apply method to be a certain way.
+        /// It does NOT ensure that the board cache is called after the apply happens, that's what ths integration tests above are for.
+        /// Combining the two test guarantees the order is as required.
+        /// </summary>
+        [Test]
+        public void TestOrderingOfCallsInApplyMethod()
+        {
+            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
+            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
+            IPawnManager pawnManager = GenerateMock<IPawnManager>();
+            IBoardCache boardCache = GenerateMock<IBoardCache>();
+            ICheckManager checkManager = GenerateMock<ICheckManager>();
+
+            IPawn pawn = MockPawn();
+            ISquare fromSquare = MockSquareWithPiece(pawn);
+            ISquare toSquare = MockSquare();
+            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+
+            List<object> callOrder = new List<object>();
+
+            //Delegates used to add mocks to list
+            Action<ISquare, ISquare, IBoard> addPMMakePawnAmendments = (frSq, toSq, bo) => callOrder.Add(pawnManager);
+            Action<int> addPMUnmark = (i) => callOrder.Add(pawnManager);
+            Action addBC = () => callOrder.Add(boardCache);
+            Action<IBoard, ISquare> addCM = (bo, toSq) => callOrder.Add(checkManager);
+
+            //Add mocks to list as they're called
+            pawnManager.Stub(pm => pm.MakePawnSpecificAmendments(fromSquare, toSquare, board)).Do(addPMMakePawnAmendments);
+            pawnManager.Stub(pm => pm.UnmarkEnPassantSquares(Arg<int>.Is.Anything)).Do(addPMUnmark);
+            boardCache.Stub(bc => bc.UpdateBoardCache()).Do(addBC);
+            checkManager.Stub(cm => cm.UpdateCheckStates(board, toSquare)).Do(addCM);
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.AreEqual(callOrder[0], pawnManager);
+            Assert.AreEqual(callOrder[1], pawnManager);
+            Assert.AreEqual(callOrder[2], boardCache);
+            Assert.AreEqual(callOrder[3], checkManager);
         }
 
 

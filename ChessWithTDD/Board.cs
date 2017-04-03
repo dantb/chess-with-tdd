@@ -5,7 +5,6 @@ using static ChessWithTDD.BoardConstants;
 
 namespace ChessWithTDD
 {
-    [Serializable]
     public class Board : IBoard
     {
         private List<List<ISquare>> _squares;
@@ -13,8 +12,6 @@ namespace ChessWithTDD
         private IPawnManager _pawnManager;
         private IBoardCache _boardCache;
         private ICheckManager _checkManager;
-
-        public Board() { }
 
         public Board(IBoardInitialiser boardInitialiser, IMoveValidator moveValidator, IPawnManager pawnManager, IBoardCache boardCache, ICheckManager checkManager)
         {
@@ -28,25 +25,16 @@ namespace ChessWithTDD
         }
 
         public List<ISquare> PendingUpdates { get; set; } = new List<ISquare>();
+
         public bool InCheck { get; set; } = false;
+
         public bool CheckMate { get; set; } = false;
+
         public int TurnCounter { get; set; } = 0;
 
-        public int ColCount
-        {
-            get
-            {
-                return _squares.Count;
-            }
-        }
+        public int ColCount { get { return _squares.Count; } }
 
-        public int RowCount
-        {
-            get
-            {
-                return _squares.FirstOrDefault().Count;
-            }
-        }
+        public int RowCount { get { return _squares.FirstOrDefault().Count; } }
 
         public ISquare GetSquare(int row, int col)
         {
