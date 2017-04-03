@@ -2,38 +2,6 @@
 
 namespace ChessWithTDD
 {
-    public class PawnManager : IPawnManager
-    {
-        private IEnPassantManager _enPassantManager;
-
-        public PawnManager(IEnPassantManager enPassantManager)
-        {
-            _enPassantManager = enPassantManager;
-        }
-        public void MakePawnSpecificAmendments(ISquare fromSquare, ISquare toSquare, IBoard theBoard)
-        {
-            IPawn pawn = fromSquare.Piece as IPawn;
-            if (!pawn.HasMoved)
-            {
-                pawn.HasMoved = true;
-            }
-            _enPassantManager.MarkSquareWithEnPassantIfApplicable(fromSquare, toSquare, theBoard);
-            _enPassantManager.CapturePieceThroughEnPassantIfApplicable(fromSquare, toSquare, theBoard);
-        }
-
-        public void UnmarkEnPassantSquares(int turnCounter)
-        {
-            _enPassantManager.UnmarkEnPassantSquares(turnCounter);
-        }
-    }
-
-    public interface IEnPassantManager
-    {
-        void MarkSquareWithEnPassantIfApplicable(ISquare fromSquare, ISquare toSquare, IBoard theBoard);
-        void CapturePieceThroughEnPassantIfApplicable(ISquare fromSquare, ISquare toSquare, IBoard theBoard);
-        void UnmarkEnPassantSquares(int turnCounter);
-    }
-
     public class EnPassantManager : IEnPassantManager
     {
         private Dictionary<int, ISquare> _squaresMarkedWithEnPassantKeyedByTurn = new Dictionary<int, ISquare>();
@@ -50,7 +18,7 @@ namespace ChessWithTDD
                 else if (BlackPawn.MoveIsDiagonallyDownwards(fromSquare, toSquare))
                 {
                     CapturePieceThroughEnPassantAndUnmarkSquare(toSquare.Row + 1, toSquare.Col, toSquare.Row, theBoard);
-                }                
+                }
             }
         }
 

@@ -5,7 +5,7 @@ using static Rhino.Mocks.MockRepository;
 using static ChessWithTDD.Tests.CommonTestMethods;
 using static ChessWithTDD.BoardConstants;
 
-namespace ChessWithTDD.Tests.BoardDependencies
+namespace ChessWithTDD.Tests
 {
     [TestFixture]
     public class BoardCacheTests
