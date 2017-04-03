@@ -1,4 +1,6 @@
-﻿namespace ChessWithTDD
+﻿using System.Collections.Generic;
+
+namespace ChessWithTDD
 {
     public interface IBoardCache
     {
@@ -11,5 +13,9 @@
         ISquare WhiteKingSquare { get; }
 
         IBoard TheBoard { get; }
+
+        HashSet<ISquare> WhitePieceSquares { get; }
+
+        HashSet<ISquare> BlackPieceSquares { get; }
     }
 }
