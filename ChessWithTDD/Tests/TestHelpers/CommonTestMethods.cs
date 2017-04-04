@@ -47,6 +47,14 @@ namespace ChessWithTDD.Tests
             return GenerateMock<ISquare>();
         }
 
+        internal static ISquare MockSquare(int row, int col)
+        {
+            ISquare theSquare = GenerateMock<ISquare>();
+            theSquare.Stub(s => s.Row).Return(row);
+            theSquare.Stub(s => s.Col).Return(col);
+            return theSquare;
+        }
+
         internal static ISquare MockSquareWithHasEnPassantMark(int row, int col, bool hasEnPassantMark)
         {
             ISquare theSquare = GenerateMock<ISquare>();

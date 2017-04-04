@@ -24,5 +24,16 @@ namespace ChessWithTDD.Tests
 
             Assert.True(square.ContainsPiece && square.Piece.Equals(thePiece));
         }
+
+        [Test]
+        public void SquareInitialisedWithRowAndColCorrectly()
+        {
+            int row = 4;
+            int col = 4;
+            Square square = new Square(row, col);
+
+            Assert.AreEqual(square.Row, row);
+            Assert.AreEqual(square.Col, col);
+        }
     }
 }

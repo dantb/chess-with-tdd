@@ -13,8 +13,8 @@
 
         public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
-            if (fromSquare.Row == toSquare.Row
-                || fromSquare.Col == toSquare.Col)
+            if (toSquare.IsInSameRowAs(fromSquare) ||
+                toSquare.IsInSameColumnAs(fromSquare))
             {
                 return true;
             }

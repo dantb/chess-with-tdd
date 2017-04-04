@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+
 namespace ChessWithTDD
 {
     public class CheckMateManager : ICheckMateManager
@@ -23,7 +24,7 @@ namespace ChessWithTDD
                     }
 
                     if (ThreateningPieceIsUnblockable(threateningSquare.Piece) ||
-                        King.MoveIsToAdjacentSquare(threateningSquare, kingSquare))
+                        threateningSquare.IsAdjacentTo(kingSquare))
                     {
                         return true;
                     }
@@ -43,7 +44,7 @@ namespace ChessWithTDD
                     }
 
                     if (ThreateningPieceIsUnblockable(threateningSquare.Piece) ||
-                        King.MoveIsToAdjacentSquare(threateningSquare, kingSquare))
+                        threateningSquare.IsAdjacentTo(kingSquare))
                     {
                         return true;
                     }

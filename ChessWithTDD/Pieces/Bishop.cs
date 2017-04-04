@@ -14,10 +14,8 @@ namespace ChessWithTDD
         public Colour Colour { get { return _colour; } }
 
         public bool CanMove(ISquare fromSquare, ISquare toSquare)
-        {
-            int rowDifference = Math.Abs(fromSquare.Row - toSquare.Row);
-            int colDifference = Math.Abs(fromSquare.Col - toSquare.Col);
-            if (rowDifference == colDifference)
+        {            
+            if (fromSquare.IsDiagonalTo(toSquare))
             {
                 return true;
             }

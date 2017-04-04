@@ -15,17 +15,11 @@ namespace ChessWithTDD
 
         public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
-            if (MoveIsLShaped(fromSquare, toSquare))
+            if (toSquare.IsAnLShapeAwayFrom(fromSquare))
             {
                 return true;
             }
             return false;
-        }
-
-        private bool MoveIsLShaped(ISquare fromSquare, ISquare toSquare)
-        {
-            return (Math.Abs(fromSquare.Row - toSquare.Row) == 2 && Math.Abs(fromSquare.Col - toSquare.Col) == 1)
-                || (Math.Abs(fromSquare.Row - toSquare.Row) == 1 && Math.Abs(fromSquare.Col - toSquare.Col) == 2);
         }
     }
 }

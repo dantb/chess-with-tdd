@@ -17,18 +17,11 @@ namespace ChessWithTDD
 
         public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {            
-            if (MoveIsToAdjacentSquare(fromSquare, toSquare))
+            if (toSquare.IsAdjacentTo(fromSquare))
             {
                 return true;
             }
             return false;
-        }
-
-        internal static bool MoveIsToAdjacentSquare(ISquare fromSquare, ISquare toSquare)
-        {
-            int rowDifference = Math.Abs(fromSquare.Row - toSquare.Row);
-            int colDifference = Math.Abs(fromSquare.Col - toSquare.Col);
-            return rowDifference <= 1 && colDifference <= 1;
         }
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="BoardDependencies\BoardInitialiser.cs" />
     <Compile Include="Interfaces\Pieces\IPawn.cs" />
+    <Compile Include="SquareExtensions.cs" />
     <Compile Include="Tests\BoardDependencies\BoardCacheTests.cs" />
     <Compile Include="Tests\BoardDependencies\BoardInitialiserTests.cs" />
     <Compile Include="Tests\BoardDependencies\CheckManagement\CheckManagerTests.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Tests\Pieces\KnightTests.cs" />
     <Compile Include="Tests\Pieces\QueenTests.cs" />
     <Compile Include="Tests\Pieces\RookTests.cs" />
+    <Compile Include="Tests\SquareExtensionsTests.cs" />
     <Compile Include="Tests\TestHelpers\CommonTestMethods.cs" />
     <Compile Include="Interfaces\IBoard.cs" />
     <Compile Include="Interfaces\Pieces\IPiece.cs" />

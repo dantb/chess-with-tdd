@@ -20,7 +20,7 @@
             }
 
             //Moving diagonally downwards
-            if (MoveIsDiagonallyDownwards(fromSquare, toSquare))
+            if (toSquare.IsOneSquareDiagonallyBelow(fromSquare))
             {
                 return toSquare.ContainsPiece || toSquare.HasEnPassantMark;
             }
@@ -37,12 +37,6 @@
             }
 
             return false;
-        }
-
-        internal static bool MoveIsDiagonallyDownwards(ISquare fromSquare, ISquare toSquare)
-        {
-            return toSquare.Row == fromSquare.Row - 1
-                    && ((toSquare.Col == fromSquare.Col - 1) || (toSquare.Col == fromSquare.Col + 1));
         }
 
         private bool WhitePieceInSquare(ISquare theSquare)

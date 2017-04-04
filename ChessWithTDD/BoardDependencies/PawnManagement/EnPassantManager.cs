@@ -10,12 +10,11 @@ namespace ChessWithTDD
         {
             if (toSquare.HasEnPassantMark)
             {
-                if (WhitePawn.MoveIsDiagonallyUpwards(fromSquare, toSquare))
+                if (toSquare.IsOneSquareDiagonallyAbove(fromSquare))
                 {
                     CapturePieceThroughEnPassantAndUnmarkSquare(toSquare.Row - 1, toSquare.Col, toSquare.Row, theBoard);
-
                 }
-                else if (BlackPawn.MoveIsDiagonallyDownwards(fromSquare, toSquare))
+                else if (toSquare.IsOneSquareDiagonallyBelow(fromSquare))
                 {
                     CapturePieceThroughEnPassantAndUnmarkSquare(toSquare.Row + 1, toSquare.Col, toSquare.Row, theBoard);
                 }

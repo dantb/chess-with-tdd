@@ -15,15 +15,13 @@ namespace ChessWithTDD
 
         public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
-            int rowDifference = Math.Abs(fromSquare.Row - toSquare.Row);
-            int colDifference = Math.Abs(fromSquare.Col - toSquare.Col);
-            if (rowDifference == colDifference)
+            if (toSquare.IsDiagonalTo(fromSquare))
             {
                 //diagonal
                 return true;
             }
-            else if (fromSquare.Row == toSquare.Row
-                || fromSquare.Col == toSquare.Col)
+            else if (toSquare.IsInSameRowAs(fromSquare) ||
+                     toSquare.IsInSameColumnAs(fromSquare))
             {
                 //vertical or horizontal
                 return true;
