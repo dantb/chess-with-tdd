@@ -5,6 +5,13 @@ namespace ChessWithTDD
 {
     public class CheckMateManager : ICheckMateManager
     {
+        ICheckMateEscapeManager _checkMateEscapeManager;
+
+        public CheckMateManager(ICheckMateEscapeManager checkMateEscapeManager)
+        {
+            _checkMateEscapeManager = checkMateEscapeManager;
+        }
+
         public bool BoardIsInCheckMate(IBoard theBoard, IBoardCache boardCache, ISquare threateningSquare)
         {
             if (theBoard.InCheck)
@@ -12,91 +19,33 @@ namespace ChessWithTDD
                 if ((boardCache.WhiteKingSquare.Piece as IKing).InCheckState)
                 {
                     ISquare kingSquare = boardCache.WhiteKingSquare;
-                    IKing king = boardCache.WhiteKingSquare.Piece as IKing;
-                    if (KingCanEscape(theBoard, kingSquare))
-                    {
-                        return false;
-                    }
-
-                    if (ThreateningPieceCanBeCaptured(boardCache.WhitePieceSquares, theBoard, threateningSquare))
-                    {
-                        return false;
-                    }
-
-                    if (ThreateningPieceIsUnblockable(threateningSquare.Piece) ||
-                        threateningSquare.IsAdjacentTo(kingSquare))
-                    {
-                        return true;
-                    }
+                    return !CheckMateCanBePrevented(theBoard, boardCache, threateningSquare, kingSquare, boardCache.WhitePieceSquares);
                 }
                 else if ((boardCache.BlackKingSquare.Piece as IKing).InCheckState)
                 {
                     ISquare kingSquare = boardCache.BlackKingSquare;
-                    IKing king = boardCache.BlackKingSquare.Piece as IKing;
-                    if (KingCanEscape(theBoard, kingSquare))
-                    {
-                        return false;
-                    }
-
-                    if (ThreateningPieceCanBeCaptured(boardCache.BlackPieceSquares, theBoard, threateningSquare))
-                    {
-                        return false;
-                    }
-
-                    if (ThreateningPieceIsUnblockable(threateningSquare.Piece) ||
-                        threateningSquare.IsAdjacentTo(kingSquare))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private bool ThreateningPieceIsUnblockable(IPiece thePiece)
-        {
-            if (thePiece is IKnight ||
-                thePiece is IPawn ||
-                thePiece is IKing)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool ThreateningPieceCanBeCaptured(HashSet<ISquare> friendlySquares, IBoard theBoard, ISquare threateningSquare)
-        {
-            foreach (var square in friendlySquares)
-            {
-                if (theBoard.MoveIsValid(square, threateningSquare))
-                {
-                    return true;
+                    return !CheckMateCanBePrevented(theBoard, boardCache, threateningSquare, kingSquare, boardCache.BlackPieceSquares);
                 }
             }
             return false;
         }
 
-        private bool KingCanEscape(IBoard theBoard, ISquare kingSquare)
+        private bool CheckMateCanBePrevented(IBoard theBoard, IBoardCache boardCache, ISquare threateningSquare, ISquare kingSquare, HashSet<ISquare> friendlySquares)
         {
-            if (theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row, kingSquare.Col - 1)) ||
-               theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row, kingSquare.Col + 1)))
+            IKing king = kingSquare.Piece as IKing;
+            if (_checkMateEscapeManager.KingCanEscape(theBoard, kingSquare))
             {
-                //escape horizontally
                 return true;
             }
-            else if (theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row - 1, kingSquare.Col)) ||
-                     theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row + 1, kingSquare.Col)))
+
+            if (_checkMateEscapeManager.ThreateningPieceCanBeCaptured(friendlySquares, theBoard, threateningSquare))
             {
-                //escape vertically
                 return true;
             }
-            else if (theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row - 1, kingSquare.Col - 1)) ||
-                     theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row + 1, kingSquare.Col - 1)) ||
-                     theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row - 1, kingSquare.Col + 1)) ||
-                     theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row + 1, kingSquare.Col + 1)))
+
+            if (_checkMateEscapeManager.ThreateningPieceIsUnblockable(threateningSquare, kingSquare))
             {
-                return true;
+                return false;
             }
 
             return false;

@@ -43,12 +43,14 @@
   <ItemGroup>
     <Compile Include="BoardDependencies\BoardCache.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckManager.cs" />
+    <Compile Include="BoardDependencies\CheckManagement\CheckMateEscapeManager.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckMateManager.cs" />
     <Compile Include="BoardDependencies\PawnManagement\EnPassantManager.cs" />
     <Compile Include="BoardDependencies\MoveValidation\GenericMoveValidator.cs" />
     <Compile Include="BoardDependencies\MoveValidation\MoveValidator.cs" />
     <Compile Include="BoardDependencies\MoveValidation\MultiSquareMoveValidator.cs" />
     <Compile Include="BoardDependencies\PawnManagement\PawnManager.cs" />
+    <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckMateEscapeManager.cs" />
     <Compile Include="Interfaces\IBoardCache.cs" />
     <Compile Include="Interfaces\IBoardInitialiser.cs" />
     <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckManager.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Tests\BoardDependencies\BoardCacheTests.cs" />
     <Compile Include="Tests\BoardDependencies\BoardInitialiserTests.cs" />
     <Compile Include="Tests\BoardDependencies\CheckManagement\CheckManagerTests.cs" />
+    <Compile Include="Tests\BoardDependencies\CheckManagement\CheckMateEscapeManagerTests.cs" />
     <Compile Include="Tests\BoardDependencies\CheckManagement\CheckMateManagerTests.cs" />
     <Compile Include="Tests\BoardDependencies\MoveValidation\GenericMoveValidatorTests.cs" />
     <Compile Include="Tests\BoardDependencies\MoveValidation\MoveValidatorTests.cs" />
