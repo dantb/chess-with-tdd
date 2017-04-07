@@ -268,7 +268,7 @@ namespace ChessWithTDD.Tests
 
             board.Apply(fromSquare, toSquare);
 
-            checkManager.AssertWasCalled(cm => cm.UpdateCheckStates(board, toSquare));
+            checkManager.AssertWasCalled(cm => cm.UpdateCheckAndCheckMateStates(board, toSquare));
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace ChessWithTDD.Tests
             pawnManager.Stub(pm => pm.MakePawnSpecificAmendments(fromSquare, toSquare, board)).Do(addPMMakePawnAmendments);
             pawnManager.Stub(pm => pm.UnmarkEnPassantSquares(Arg<int>.Is.Anything)).Do(addPMUnmark);
             boardCache.Stub(bc => bc.UpdateBoardCache()).Do(addBC);
-            checkManager.Stub(cm => cm.UpdateCheckStates(board, toSquare)).Do(addCM);
+            checkManager.Stub(cm => cm.UpdateCheckAndCheckMateStates(board, toSquare)).Do(addCM);
 
             board.Apply(fromSquare, toSquare);
 

@@ -9,5 +9,7 @@ namespace ChessWithTDD
         bool KingCanEscape(IBoard theBoard, ISquare kingSquare);
 
         bool ThreateningPieceCanBeCaptured(HashSet<ISquare> friendlySquares, IBoard theBoard, ISquare threateningSquare);
+
+        bool LineOfSightToKingCanBeBlockedByFriendlyPiece(IBoard theBoard, ISquare threateningSquare, ISquare kingSquare, HashSet<ISquare> friendlySquares);
     }
 }

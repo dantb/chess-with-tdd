@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
 namespace ChessWithTDD
 {
     public class CheckMateManager : ICheckMateManager
@@ -33,6 +32,7 @@ namespace ChessWithTDD
         private bool CheckMateCanBePrevented(IBoard theBoard, IBoardCache boardCache, ISquare threateningSquare, ISquare kingSquare, HashSet<ISquare> friendlySquares)
         {
             IKing king = kingSquare.Piece as IKing;
+
             if (_checkMateEscapeManager.KingCanEscape(theBoard, kingSquare))
             {
                 return true;
@@ -46,6 +46,11 @@ namespace ChessWithTDD
             if (_checkMateEscapeManager.ThreateningPieceIsUnblockable(threateningSquare, kingSquare))
             {
                 return false;
+            }
+
+            if (_checkMateEscapeManager.LineOfSightToKingCanBeBlockedByFriendlyPiece(theBoard, threateningSquare, kingSquare, friendlySquares))
+            {
+                return true;
             }
 
             return false;

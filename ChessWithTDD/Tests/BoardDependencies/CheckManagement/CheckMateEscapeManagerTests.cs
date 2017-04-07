@@ -140,5 +140,71 @@ namespace ChessWithTDD.Tests
 
             Assert.False(isUnblockable);
         }
+
+        [TestCase(3, 2, 3, 7, 3, 5)]
+        [TestCase(3, 6, 3, 0, 3, 2)]
+        [TestCase(2, 2, 6, 2, 4, 2)]
+        [TestCase(5, 2, 2, 2, 3, 2)]
+        [TestCase(2, 5, 5, 2, 4, 3)]
+        [TestCase(2, 3, 5, 6, 4, 5)]
+        [TestCase(5, 5, 2, 2, 3, 3)]
+        [TestCase(5, 2, 2, 5, 3, 4)]
+        [Test]
+        public void IfFriendlyPieceCanInterceptThreateningPieceThenReturnTrue(int threatRow, int threatCol, int kingRow, int kingCol, int interceptRow, int interceptCol)
+        {
+            IKing king = MockKing();
+            ISquare kingSquare = MockSquareWithPiece(kingRow, kingCol, king);
+            //square with threatening piece in
+            IPiece threateningPiece = MockPiece();
+            ISquare threateningPieceSquare = MockSquareWithPiece(threatRow, threatCol, threateningPiece);
+            //square with piece to intercept and save king
+            IPiece friendlyPiece = MockPiece();
+            ISquare friendlySquare = MockSquareWithPiece(friendlyPiece);
+            HashSet<ISquare> friendlySquares = new HashSet<ISquare> { friendlySquare };
+            //square that friendly piece can move to to intercept
+            ISquare interceptionSquare = MockSquareWithoutPiece(interceptRow, interceptCol);
+
+            IBoard board = MockBoard();
+            board.Stub(b => b.MoveIsValid(friendlySquare, interceptionSquare)).Return(true);
+            board.Stub(b => b.GetSquare(interceptRow, interceptCol)).Return(interceptionSquare);
+
+            CheckMateEscapeManager checkMateManager = new CheckMateEscapeManager();
+            bool attackCanBeBlocked = checkMateManager.LineOfSightToKingCanBeBlockedByFriendlyPiece(board, threateningPieceSquare, kingSquare, friendlySquares);
+
+            Assert.True(attackCanBeBlocked);
+        }
+
+        [TestCase(3, 2, 3, 7, 3, 5)]
+        [TestCase(3, 6, 3, 0, 3, 2)]
+        [TestCase(2, 2, 6, 2, 4, 2)]
+        [TestCase(5, 2, 2, 2, 3, 2)]
+        [TestCase(2, 5, 5, 2, 4, 3)]
+        [TestCase(2, 3, 5, 6, 4, 5)]
+        [TestCase(5, 5, 2, 2, 3, 3)]
+        [TestCase(5, 2, 2, 5, 3, 4)]
+        [Test]
+        public void IfNoFriendlyPieceCanInterceptThreateningPieceThenReturnFalse(int threatRow, int threatCol, int kingRow, int kingCol, int interceptRow, int interceptCol)
+        {
+            IKing king = MockKing();
+            ISquare kingSquare = MockSquareWithPiece(kingRow, kingCol, king);
+            //square with threatening piece in
+            IPiece threateningPiece = MockPiece();
+            ISquare threateningPieceSquare = MockSquareWithPiece(threatRow, threatCol, threateningPiece);
+            //square with piece to intercept and save king
+            IPiece friendlyPiece = MockPiece();
+            ISquare friendlySquare = MockSquareWithPiece(friendlyPiece);
+            HashSet<ISquare> friendlySquares = new HashSet<ISquare> { friendlySquare };
+            //square that friendly piece can move to to intercept
+            ISquare interceptionSquare = MockSquareWithoutPiece(interceptRow, interceptCol);
+
+            IBoard board = MockBoard();
+            board.Stub(b => b.MoveIsValid(friendlySquare, interceptionSquare)).Return(false);
+            board.Stub(b => b.GetSquare(interceptRow, interceptCol)).Return(interceptionSquare);
+
+            CheckMateEscapeManager checkMateManager = new CheckMateEscapeManager();
+            bool attackCanBeBlocked = checkMateManager.LineOfSightToKingCanBeBlockedByFriendlyPiece(board, threateningPieceSquare, kingSquare, friendlySquares);
+
+            Assert.False(attackCanBeBlocked);
+        }
     }
 }

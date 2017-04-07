@@ -56,6 +56,126 @@ namespace ChessWithTDD
 
         public bool LineOfSightToKingCanBeBlockedByFriendlyPiece(IBoard theBoard, ISquare threateningSquare, ISquare kingSquare, HashSet<ISquare> friendlySquares)
         {
+            if (kingSquare.IsMultipleSquaresEastEastOf(threateningSquare))
+            {
+                //moving east
+                for (int i = threateningSquare.Col + 1; i < kingSquare.Col; i++)
+                {
+                    foreach (var friendly in friendlySquares)
+                    {
+                        if (theBoard.MoveIsValid(friendly, theBoard.GetSquare(kingSquare.Row, i)))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            else if (kingSquare.IsMultipleSquaresWestWestOf(threateningSquare))
+            {
+                //moving west
+                for (int i = threateningSquare.Col - 1; i > kingSquare.Col; i--)
+                {
+                    foreach (var friendly in friendlySquares)
+                    {
+                        if (theBoard.MoveIsValid(friendly, theBoard.GetSquare(kingSquare.Row, i)))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            else if (kingSquare.IsMultipleSquaresNorthNorthOf(threateningSquare))
+            {
+                //moving up
+                for (int i = threateningSquare.Row + 1; i < kingSquare.Row; i++)
+                {
+                    foreach (var friendly in friendlySquares)
+                    {
+                        if (theBoard.MoveIsValid(friendly, theBoard.GetSquare(i, kingSquare.Col)))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            else if (kingSquare.IsMultipleSquaresSouthSouthOf(threateningSquare))
+            {
+                //moving down
+                for (int i = threateningSquare.Row - 1; i > kingSquare.Row; i--)
+                {
+                    foreach (var friendly in friendlySquares)
+                    {
+                        if (theBoard.MoveIsValid(friendly, theBoard.GetSquare(i, kingSquare.Col)))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            else if (kingSquare.IsMultipleSquaresNorthWestOf(threateningSquare))
+            {
+                //north west
+                int initialCol = threateningSquare.Col - 1;
+                for (int i = threateningSquare.Row + 1; i < kingSquare.Row; i++)
+                {
+                    foreach (var friendly in friendlySquares)
+                    {
+                        if (theBoard.MoveIsValid(friendly, theBoard.GetSquare(i, initialCol)))
+                        {
+                            return true;
+                        }
+                    }
+                    initialCol--;
+                }
+            }
+            else if (kingSquare.IsMultipleSquaresNorthEastOf(threateningSquare))
+            {
+                //north east
+                int initialCol = threateningSquare.Col + 1;
+                for (int i = threateningSquare.Row + 1; i < kingSquare.Row; i++)
+                {
+                    foreach (var friendly in friendlySquares)
+                    {
+                        if (theBoard.MoveIsValid(friendly, theBoard.GetSquare(i, initialCol)))
+                        {
+                            return true;
+                        }
+                    }
+                    initialCol++;
+                }
+            }
+            else if (kingSquare.IsMultipleSquaresSouthWestOf(threateningSquare))
+            {
+                //south west
+                int initialCol = threateningSquare.Col - 1;
+                for (int i = threateningSquare.Row - 1; i > kingSquare.Row; i--)
+                {
+                    foreach (var friendly in friendlySquares)
+                    {
+                        if (theBoard.MoveIsValid(friendly, theBoard.GetSquare(i, initialCol)))
+                        {
+                            return true;
+                        }
+                    }
+                    initialCol--;
+                }
+            }
+            else if (kingSquare.IsMultipleSquaresSouthEastOf(threateningSquare))
+            {
+                //south east
+                int initialCol = threateningSquare.Col + 1;
+                for (int i = threateningSquare.Row - 1; i > kingSquare.Row; i--)
+                {
+                    foreach (var friendly in friendlySquares)
+                    {
+                        if (theBoard.MoveIsValid(friendly, theBoard.GetSquare(i, initialCol)))
+                        {
+                            return true;
+                        }
+                    }
+                    initialCol++;
+                }
+            }
             return false;
         }
     }

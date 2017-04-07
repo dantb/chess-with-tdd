@@ -68,7 +68,7 @@ namespace ChessWithTDD
             _boardCache.UpdateBoardCache();
 
             //Evaluate check states after move has been applied
-            _checkManager.UpdateCheckStates(this, toSquare);
+            _checkManager.UpdateCheckAndCheckMateStates(this, toSquare);
 
             TurnCounter++;
         }

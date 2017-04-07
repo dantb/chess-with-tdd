@@ -26,7 +26,7 @@ namespace ChessWithTDD.Tests
             board.Stub(b => b.MoveIsValid(toSquare, blackKingSquare)).Return(true);
 
             CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
-            checkManager.UpdateCheckStates(board, toSquare);
+            checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = true);
             blackKing.AssertWasCalled(b => b.InCheckState = true);
@@ -55,7 +55,7 @@ namespace ChessWithTDD.Tests
             checkMateManager.Stub(cmm => cmm.BoardIsInCheckMate(board, boardCache, toSquare)).Return(checkMate);
 
             CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
-            checkManager.UpdateCheckStates(board, toSquare);
+            checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = true);
             //check mate should be called with the value returned by check mate manager
@@ -81,7 +81,7 @@ namespace ChessWithTDD.Tests
             board.Stub(b => b.MoveIsValid(toSquare, whiteKingSquare)).Return(true);
 
             CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
-            checkManager.UpdateCheckStates(board, toSquare);
+            checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = true);
             whiteKing.AssertWasCalled(b => b.InCheckState = true);
@@ -109,7 +109,7 @@ namespace ChessWithTDD.Tests
             checkMateManager.Stub(cmm => cmm.BoardIsInCheckMate(board, boardCache, toSquare)).Return(checkMate);
 
             CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
-            checkManager.UpdateCheckStates(board, toSquare);
+            checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = true);
             //check mate should be called with the value returned by check mate manager
@@ -140,7 +140,7 @@ namespace ChessWithTDD.Tests
             board.Stub(b => b.InCheck).Return(true);
 
             CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
-            checkManager.UpdateCheckStates(board, toSquare);
+            checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = false);
             whiteKing.AssertWasCalled(b => b.InCheckState = false);
@@ -169,7 +169,7 @@ namespace ChessWithTDD.Tests
             board.Stub(b => b.InCheck).Return(true);
 
             CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
-            checkManager.UpdateCheckStates(board, toSquare);
+            checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = false);
             blackKing.AssertWasCalled(b => b.InCheckState = false);

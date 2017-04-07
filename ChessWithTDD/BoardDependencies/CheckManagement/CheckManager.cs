@@ -13,40 +13,31 @@ namespace ChessWithTDD
             _boardCache = boardCache;
         }
 
-        public bool BoardIsInCheckMate(IBoard theBoard)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateCheckStates(IBoard theBoard, ISquare toSquare)
+        public void UpdateCheckAndCheckMateStates(IBoard theBoard, ISquare toSquare)
         {
             RemoveCheckStates(theBoard);
-            AddCheckStates(theBoard, toSquare);
+            AddCheckAndCheckMateStates(theBoard, toSquare);
         }
 
-        private void AddCheckStates(IBoard theBoard, ISquare toSquare)
+        private void AddCheckAndCheckMateStates(IBoard theBoard, ISquare threateningSquare)
         {
-            if (toSquare.Piece.Colour == Colour.White)
+            if (threateningSquare.Piece.Colour == Colour.White)
             {
-                ISquare blackKingSquare = _boardCache.BlackKingSquare;
-                //see if black king is in check
-                if (theBoard.MoveIsValid(toSquare, blackKingSquare))
-                {
-                    theBoard.InCheck = true;
-                    (blackKingSquare.Piece as IKing).InCheckState = true;
-                    theBoard.CheckMate = _checkMateManager.BoardIsInCheckMate(theBoard, _boardCache, toSquare);
-                }
+                SetBoardAndKingCheckAndCheckMateStatesIfThreatened(theBoard, threateningSquare, _boardCache.BlackKingSquare);
             }
-            else if (toSquare.Piece.Colour == Colour.Black)
+            else if (threateningSquare.Piece.Colour == Colour.Black)
             {
-                ISquare whtieKingSquare = _boardCache.WhiteKingSquare;
-                //see if white king is in check
-                if (theBoard.MoveIsValid(toSquare, whtieKingSquare))
-                {
-                    theBoard.InCheck = true;
-                    (whtieKingSquare.Piece as IKing).InCheckState = true;
-                    theBoard.CheckMate = _checkMateManager.BoardIsInCheckMate(theBoard, _boardCache, toSquare);
-                }
+                SetBoardAndKingCheckAndCheckMateStatesIfThreatened(theBoard, threateningSquare, _boardCache.WhiteKingSquare);
+            }
+        }
+
+        private void SetBoardAndKingCheckAndCheckMateStatesIfThreatened(IBoard theBoard, ISquare threateningSquare, ISquare kingSquare)
+        {
+            if (theBoard.MoveIsValid(threateningSquare, kingSquare))
+            {
+                theBoard.InCheck = true;
+                (kingSquare.Piece as IKing).InCheckState = true;
+                theBoard.CheckMate = _checkMateManager.BoardIsInCheckMate(theBoard, _boardCache, threateningSquare);
             }
         }
 
@@ -54,8 +45,7 @@ namespace ChessWithTDD
         {
             if (theBoard.InCheck)
             {
-                //If we get here then we know for sure that a piece of the same colour as the king in check
-                //has just moved to result in the removal of check state (could be the king itself that moved).
+                //If we get here then we know for sure the previous move removed the king's check state
                 if ((_boardCache.WhiteKingSquare.Piece as IKing).InCheckState)
                 {
                     (_boardCache.WhiteKingSquare.Piece as IKing).InCheckState = false;
