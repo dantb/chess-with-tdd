@@ -48,8 +48,7 @@ namespace ChessWithTDD
                 return false;
             }
             return fromSquare.Piece.CanMove(fromSquare, toSquare);
-        }
-      
+        }      
 
         public void Apply(ISquare fromSquare, ISquare toSquare)
         {

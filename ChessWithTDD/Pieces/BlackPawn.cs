@@ -4,7 +4,7 @@
     /// A black pawn. The black team are at the top of the board in this model, occupying rows 6 and 7 intially.
     /// TODO - when it reaches end of board should be swappable. Not sure where this logic will go yet.
     /// </summary>
-    internal class BlackPawn : IPawn
+    public class BlackPawn : IPawn
     {
         public Colour Colour { get { return Colour.Black; } }
 

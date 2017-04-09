@@ -1,6 +1,8 @@
-﻿namespace ChessWithTDD
+﻿using System.ComponentModel;
+
+namespace ChessWithTDD
 {
-    public interface ISquare
+    public interface ISquare : INotifyPropertyChanged
     {
         IPiece Piece { get; set; }
 

@@ -1,7 +1,14 @@
-﻿namespace ChessWithTDD
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace ChessWithTDD
 {
-    internal class Square : ISquare
+    public class Square : ISquare
     {
+        IPiece _thePiece;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public Square(int row, int col)
         {
             Row = row;
@@ -12,7 +19,18 @@
 
         public bool ContainsPiece { get; set; }
 
-        public IPiece Piece { get; set; }
+        public IPiece Piece
+        {
+            get
+            {
+                return _thePiece;
+            }
+            set
+            {
+                _thePiece = value;
+                OnPropertyChanged();
+            }            
+        }
 
         public int Col { get; set; }
 
@@ -22,6 +40,11 @@
         {
             ContainsPiece = true;
             Piece = piece;
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string caller = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(caller));
         }
     }
 }
