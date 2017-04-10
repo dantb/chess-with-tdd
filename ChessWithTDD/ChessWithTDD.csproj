@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckMateManager.cs" />
     <Compile Include="Interfaces\BoardDependencies\PawnManagement\IEnPassantManager.cs" />
     <Compile Include="Interfaces\BoardDependencies\MoveValidation\IGenericMoveValidator.cs" />
+    <Compile Include="Interfaces\IMoveProvider.cs" />
     <Compile Include="Interfaces\Pieces\IKing.cs" />
     <Compile Include="Interfaces\Pieces\IKnight.cs" />
     <Compile Include="Interfaces\BoardDependencies\MoveValidation\IMoveValidator.cs" />

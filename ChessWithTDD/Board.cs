@@ -36,6 +36,8 @@ namespace ChessWithTDD
 
         public int RowCount { get { return _squares.FirstOrDefault().Count; } }
 
+        public List<List<ISquare>> Squares { get { return _squares; } }
+
         public ISquare GetSquare(int row, int col)
         {
             return _squares[row][col];

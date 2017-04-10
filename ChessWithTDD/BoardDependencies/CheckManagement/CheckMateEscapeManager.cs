@@ -6,22 +6,22 @@ namespace ChessWithTDD
     {
         public bool KingCanEscape(IBoard theBoard, ISquare kingSquare)
         {
-            if (theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row, kingSquare.Col - 1)) ||
-                theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row, kingSquare.Col + 1)))
+            if (SquareOnBoardAndKingCanEscape(theBoard, kingSquare, kingSquare.Row, kingSquare.Col - 1) ||
+                SquareOnBoardAndKingCanEscape(theBoard, kingSquare, kingSquare.Row, kingSquare.Col + 1))
             {
                 //escape horizontally
                 return true;
             }
-            else if (theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row - 1, kingSquare.Col)) ||
-                     theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row + 1, kingSquare.Col)))
+            else if (SquareOnBoardAndKingCanEscape(theBoard, kingSquare, kingSquare.Row - 1, kingSquare.Col) ||
+                     SquareOnBoardAndKingCanEscape(theBoard, kingSquare, kingSquare.Row + 1, kingSquare.Col))
             {
                 //escape vertically
                 return true;
             }
-            else if (theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row - 1, kingSquare.Col - 1)) ||
-                     theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row + 1, kingSquare.Col - 1)) ||
-                     theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row - 1, kingSquare.Col + 1)) ||
-                     theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(kingSquare.Row + 1, kingSquare.Col + 1)))
+            else if (SquareOnBoardAndKingCanEscape(theBoard, kingSquare, kingSquare.Row - 1, kingSquare.Col - 1) ||
+                     SquareOnBoardAndKingCanEscape(theBoard, kingSquare, kingSquare.Row + 1, kingSquare.Col - 1) ||
+                     SquareOnBoardAndKingCanEscape(theBoard, kingSquare, kingSquare.Row - 1, kingSquare.Col + 1) ||
+                     SquareOnBoardAndKingCanEscape(theBoard, kingSquare, kingSquare.Row + 1, kingSquare.Col + 1))
             {
                 return true;
             }
@@ -178,5 +178,16 @@ namespace ChessWithTDD
             }
             return false;
         }
+
+        private bool SquareOnBoardAndKingCanEscape(IBoard theBoard, ISquare kingSquare, int escapeRow, int escapeCol)
+        {
+            if (escapeRow < 0 || escapeRow > BoardConstants.BOARD_DIMENSION ||
+                escapeCol < 0 || escapeCol > BoardConstants.BOARD_DIMENSION)
+            {
+                return false;
+            }
+            return theBoard.MoveIsValid(kingSquare, theBoard.GetSquare(escapeRow, escapeCol));
+        }
+
     }
 }
