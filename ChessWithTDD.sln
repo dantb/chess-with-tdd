@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessWithTDD", "ChessWithTDD\ChessWithTDD.csproj", "{5CDACF88-D86C-4A3B-BD35-65D3260C01E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessGameController", "ChessGameController\ChessGameController.csproj", "{6ECD757D-FC8E-462D-9DA3-61753B6B4C05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessGameUI", "ChessGameUI\ChessGameUI.csproj", "{F0E40B45-6B54-428B-A81B-27BA4A4E1BBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{5CDACF88-D86C-4A3B-BD35-65D3260C01E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CDACF88-D86C-4A3B-BD35-65D3260C01E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CDACF88-D86C-4A3B-BD35-65D3260C01E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ECD757D-FC8E-462D-9DA3-61753B6B4C05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ECD757D-FC8E-462D-9DA3-61753B6B4C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ECD757D-FC8E-462D-9DA3-61753B6B4C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ECD757D-FC8E-462D-9DA3-61753B6B4C05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0E40B45-6B54-428B-A81B-27BA4A4E1BBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0E40B45-6B54-428B-A81B-27BA4A4E1BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0E40B45-6B54-428B-A81B-27BA4A4E1BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E40B45-6B54-428B-A81B-27BA4A4E1BBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
