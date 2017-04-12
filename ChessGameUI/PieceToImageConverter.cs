@@ -42,7 +42,7 @@ namespace ChessGameUI
         private string GetFileName(IPiece piece)
         {
             Colour colour = piece.Colour;
-            Colour playerColour = MainWindow.PlayerColour;
+            Colour playerColour = MainWindow.BottomOfBoardTeamColour;
             if (piece is Bishop)
             {
                 return (colour != playerColour ? BlackBishop : WhiteBishop) + PNGFileExtension;

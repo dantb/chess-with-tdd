@@ -38,13 +38,22 @@ namespace ChessGameUI
             InitializeComponent();
             _theBoard = board;
             _dragManager = new DragManager(_theBoard, this);
-            PlayerColour = playerColour;
+            BottomOfBoardTeamColour = playerColour;
+            ColourOfTeamWithTurn = Colour.White;
             DataContext = _theBoard;
         }
 
-        public static Colour PlayerColour
+        /// <summary>
+        /// Colour of the team at the bottom of the board.
+        /// </summary>
+        public static Colour BottomOfBoardTeamColour
         {
             get; private set;
+        }
+
+        public Colour ColourOfTeamWithTurn
+        {
+            get; set;
         }
 
         private void Button_PreviewMouseMove(object sender, MouseEventArgs e)
@@ -54,12 +63,24 @@ namespace ChessGameUI
             {
                 if (e.LeftButton == MouseButtonState.Pressed)
                 {
-                    if (!_dragManager.InDrag && 
-                        _dragManager.LastButtonLeftMousePressedIn.Content is Image &&
-                        button.Content is Image)
+                    int gridRow = Grid.GetRow(button);
+                    int gridCol = Grid.GetColumn(button);
+                    if (_theBoard.GetSquare(gridRow, gridCol).ContainsPiece)
                     {
-                        _dragManager.BeginDrag(button);
+                        if (_theBoard.GetSquare(gridRow, gridCol).Piece.Colour == ColourOfTeamWithTurn)
+                        {
+                            if (!_dragManager.InDrag &&
+                                button.Content is Image &&
+                                _dragManager.LastButtonLeftMousePressedIn == button)
+                            {                             
+                                _dragManager.BeginDrag(button);
+                            }
+                        }
                     }
+                    else
+                    {
+                        Cursor = Cursors.No;
+                    }                   
                 }
             }
         }
@@ -69,11 +90,42 @@ namespace ChessGameUI
             Button button = sender as Button;
             if (button != null)
             {
-                if (e.LeftButton == MouseButtonState.Pressed &&
-                    _dragManager.InDrag)
+                int gridRow = Grid.GetRow(button);
+                int gridCol = Grid.GetColumn(button);
+                if (e.LeftButton == MouseButtonState.Pressed)
                 {
-                    _dragManager.ButtonDragEnter(button);
+                    if (_dragManager.InDrag)
+                    {
+                        _dragManager.ButtonDragEnter(button);
+                    }
+                    else
+                    {
+                        Cursor = Cursors.No;
+                    }
                 }
+                else
+                {
+                    SetCursorFromSquare(gridRow, gridCol);
+                }
+            }
+        }
+
+        private void SetCursorFromSquare(int row, int col)
+        {
+            if (_theBoard.GetSquare(row, col).ContainsPiece)
+            {
+                if (_theBoard.GetSquare(row, col).Piece.Colour == ColourOfTeamWithTurn)
+                {
+                    Cursor = Cursors.Hand;
+                }
+                else
+                {
+                    Cursor = Cursors.No;
+                }
+            }
+            else
+            {
+                Cursor = Cursors.Arrow;
             }
         }
 
@@ -101,6 +153,12 @@ namespace ChessGameUI
                 {
                     Debug.Print("Mouse up fired");
                     _dragManager.ButtonDrop(button);
+                }
+                else
+                {
+                    int gridRow = Grid.GetRow(button);
+                    int gridCol = Grid.GetColumn(button);
+                    SetCursorFromSquare(gridRow, gridCol);
                 }
             }
         }
