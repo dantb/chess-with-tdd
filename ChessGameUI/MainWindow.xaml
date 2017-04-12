@@ -1,0 +1,696 @@
+﻿<Window x:Class="ChessGameUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChessGameUI"
+        mc:Ignorable="d"
+        Title="Chess" Height="800" Width="800">
+    <Window.Resources>
+        <local:PieceToImageConverter x:Key="PieceToImageConverter"/>
+    </Window.Resources>
+    <Grid>
+
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="LayoutTransform">
+                    <Setter.Value>
+                        <MatrixTransform>
+                            <MatrixTransform.Matrix>
+                                <Matrix M11="1" M12="0" M21="0" M22="-1"  />
+                            </MatrixTransform.Matrix>
+                        </MatrixTransform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+        <Grid.LayoutTransform>
+            <MatrixTransform>
+                <MatrixTransform.Matrix>
+                    <Matrix M11="1" M12="0" M21="0" M22="-1"  />
+                </MatrixTransform.Matrix>
+            </MatrixTransform>
+        </Grid.LayoutTransform>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Button Grid.Row="0" Grid.Column="0" Background="RosyBrown"
+                 Tag="00" PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+                >
+            <Image Source="{Binding Squares[0][0].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+        
+        <Button Grid.Row="0" Grid.Column="2" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="02"
+                >
+            <Image Source="{Binding Squares[0][2].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+        
+        <Button Grid.Row="0" Grid.Column="4" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="04"
+                >
+            <Image Source="{Binding Squares[0][4].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="0" Grid.Column="6" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="06"
+                >
+            <Image Source="{Binding Squares[0][6].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+        
+        <Button Grid.Row="1" Grid.Column="1" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="11"
+                >
+            <Image Source="{Binding Squares[1][1].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+        
+        <Button Grid.Row="1" Grid.Column="3" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="13"                
+                >
+            <Image Source="{Binding Squares[1][3].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+        
+        <Button Grid.Row="1" Grid.Column="5" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="15"
+                >
+            <Image Source="{Binding Squares[1][5].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="1" Grid.Column="7" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="17"
+                >
+            <Image Source="{Binding Squares[1][7].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="0" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="20" AllowDrop="True" PreviewMouseUp="Button_PreviewMouseUp" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown"
+                >
+            <Image Source="{Binding Squares[2][0].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="2" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="22"
+                >
+            <Image Source="{Binding Squares[2][2].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="4" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="24"
+                >
+            <Image Source="{Binding Squares[2][4].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="6" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="26"
+                >
+            <Image Source="{Binding Squares[2][6].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="3" Grid.Column="1" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="31"
+                >
+            <Image Source="{Binding Squares[3][1].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="3" Grid.Column="3" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="33"
+                >
+            <Image Source="{Binding Squares[3][3].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="3" Grid.Column="5" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="35"
+                >
+            <Image Source="{Binding Squares[3][5].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="3" Grid.Column="7" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="37"
+                >
+            <Image Source="{Binding Squares[3][7].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="4" Grid.Column="0" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="40"
+                >
+            <Image Source="{Binding Squares[4][0].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="4" Grid.Column="2" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="42"
+                >
+            <Image Source="{Binding Squares[4][2].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="4" Grid.Column="4" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="44"
+                >
+            <Image Source="{Binding Squares[4][4].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="4" Grid.Column="6" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="46"
+                >
+            <Image Source="{Binding Squares[4][6].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="5" Grid.Column="1" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="51"
+                >
+            <Image Source="{Binding Squares[5][1].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="5" Grid.Column="3" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="53"
+                >
+            <Image Source="{Binding Squares[5][3].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="5" Grid.Column="5" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="55"
+                >
+            <Image Source="{Binding Squares[5][5].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="5" Grid.Column="7" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="57"
+                >
+            <Image Source="{Binding Squares[5][7].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="6" Grid.Column="0" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="60"
+                >
+            <Image Source="{Binding Squares[6][0].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="6" Grid.Column="2" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="62"
+                >
+            <Image Source="{Binding Squares[6][2].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="6" Grid.Column="4" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="64"
+                >
+            <Image Source="{Binding Squares[6][4].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="6" Grid.Column="6" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="66"
+                >
+            <Image Source="{Binding Squares[6][6].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="7" Grid.Column="1" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="71"
+                >
+            <Image Source="{Binding Squares[7][1].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="7" Grid.Column="3" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="73"
+                >
+            <Image Source="{Binding Squares[7][3].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="7" Grid.Column="5" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="75"
+                >
+            <Image Source="{Binding Squares[7][5].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="7" Grid.Column="7" Background="RosyBrown"
+                Click="MarkSquareDirty" Tag="77"
+                >
+            <Image Source="{Binding Squares[7][7].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="0" Grid.Column="1" Background="White"
+                Click="MarkSquareDirty" Tag="01"
+                >
+            <Image Source="{Binding Squares[0][1].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+        
+        <Button Grid.Row="0" Grid.Column="3" Background="White"
+                Click="MarkSquareDirty" Tag="03"
+                >
+            <Image Source="{Binding Squares[0][3].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+        
+        <Button Grid.Row="0" Grid.Column="5" Background="White"
+                Click="MarkSquareDirty" Tag="05"
+                >
+            <Image Source="{Binding Squares[0][5].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="0" Grid.Column="7" Background="White"
+                Click="MarkSquareDirty" Tag="07"
+                >
+            <Image Source="{Binding Squares[0][7].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+        
+        <Button Grid.Row="1" Grid.Column="0" Background="White"
+                Click="MarkSquareDirty" Tag="10"
+                >
+            <Image Source="{Binding Squares[1][0].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+        
+        <Button Grid.Row="1" Grid.Column="2" Background="White"
+                Click="MarkSquareDirty" Tag="12"
+                >
+            <Image Source="{Binding Squares[1][2].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+        
+        <Button Grid.Row="1" Grid.Column="4" Background="White"
+                Click="MarkSquareDirty" Tag="14"
+                >
+            <Image Source="{Binding Squares[1][4].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="1" Grid.Column="6" Background="White"
+                Click="MarkSquareDirty" Tag="16"
+                >
+            <Image Source="{Binding Squares[1][6].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="1" Background="White"
+                Click="MarkSquareDirty" Tag="21"
+                >
+            <Image Source="{Binding Squares[2][1].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="3" Background="White"
+                Click="MarkSquareDirty" Tag="23"
+                >
+            <Image Source="{Binding Squares[2][3].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="5" Background="White"
+                Click="MarkSquareDirty" Tag="25"
+                >
+            <Image Source="{Binding Squares[2][5].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="7" Background="White"
+                Click="MarkSquareDirty" Tag="27"
+                >
+            <Image Source="{Binding Squares[2][7].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="3" Grid.Column="0" Background="White"
+                Click="MarkSquareDirty" Tag="30"
+                >
+            <Image Source="{Binding Squares[3][0].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="3" Grid.Column="2" Background="White"
+                Click="MarkSquareDirty" Tag="32"
+                >
+            <Image Source="{Binding Squares[3][2].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="3" Grid.Column="4" Background="White"
+                Click="MarkSquareDirty" Tag="34"
+                >
+            <Image Source="{Binding Squares[3][4].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="3" Grid.Column="6" Background="White"
+                Click="MarkSquareDirty" Tag="36"
+                >
+            <Image Source="{Binding Squares[3][6].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="4" Grid.Column="1" Background="White"
+                Click="MarkSquareDirty" Tag="41"
+                >
+            <Image Source="{Binding Squares[4][1].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="4" Grid.Column="3" Background="White"
+                Click="MarkSquareDirty" Tag="43"
+                >
+            <Image Source="{Binding Squares[4][3].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="4" Grid.Column="5" Background="White"
+                Click="MarkSquareDirty" Tag="45"
+                >
+            <Image Source="{Binding Squares[4][5].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="4" Grid.Column="7" Background="White"
+                Click="MarkSquareDirty" Tag="47"
+                >
+            <Image Source="{Binding Squares[4][7].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="5" Grid.Column="0" Background="White"
+                Click="MarkSquareDirty" Tag="50"
+                >
+            <Image Source="{Binding Squares[5][0].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="5" Grid.Column="2" Background="White"
+                Click="MarkSquareDirty" Tag="52"
+                >
+            <Image Source="{Binding Squares[5][2].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="5" Grid.Column="4" Background="White"
+                Click="MarkSquareDirty" Tag="54"
+                >
+            <Image Source="{Binding Squares[5][4].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="5" Grid.Column="6" Background="White"
+                Click="MarkSquareDirty" Tag="56"
+                >
+            <Image Source="{Binding Squares[5][6].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="6" Grid.Column="1" Background="White"
+                Click="MarkSquareDirty" Tag="61"
+                >
+            <Image Source="{Binding Squares[6][1].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="6" Grid.Column="3" Background="White"
+                Click="MarkSquareDirty" Tag="63"
+                >
+            <Image Source="{Binding Squares[6][3].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="6" Grid.Column="5" Background="White"
+                Click="MarkSquareDirty" Tag="65"
+                >
+            <Image Source="{Binding Squares[6][5].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="6" Grid.Column="7" Background="White"
+                Click="MarkSquareDirty" Tag="67"
+                >
+            <Image Source="{Binding Squares[6][7].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="7" Grid.Column="0" Background="White"
+                Click="MarkSquareDirty" Tag="70"
+                >
+            <Image Source="{Binding Squares[7][0].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="7" Grid.Column="2" Background="White"
+                Click="MarkSquareDirty" Tag="72"
+                >
+            <Image Source="{Binding Squares[7][2].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="7" Grid.Column="4" Background="White"
+                Click="MarkSquareDirty" Tag="74"
+                >
+            <Image Source="{Binding Squares[7][4].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+
+        <Button Grid.Row="7" Grid.Column="6" Background="White"
+                Click="MarkSquareDirty" Tag="76"
+                >
+            <Image Source="{Binding Squares[7][6].Piece, Converter={StaticResource PieceToImageConverter}}"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="5,5,5,5" 
+                   Stretch="Fill"/>
+        </Button>
+    </Grid>
+</Window>
