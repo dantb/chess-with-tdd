@@ -1,43 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ChessWithTDD;
 using System.Diagnostics;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace ChessGameUI
 {
     public class DragManager
     {
-        Button _dragSender;
-        Image _dragSenderImage;
-        Button _dragTarget;
-        Image _dragTargetImage;
+        IBoard _theBoard;   
         DragOperation _dragOperation;
-
-
         public bool InDrag = false;
+        public Button LastButtonLeftMousePressedIn;
+        MainWindow _window;
 
-        internal void BeginDrag(Button button, MouseEventArgs e)
+        public DragManager(IBoard theBoard, MainWindow window)
+        {
+            _theBoard = theBoard;
+            _window = window;
+        }
+
+        internal void BeginDrag(Button button)
         {
             _dragOperation = new DragOperation(button);
-            //_dragSender = button;
-            //_dragSenderImage = button.Content as Image;
+            _window.Cursor = Cursors.Hand;
             InDrag = true;
         }
 
-        internal void ButtonDrop(Button button, MouseEventArgs e)
+        internal void ButtonDrop(Button button)
         {
             if (button == _dragOperation.Target?.Button)
             {
                 if (button.Content is Image)
                 {
-
                     Debug.Print("Button Drop image to drag target");
+                    int toRow = Grid.GetRow(button);
+                    int toCol = Grid.GetColumn(button);
+                    int fromRow = Grid.GetRow(_dragOperation.Source.Button);
+                    int fromCol = Grid.GetColumn(_dragOperation.Source.Button);
+                    Move theMove = new Move(fromRow, fromCol, toRow, toCol);                  
                     _dragOperation.Target.ButtonImage.Opacity = 1;
                     _dragOperation.Source.ButtonImage = null;
                     _dragOperation = null;
+                    _window.RaiseMoveChosenEvent(new MoveProviderEventArgs(theMove));
                 }
             }
             else
@@ -49,11 +53,12 @@ namespace ChessGameUI
                     _dragOperation.Target.ButtonImage = _dragOperation.Target.OriginalImage;
                 }
             }
+            _window.Cursor = Cursors.Arrow;
             InDrag = false;
             _dragOperation = null;
         }
 
-        internal void ButtonDragLeave(Button button, MouseEventArgs e)
+        internal void ButtonDragLeave(Button button)
         {
             if (button == _dragOperation.Target?.Button)
             {
@@ -70,20 +75,34 @@ namespace ChessGameUI
             }
         }
 
-        internal void ButtonDragEnter(Button button, MouseEventArgs e)
+        internal void ButtonDragEnter(Button button)
         {
             if (button != _dragOperation.Source.Button)
             {
-                Debug.Print("Button Mouse enter not drag source");
-                DragButtonTarget theTargetButton = new DragButtonTarget(button);
-                Image sourceImageClone = new Image
+                int gridRow = Grid.GetRow(button);
+                int gridCol = Grid.GetColumn(button);
+                ISquare toSquare = _theBoard.GetSquare(gridRow, gridCol);
+                ISquare fromSquare = _theBoard.GetSquare(
+                    Grid.GetRow(_dragOperation.Source.Button),
+                    Grid.GetColumn(_dragOperation.Source.Button));
+                if (_theBoard.MoveIsValid(fromSquare, toSquare))
                 {
-                    Source = _dragOperation.Source.ButtonImage.Source.Clone(),
-                    Opacity = 0.5                    
-                };
-                theTargetButton.ButtonImage = sourceImageClone;
-                //set new target
-                _dragOperation.Target = theTargetButton;
+                    Debug.Print("Button Mouse enter not drag source");
+                    DragButtonTarget theTargetButton = new DragButtonTarget(button);
+                    Image sourceImageClone = new Image
+                    {
+                        Source = _dragOperation.Source.ButtonImage.Source.Clone(),
+                        Opacity = 1
+                    };
+                    theTargetButton.ButtonImage = sourceImageClone;
+                    //set new target
+                    _dragOperation.Target = theTargetButton;
+                    _window.Cursor = Cursors.Hand;
+                }
+                else
+                {
+                    _window.Cursor = Cursors.No;
+                }
             }
             else
             {

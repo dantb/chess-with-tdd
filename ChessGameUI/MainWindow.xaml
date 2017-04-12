@@ -53,9 +53,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <Button Grid.Row="0" Grid.Column="0" Background="RosyBrown"
-                 Tag="00" PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
-                >
+        <Button Grid.Row="0" Grid.Column="0" Background="RosyBrown" Tag="00" 
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[0][0].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -63,9 +62,8 @@
                    Stretch="Fill"/>
         </Button>
         
-        <Button Grid.Row="0" Grid.Column="2" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="02"
-                >
+        <Button Grid.Row="0" Grid.Column="2" Background="RosyBrown" Tag="02"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[0][2].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -73,9 +71,8 @@
                    Stretch="Fill"/>
         </Button>
         
-        <Button Grid.Row="0" Grid.Column="4" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="04"
-                >
+        <Button Grid.Row="0" Grid.Column="4" Background="RosyBrown" Tag="04"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[0][4].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -83,9 +80,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="0" Grid.Column="6" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="06"
-                >
+        <Button Grid.Row="0" Grid.Column="6" Background="RosyBrown" Tag="06"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[0][6].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -93,9 +89,8 @@
                    Stretch="Fill"/>
         </Button>
         
-        <Button Grid.Row="1" Grid.Column="1" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="11"
-                >
+        <Button Grid.Row="1" Grid.Column="1" Background="RosyBrown" Tag="11"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[1][1].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -103,9 +98,8 @@
                    Stretch="Fill"/>
         </Button>
         
-        <Button Grid.Row="1" Grid.Column="3" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="13"                
-                >
+        <Button Grid.Row="1" Grid.Column="3" Background="RosyBrown" Tag="13"                
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[1][3].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -113,9 +107,8 @@
                    Stretch="Fill"/>
         </Button>
         
-        <Button Grid.Row="1" Grid.Column="5" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="15"
-                >
+        <Button Grid.Row="1" Grid.Column="5" Background="RosyBrown" Tag="15"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[1][5].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -123,9 +116,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="1" Grid.Column="7" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="17"
-                >
+        <Button Grid.Row="1" Grid.Column="7" Background="RosyBrown" Tag="17"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[1][7].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -133,9 +125,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="2" Grid.Column="0" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="20" AllowDrop="True" PreviewMouseUp="Button_PreviewMouseUp" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown"
-                >
+        <Button Grid.Row="2" Grid.Column="0" Background="RosyBrown" Tag="20" 
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[2][0].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -143,9 +134,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="2" Grid.Column="2" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="22"
-                >
+        <Button Grid.Row="2" Grid.Column="2" Background="RosyBrown" Tag="22"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[2][2].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -153,9 +143,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="2" Grid.Column="4" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="24"
-                >
+        <Button Grid.Row="2" Grid.Column="4" Background="RosyBrown" Tag="24"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[2][4].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -163,9 +152,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="2" Grid.Column="6" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="26"
-                >
+        <Button Grid.Row="2" Grid.Column="6" Background="RosyBrown" Tag="26"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[2][6].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -173,9 +161,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="3" Grid.Column="1" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="31"
-                >
+        <Button Grid.Row="3" Grid.Column="1" Background="RosyBrown" Tag="31"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[3][1].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -183,9 +170,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="3" Grid.Column="3" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="33"
-                >
+        <Button Grid.Row="3" Grid.Column="3" Background="RosyBrown" Tag="33"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[3][3].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -193,9 +179,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="3" Grid.Column="5" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="35"
-                >
+        <Button Grid.Row="3" Grid.Column="5" Background="RosyBrown" Tag="35"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[3][5].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -203,9 +188,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="3" Grid.Column="7" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="37"
-                >
+        <Button Grid.Row="3" Grid.Column="7" Background="RosyBrown" Tag="37"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[3][7].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -213,9 +197,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="4" Grid.Column="0" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="40"
-                >
+        <Button Grid.Row="4" Grid.Column="0" Background="RosyBrown" Tag="40"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[4][0].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -223,9 +206,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="4" Grid.Column="2" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="42"
-                >
+        <Button Grid.Row="4" Grid.Column="2" Background="RosyBrown" Tag="42"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[4][2].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -233,9 +215,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="4" Grid.Column="4" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="44"
-                >
+        <Button Grid.Row="4" Grid.Column="4" Background="RosyBrown" Tag="44"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[4][4].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -243,9 +224,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="4" Grid.Column="6" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="46"
-                >
+        <Button Grid.Row="4" Grid.Column="6" Background="RosyBrown" Tag="46"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[4][6].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -253,9 +233,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="5" Grid.Column="1" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="51"
-                >
+        <Button Grid.Row="5" Grid.Column="1" Background="RosyBrown" Tag="51"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[5][1].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -263,9 +242,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="5" Grid.Column="3" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="53"
-                >
+        <Button Grid.Row="5" Grid.Column="3" Background="RosyBrown" Tag="53"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[5][3].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -273,9 +251,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="5" Grid.Column="5" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="55"
-                >
+        <Button Grid.Row="5" Grid.Column="5" Background="RosyBrown" Tag="55"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[5][5].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -283,9 +260,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="5" Grid.Column="7" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="57"
-                >
+        <Button Grid.Row="5" Grid.Column="7" Background="RosyBrown" Tag="57"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[5][7].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -293,9 +269,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="6" Grid.Column="0" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="60"
-                >
+        <Button Grid.Row="6" Grid.Column="0" Background="RosyBrown" Tag="60"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[6][0].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -303,9 +278,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="6" Grid.Column="2" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="62"
-                >
+        <Button Grid.Row="6" Grid.Column="2" Background="RosyBrown" Tag="62"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[6][2].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -313,9 +287,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="6" Grid.Column="4" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="64"
-                >
+        <Button Grid.Row="6" Grid.Column="4" Background="RosyBrown" Tag="64"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[6][4].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -323,9 +296,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="6" Grid.Column="6" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="66"
-                >
+        <Button Grid.Row="6" Grid.Column="6" Background="RosyBrown" Tag="66"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[6][6].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -333,9 +305,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="7" Grid.Column="1" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="71"
-                >
+        <Button Grid.Row="7" Grid.Column="1" Background="RosyBrown" Tag="71"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[7][1].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -343,9 +314,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="7" Grid.Column="3" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="73"
-                >
+        <Button Grid.Row="7" Grid.Column="3" Background="RosyBrown" Tag="73"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[7][3].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -353,9 +323,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="7" Grid.Column="5" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="75"
-                >
+        <Button Grid.Row="7" Grid.Column="5" Background="RosyBrown" Tag="75"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[7][5].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -363,9 +332,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="7" Grid.Column="7" Background="RosyBrown"
-                Click="MarkSquareDirty" Tag="77"
-                >
+        <Button Grid.Row="7" Grid.Column="7" Background="RosyBrown" Tag="77"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[7][7].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -373,9 +341,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="0" Grid.Column="1" Background="White"
-                Click="MarkSquareDirty" Tag="01"
-                >
+        <Button Grid.Row="0" Grid.Column="1" Background="White" Tag="01"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[0][1].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -383,9 +350,8 @@
                    Stretch="Fill"/>
         </Button>
         
-        <Button Grid.Row="0" Grid.Column="3" Background="White"
-                Click="MarkSquareDirty" Tag="03"
-                >
+        <Button Grid.Row="0" Grid.Column="3" Background="White" Tag="03"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[0][3].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -393,9 +359,8 @@
                    Stretch="Fill"/>
         </Button>
         
-        <Button Grid.Row="0" Grid.Column="5" Background="White"
-                Click="MarkSquareDirty" Tag="05"
-                >
+        <Button Grid.Row="0" Grid.Column="5" Background="White" Tag="05"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[0][5].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -403,9 +368,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="0" Grid.Column="7" Background="White"
-                Click="MarkSquareDirty" Tag="07"
-                >
+        <Button Grid.Row="0" Grid.Column="7" Background="White" Tag="07"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[0][7].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -413,9 +377,8 @@
                    Stretch="Fill"/>
         </Button>
         
-        <Button Grid.Row="1" Grid.Column="0" Background="White"
-                Click="MarkSquareDirty" Tag="10"
-                >
+        <Button Grid.Row="1" Grid.Column="0" Background="White" Tag="10"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[1][0].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -423,9 +386,8 @@
                    Stretch="Fill"/>
         </Button>
         
-        <Button Grid.Row="1" Grid.Column="2" Background="White"
-                Click="MarkSquareDirty" Tag="12"
-                >
+        <Button Grid.Row="1" Grid.Column="2" Background="White" Tag="12"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[1][2].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -433,9 +395,8 @@
                    Stretch="Fill"/>
         </Button>
         
-        <Button Grid.Row="1" Grid.Column="4" Background="White"
-                Click="MarkSquareDirty" Tag="14"
-                >
+        <Button Grid.Row="1" Grid.Column="4" Background="White" Tag="14"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[1][4].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -443,9 +404,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="1" Grid.Column="6" Background="White"
-                Click="MarkSquareDirty" Tag="16"
-                >
+        <Button Grid.Row="1" Grid.Column="6" Background="White" Tag="16"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[1][6].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -453,9 +413,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="2" Grid.Column="1" Background="White"
-                Click="MarkSquareDirty" Tag="21"
-                >
+        <Button Grid.Row="2" Grid.Column="1" Background="White" Tag="21"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[2][1].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -463,9 +422,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="2" Grid.Column="3" Background="White"
-                Click="MarkSquareDirty" Tag="23"
-                >
+        <Button Grid.Row="2" Grid.Column="3" Background="White" Tag="23"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[2][3].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -473,9 +431,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="2" Grid.Column="5" Background="White"
-                Click="MarkSquareDirty" Tag="25"
-                >
+        <Button Grid.Row="2" Grid.Column="5" Background="White" Tag="25"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[2][5].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -483,9 +440,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="2" Grid.Column="7" Background="White"
-                Click="MarkSquareDirty" Tag="27"
-                >
+        <Button Grid.Row="2" Grid.Column="7" Background="White" Tag="27"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[2][7].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -493,9 +449,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="3" Grid.Column="0" Background="White"
-                Click="MarkSquareDirty" Tag="30"
-                >
+        <Button Grid.Row="3" Grid.Column="0" Background="White" Tag="30"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[3][0].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -503,9 +458,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="3" Grid.Column="2" Background="White"
-                Click="MarkSquareDirty" Tag="32"
-                >
+        <Button Grid.Row="3" Grid.Column="2" Background="White" Tag="32"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[3][2].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -513,9 +467,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="3" Grid.Column="4" Background="White"
-                Click="MarkSquareDirty" Tag="34"
-                >
+        <Button Grid.Row="3" Grid.Column="4" Background="White" Tag="34"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[3][4].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -523,9 +476,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="3" Grid.Column="6" Background="White"
-                Click="MarkSquareDirty" Tag="36"
-                >
+        <Button Grid.Row="3" Grid.Column="6" Background="White" Tag="36"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[3][6].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -533,9 +485,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="4" Grid.Column="1" Background="White"
-                Click="MarkSquareDirty" Tag="41"
-                >
+        <Button Grid.Row="4" Grid.Column="1" Background="White" Tag="41"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[4][1].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -543,9 +494,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="4" Grid.Column="3" Background="White"
-                Click="MarkSquareDirty" Tag="43"
-                >
+        <Button Grid.Row="4" Grid.Column="3" Background="White" Tag="43"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[4][3].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -553,9 +503,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="4" Grid.Column="5" Background="White"
-                Click="MarkSquareDirty" Tag="45"
-                >
+        <Button Grid.Row="4" Grid.Column="5" Background="White" Tag="45"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[4][5].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -563,9 +512,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="4" Grid.Column="7" Background="White"
-                Click="MarkSquareDirty" Tag="47"
-                >
+        <Button Grid.Row="4" Grid.Column="7" Background="White" Tag="47"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[4][7].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -573,9 +521,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="5" Grid.Column="0" Background="White"
-                Click="MarkSquareDirty" Tag="50"
-                >
+        <Button Grid.Row="5" Grid.Column="0" Background="White" Tag="50"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[5][0].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -583,9 +530,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="5" Grid.Column="2" Background="White"
-                Click="MarkSquareDirty" Tag="52"
-                >
+        <Button Grid.Row="5" Grid.Column="2" Background="White" Tag="52"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[5][2].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -593,9 +539,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="5" Grid.Column="4" Background="White"
-                Click="MarkSquareDirty" Tag="54"
-                >
+        <Button Grid.Row="5" Grid.Column="4" Background="White" Tag="54"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[5][4].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -603,9 +548,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="5" Grid.Column="6" Background="White"
-                Click="MarkSquareDirty" Tag="56"
-                >
+        <Button Grid.Row="5" Grid.Column="6" Background="White" Tag="56"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[5][6].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -613,9 +557,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="6" Grid.Column="1" Background="White"
-                Click="MarkSquareDirty" Tag="61"
-                >
+        <Button Grid.Row="6" Grid.Column="1" Background="White" Tag="61"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[6][1].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -623,9 +566,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="6" Grid.Column="3" Background="White"
-                Click="MarkSquareDirty" Tag="63"
-                >
+        <Button Grid.Row="6" Grid.Column="3" Background="White" Tag="63"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[6][3].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -633,9 +575,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="6" Grid.Column="5" Background="White"
-                Click="MarkSquareDirty" Tag="65"
-                >
+        <Button Grid.Row="6" Grid.Column="5" Background="White" Tag="65"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[6][5].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -643,9 +584,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="6" Grid.Column="7" Background="White"
-                Click="MarkSquareDirty" Tag="67"
-                >
+        <Button Grid.Row="6" Grid.Column="7" Background="White" Tag="67"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[6][7].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -653,9 +593,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="7" Grid.Column="0" Background="White"
-                Click="MarkSquareDirty" Tag="70"
-                >
+        <Button Grid.Row="7" Grid.Column="0" Background="White" Tag="70"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[7][0].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -663,9 +602,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="7" Grid.Column="2" Background="White"
-                Click="MarkSquareDirty" Tag="72"
-                >
+        <Button Grid.Row="7" Grid.Column="2" Background="White" Tag="72"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[7][2].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -673,9 +611,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="7" Grid.Column="4" Background="White"
-                Click="MarkSquareDirty" Tag="74"
-                >
+        <Button Grid.Row="7" Grid.Column="4" Background="White" Tag="74"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[7][4].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
@@ -683,9 +620,8 @@
                    Stretch="Fill"/>
         </Button>
 
-        <Button Grid.Row="7" Grid.Column="6" Background="White"
-                Click="MarkSquareDirty" Tag="76"
-                >
+        <Button Grid.Row="7" Grid.Column="6" Background="White" Tag="76"
+				PreviewMouseMove="Button_PreviewMouseMove" PreviewMouseUp="Button_PreviewMouseUp" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
             <Image Source="{Binding Squares[7][6].Piece, Converter={StaticResource PieceToImageConverter}}"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center"
