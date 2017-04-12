@@ -4,7 +4,7 @@ namespace ChessWithTDD
 {
     public interface IMoveProvider
     {
-        event EventHandler MoveChosenEvent;
+        event MoveProviderEventHandler MoveChosenEvent;
     }
 
     public class MoveProviderEventArgs : EventArgs
@@ -16,4 +16,6 @@ namespace ChessWithTDD
 
         public IMove TheMove { get; private set; }
     }
+
+    public delegate void MoveProviderEventHandler(object sender, MoveProviderEventArgs eventArgs);
 }
