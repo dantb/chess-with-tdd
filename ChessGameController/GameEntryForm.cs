@@ -2,10 +2,6 @@
 using ChessGameUI;
 using System;
 using System.Windows.Forms;
-using System.Windows.Forms;
-
-using System.Windows;
-using System.Windows.Forms.Integration;
 
 namespace ChessGameController
 {
@@ -23,7 +19,6 @@ namespace ChessGameController
             theBoard = GetAFullyInitialisedGameBoard();
 
             MainWindow chessBoardGUI = new MainWindow(theBoard, BlackTeamRB.Checked ? Colour.Black : Colour.White);
-            ElementHost.EnableModelessKeyboardInterop(chessBoardGUI);
             chessBoardGUI.MoveChosenEvent += ChessBoardGUI_MoveChosenEvent;
 
             try
@@ -46,7 +41,12 @@ namespace ChessGameController
             {
                 theBoard.Apply(fromSquare, toSquare);
                 MainWindow chessBoard = (MainWindow) sender;
-                chessBoard.ColourOfTeamWithTurn = chessBoard.ColourOfTeamWithTurn == Colour.White ?
+                Colour teamThatMoved = chessBoard.ColourOfTeamWithTurn;
+                if (theBoard.CheckMate)
+                {
+                    ShowCheckMateDialogue(teamThatMoved, chessBoard);
+                }
+                chessBoard.ColourOfTeamWithTurn = teamThatMoved == Colour.White ?
                     Colour.Black : Colour.White;
             }
             else
@@ -54,6 +54,22 @@ namespace ChessGameController
                 string rowColumnString = $"row {fromSquare.Row}, column {fromSquare.Col}, to row {toSquare.Row}, column {toSquare.Col}";
                 System.Windows.MessageBox.Show("Move from " + rowColumnString + "is invalid.");
             }
+        }
+
+        private void ShowCheckMateDialogue(Colour winningColour, MainWindow chessBoard)
+        {
+            const string White = "white";
+            const string Black = "black";
+            string winningTeam = winningColour == Colour.White ?
+                White : Black;
+            string losingTeam = winningColour == Colour.White ?
+                Black : White;
+            MessageBox.Show(
+                $"The {losingTeam} king is in checkmate. The {winningTeam} team wins!\n\n\tClick ok to close the board.",
+                "Check mate!",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
+            chessBoard.Close();
         }
 
         private IBoard GetAFullyInitialisedGameBoard()

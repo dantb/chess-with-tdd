@@ -37,10 +37,7 @@ namespace ChessGameUI
                     int toCol = Grid.GetColumn(button);
                     int fromRow = Grid.GetRow(_dragOperation.Source.Button);
                     int fromCol = Grid.GetColumn(_dragOperation.Source.Button);
-                    Move theMove = new Move(fromRow, fromCol, toRow, toCol);                  
-                    _dragOperation.Target.ButtonImage.Opacity = 1;
-                    _dragOperation.Source.ButtonImage = null;
-                    _dragOperation = null;
+                    Move theMove = new Move(fromRow, fromCol, toRow, toCol);
                     _window.RaiseMoveChosenEvent(new MoveProviderEventArgs(theMove));
                 }
             }

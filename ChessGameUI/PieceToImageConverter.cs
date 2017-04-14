@@ -1,13 +1,14 @@
 ﻿using ChessWithTDD;
 using System;
 using System.Globalization;
+using System.IO;
 using System.Windows.Data;
 
 namespace ChessGameUI
 {
     public class PieceToImageConverter : IValueConverter
     {
-        const string ImageFolder = @"C:\Programming\ChessWithTDD\ChessWithTDD\ChessGameUI\PieceImages\";
+        const string ImageFolderRelativePath = @"/../../../ChessGameUI/PieceImages/";
         const string BlackRook = "BlackRook";
         const string BlackKnight = "BlackKnight";
         const string BlackBishop = "BlackBishop";
@@ -27,45 +28,44 @@ namespace ChessGameUI
             if (value != null)
             {
                 IPiece piece = (IPiece) value;
-                string fileName = GetFileName(piece);
-                return ImageFolder + fileName;
+                string fileName = GetFileName(piece) + PNGFileExtension;
+                DirectoryInfo pieceImages = new DirectoryInfo(Directory.GetCurrentDirectory() + ImageFolderRelativePath);
+                return pieceImages + fileName;
             }
-                       
-            return "";
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return "Converted back";
+            throw new NotImplementedException("Chess board only uses one way data binding");
         }
 
         private string GetFileName(IPiece piece)
         {
-            Colour colour = piece.Colour;
-            Colour playerColour = MainWindow.BottomOfBoardTeamColour;
+            Colour pieceColour = piece.Colour;
             if (piece is Bishop)
             {
-                return (colour != playerColour ? BlackBishop : WhiteBishop) + PNGFileExtension;
+                return (pieceColour == Colour.Black ? BlackBishop : WhiteBishop);
             }
             else if (piece is Knight)
             {
-                return (colour != playerColour ? BlackKnight : WhiteKnight) + PNGFileExtension;
+                return (pieceColour == Colour.Black ? BlackKnight : WhiteKnight);
             }
             else if (piece is Rook)
             {
-                return (colour != playerColour ? BlackRook : WhiteRook) + PNGFileExtension;
+                return (pieceColour == Colour.Black ? BlackRook : WhiteRook);
             }
             else if (piece is Queen)
             {
-                return (colour != playerColour ? BlackQueen : WhiteQueen) + PNGFileExtension;
+                return (pieceColour == Colour.Black ? BlackQueen : WhiteQueen);
             }
             else if (piece is King)
             {
-                return (colour != playerColour ? BlackKing : WhiteKing) + PNGFileExtension;
+                return (pieceColour == Colour.Black ? BlackKing : WhiteKing);
             }
             else if (piece is WhitePawn || piece is BlackPawn)
             {
-                return (colour != playerColour ? BlackPawn : WhitePawn) + PNGFileExtension;
+                return (pieceColour == Colour.Black ? BlackPawn : WhitePawn);
             }
             throw new ArgumentException("The piece does not have a valid type.");
         }

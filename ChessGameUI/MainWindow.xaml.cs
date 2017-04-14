@@ -1,20 +1,8 @@
 ﻿using ChessWithTDD;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ChessGameUI
 {
@@ -38,17 +26,8 @@ namespace ChessGameUI
             InitializeComponent();
             _theBoard = board;
             _dragManager = new DragManager(_theBoard, this);
-            BottomOfBoardTeamColour = playerColour;
             ColourOfTeamWithTurn = Colour.White;
             DataContext = _theBoard;
-        }
-
-        /// <summary>
-        /// Colour of the team at the bottom of the board.
-        /// </summary>
-        public static Colour BottomOfBoardTeamColour
-        {
-            get; private set;
         }
 
         public Colour ColourOfTeamWithTurn
@@ -63,24 +42,27 @@ namespace ChessGameUI
             {
                 if (e.LeftButton == MouseButtonState.Pressed)
                 {
-                    int gridRow = Grid.GetRow(button);
-                    int gridCol = Grid.GetColumn(button);
-                    if (_theBoard.GetSquare(gridRow, gridCol).ContainsPiece)
+                    if (!_dragManager.InDrag)
                     {
-                        if (_theBoard.GetSquare(gridRow, gridCol).Piece.Colour == ColourOfTeamWithTurn)
+                        int gridRow = Grid.GetRow(button);
+                        int gridCol = Grid.GetColumn(button);
+                        if (_theBoard.GetSquare(gridRow, gridCol).ContainsPiece)
                         {
-                            if (!_dragManager.InDrag &&
-                                button.Content is Image &&
-                                _dragManager.LastButtonLeftMousePressedIn == button)
-                            {                             
-                                _dragManager.BeginDrag(button);
+                            if (_theBoard.GetSquare(gridRow, gridCol).Piece.Colour == ColourOfTeamWithTurn)
+                            {
+                                if (!_dragManager.InDrag &&
+                                    button.Content is Image &&
+                                    _dragManager.LastButtonLeftMousePressedIn == button)
+                                {
+                                    _dragManager.BeginDrag(button);
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        Cursor = Cursors.No;
-                    }                   
+                        else
+                        {
+                            Cursor = Cursors.No;
+                        }
+                    }               
                 }
             }
         }
