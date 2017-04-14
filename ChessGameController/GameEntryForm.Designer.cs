@@ -30,22 +30,28 @@
         {
             this.StartGameButton = new System.Windows.Forms.Button();
             this.BlackTeamRB = new System.Windows.Forms.RadioButton();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.TeamRadioButtonsPanel = new System.Windows.Forms.Panel();
             this.YourTeamLabel = new System.Windows.Forms.Label();
             this.WhiteTeamRB = new System.Windows.Forms.RadioButton();
-            this.panel1.SuspendLayout();
+            this.ButtonTeamSplitter = new System.Windows.Forms.SplitContainer();
+            this.TeamRadioButtonsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ButtonTeamSplitter)).BeginInit();
+            this.ButtonTeamSplitter.Panel1.SuspendLayout();
+            this.ButtonTeamSplitter.Panel2.SuspendLayout();
+            this.ButtonTeamSplitter.SuspendLayout();
             this.SuspendLayout();
             // 
             // StartGameButton
             // 
             this.StartGameButton.BackColor = System.Drawing.Color.SaddleBrown;
+            this.StartGameButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StartGameButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.StartGameButton.FlatAppearance.BorderSize = 10;
             this.StartGameButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DimGray;
             this.StartGameButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
             this.StartGameButton.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StartGameButton.ForeColor = System.Drawing.Color.BurlyWood;
-            this.StartGameButton.Location = new System.Drawing.Point(12, 12);
+            this.StartGameButton.Location = new System.Drawing.Point(0, 0);
             this.StartGameButton.Name = "StartGameButton";
             this.StartGameButton.Size = new System.Drawing.Size(206, 109);
             this.StartGameButton.TabIndex = 0;
@@ -66,16 +72,17 @@
             this.BlackTeamRB.Text = "Black";
             this.BlackTeamRB.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // TeamRadioButtonsPanel
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.YourTeamLabel);
-            this.panel1.Controls.Add(this.WhiteTeamRB);
-            this.panel1.Controls.Add(this.BlackTeamRB);
-            this.panel1.Location = new System.Drawing.Point(235, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 109);
-            this.panel1.TabIndex = 2;
+            this.TeamRadioButtonsPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.TeamRadioButtonsPanel.Controls.Add(this.YourTeamLabel);
+            this.TeamRadioButtonsPanel.Controls.Add(this.WhiteTeamRB);
+            this.TeamRadioButtonsPanel.Controls.Add(this.BlackTeamRB);
+            this.TeamRadioButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TeamRadioButtonsPanel.Location = new System.Drawing.Point(0, 0);
+            this.TeamRadioButtonsPanel.Name = "TeamRadioButtonsPanel";
+            this.TeamRadioButtonsPanel.Size = new System.Drawing.Size(206, 109);
+            this.TeamRadioButtonsPanel.TabIndex = 2;
             // 
             // YourTeamLabel
             // 
@@ -98,18 +105,43 @@
             this.WhiteTeamRB.Text = "White";
             this.WhiteTeamRB.UseVisualStyleBackColor = true;
             // 
+            // ButtonTeamSplitter
+            // 
+            this.ButtonTeamSplitter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ButtonTeamSplitter.Location = new System.Drawing.Point(12, 12);
+            this.ButtonTeamSplitter.Name = "ButtonTeamSplitter";
+            // 
+            // ButtonTeamSplitter.Panel1
+            // 
+            this.ButtonTeamSplitter.Panel1.Controls.Add(this.StartGameButton);
+            this.ButtonTeamSplitter.Panel1MinSize = 206;
+            // 
+            // ButtonTeamSplitter.Panel2
+            // 
+            this.ButtonTeamSplitter.Panel2.Controls.Add(this.TeamRadioButtonsPanel);
+            this.ButtonTeamSplitter.Panel2MinSize = 206;
+            this.ButtonTeamSplitter.Size = new System.Drawing.Size(416, 109);
+            this.ButtonTeamSplitter.SplitterDistance = 206;
+            this.ButtonTeamSplitter.TabIndex = 3;
+            // 
             // GameEntryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.BurlyWood;
-            this.ClientSize = new System.Drawing.Size(452, 134);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.StartGameButton);
+            this.ClientSize = new System.Drawing.Size(441, 136);
+            this.Controls.Add(this.ButtonTeamSplitter);
+            this.MinimumSize = new System.Drawing.Size(457, 175);
             this.Name = "GameEntryForm";
             this.Text = "Chess Game";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.TeamRadioButtonsPanel.ResumeLayout(false);
+            this.TeamRadioButtonsPanel.PerformLayout();
+            this.ButtonTeamSplitter.Panel1.ResumeLayout(false);
+            this.ButtonTeamSplitter.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ButtonTeamSplitter)).EndInit();
+            this.ButtonTeamSplitter.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -118,9 +150,10 @@
 
         private System.Windows.Forms.Button StartGameButton;
         private System.Windows.Forms.RadioButton BlackTeamRB;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel TeamRadioButtonsPanel;
         private System.Windows.Forms.RadioButton WhiteTeamRB;
         private System.Windows.Forms.Label YourTeamLabel;
+        private System.Windows.Forms.SplitContainer ButtonTeamSplitter;
     }
 }
 
