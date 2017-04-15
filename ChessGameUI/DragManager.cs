@@ -1,6 +1,7 @@
 ﻿using ChessWithTDD;
 using System.Diagnostics;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace ChessGameUI
@@ -38,6 +39,7 @@ namespace ChessGameUI
                     int fromRow = Grid.GetRow(_dragOperation.Source.Button);
                     int fromCol = Grid.GetColumn(_dragOperation.Source.Button);
                     Move theMove = new Move(fromRow, fromCol, toRow, toCol);
+                    BindingOperations.SetBinding(_dragOperation.Target.ButtonImage, Image.SourceProperty, _dragOperation.Target.OriginalBinding);
                     _window.RaiseMoveChosenEvent(new MoveProviderEventArgs(theMove));
                 }
             }
@@ -47,7 +49,7 @@ namespace ChessGameUI
                 _dragOperation.Source.ButtonImage.Opacity = 1;
                 if (_dragOperation.Target != null)
                 {
-                    _dragOperation.Target.ButtonImage = _dragOperation.Target.OriginalImage;
+                    BindingOperations.SetBinding(_dragOperation.Target.ButtonImage, Image.SourceProperty, _dragOperation.Target.OriginalBinding);
                 }
             }
             _window.Cursor = Cursors.Arrow;
@@ -61,7 +63,7 @@ namespace ChessGameUI
             {
                 Debug.Print("Button Mouse leave drag target");
                 //set target piece back to what it was before
-                button.Content = _dragOperation.Target.OriginalImage;
+                BindingOperations.SetBinding(_dragOperation.Target.ButtonImage, Image.SourceProperty, _dragOperation.Target.OriginalBinding);
                 _dragOperation.Target = null;
             }
             else if (button == _dragOperation.Source.Button)
@@ -91,6 +93,7 @@ namespace ChessGameUI
                         Source = _dragOperation.Source.ButtonImage.Source.Clone(),
                         Opacity = 1
                     };
+
                     theTargetButton.ButtonImage = sourceImageClone;
                     //set new target
                     _dragOperation.Target = theTargetButton;
@@ -151,7 +154,7 @@ namespace ChessGameUI
         public DragButtonTarget(Button button)
         {
             Button = button;
-            OriginalImage = button.Content as Image;
+            OriginalBinding = BindingOperations.GetBinding(button.Content as Image, Image.SourceProperty);
         }
 
         public Button Button { get; }
@@ -166,6 +169,10 @@ namespace ChessGameUI
                 Button.Content = value;
             }
         }
-        public Image OriginalImage { get; }
+        /// <summary>
+        /// Retain the original binding of the target square's contents with the board. It will be temporarily disabled
+        /// when the drag operation is in progress in order to show potential move
+        /// </summary>
+        public Binding OriginalBinding { get; }
     }
 }
