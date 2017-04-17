@@ -1,5 +1,5 @@
 # ChessWithTDD
-As a learning exercise I've decided to create a chess game and engine from scratch. All of the components use Microsoft technologies. The components are:
+As a learning exercise I've decided to create a chess game and engine from scratch. All of the components use Microsoft technologies; the code is written in C# and the board UI uses WPF. The components are:
 
 ChessWithTDD - The board representation or back-end for the game. I'm writing this using test-driven development with Rhino.Mocks and NUnit. This contains all the rules of chess - including move validation, and check/mate evaluation. Every line of code should be covered by a unit test in this library.
 
