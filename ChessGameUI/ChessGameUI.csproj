@@ -64,7 +64,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DragManager.cs" />
+    <Compile Include="DragManagement\DragButtonSource.cs" />
+    <Compile Include="DragManagement\DragButtonTarget.cs" />
+    <Compile Include="DragManagement\DragManager.cs" />
+    <Compile Include="DragManagement\DragOperation.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
