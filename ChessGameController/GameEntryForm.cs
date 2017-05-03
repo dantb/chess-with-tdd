@@ -7,7 +7,7 @@ namespace ChessGameController
 {
     public partial class GameEntryForm : Form
     {
-        public IBoard theBoard;
+        private IBoard theBoard;
 
         public GameEntryForm()
         {

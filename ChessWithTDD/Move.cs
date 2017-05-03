@@ -10,9 +10,9 @@
             ToCol = colTo;
         }
 
-        public int FromRow { get; private set; }
-        public int FromCol { get; private set; }
-        public int ToRow { get; private set; }
-        public int ToCol { get; private set; }
+        public int FromRow { get; }
+        public int FromCol { get; }
+        public int ToRow { get; }
+        public int ToCol { get; }
     }
 }

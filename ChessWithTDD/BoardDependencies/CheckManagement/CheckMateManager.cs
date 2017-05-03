@@ -4,7 +4,7 @@ namespace ChessWithTDD
 {
     public class CheckMateManager : ICheckMateManager
     {
-        ICheckMateEscapeManager _checkMateEscapeManager;
+        private ICheckMateEscapeManager _checkMateEscapeManager;
 
         public CheckMateManager(ICheckMateEscapeManager checkMateEscapeManager)
         {

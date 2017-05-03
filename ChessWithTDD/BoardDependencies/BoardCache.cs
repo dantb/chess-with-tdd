@@ -5,8 +5,8 @@ namespace ChessWithTDD
 {
     public class BoardCache : IBoardCache
     {
-        HashSet<ISquare> _whitePieceSquares;
-        HashSet<ISquare> _blackPieceSquares;
+        private HashSet<ISquare> _whitePieceSquares;
+        private HashSet<ISquare> _blackPieceSquares;
         private ISquare _blackKingSquare;
         private ISquare _whiteKingSquare;
         private IBoard _theBoard;
