@@ -10,9 +10,9 @@ namespace ChessGameUI
     {
         private IBoard _theBoard;
         private DragOperation _dragOperation;
-        private MainWindow _window;
+        private BoardFrontEnd _window;
 
-        public DragManager(IBoard theBoard, MainWindow window)
+        public DragManager(IBoard theBoard, BoardFrontEnd window)
         {
             _theBoard = theBoard;
             _window = window;

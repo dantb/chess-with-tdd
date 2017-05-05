@@ -9,7 +9,7 @@ namespace ChessGameUI
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IMoveProvider
+    public partial class BoardFrontEnd : Window, IMoveProvider
     {
         IBoard _theBoard;
         DragManager _dragManager;
@@ -21,7 +21,7 @@ namespace ChessGameUI
             MoveChosenEvent?.Invoke(this, e);
         }
 
-        public MainWindow(IBoard board, Colour playerColour)
+        public BoardFrontEnd(IBoard board, Colour playerColour)
         {
             InitializeComponent();
             _theBoard = board;

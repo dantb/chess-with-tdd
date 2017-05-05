@@ -7,7 +7,7 @@ namespace ChessGameController
 {
     public partial class GameEntryForm : Form
     {
-        private IBoard theBoard;
+        private IBoard _theBoard;
 
         public GameEntryForm()
         {
@@ -16,13 +16,9 @@ namespace ChessGameController
 
         private void StartGameButton_Click(object sender, EventArgs e)
         {
-            theBoard = GetAFullyInitialisedGameBoard();
-
-            MainWindow chessBoardGUI = new MainWindow(theBoard, BlackTeamRB.Checked ? Colour.Black : Colour.White);
-            chessBoardGUI.MoveChosenEvent += ChessBoardGUI_MoveChosenEvent;
-
+            BoardFrontEnd chessBoardGUI = GetBoardUI();
             try
-            {                
+            {
                 chessBoardGUI.ShowDialog();
             }
             catch
@@ -32,31 +28,49 @@ namespace ChessGameController
             }
         }
 
+        private BoardFrontEnd GetBoardUI()
+        {
+            _theBoard = GetAFullyInitialisedGameBoard();
+
+            BoardFrontEnd chessBoardGUI = new BoardFrontEnd(_theBoard, BlackTeamRB.Checked ? Colour.Black : Colour.White);
+            chessBoardGUI.MoveChosenEvent += ChessBoardGUI_MoveChosenEvent;
+            return chessBoardGUI;
+        }
+
         private void ChessBoardGUI_MoveChosenEvent(object sender, MoveProviderEventArgs e)
         {
             IMove move = e.TheMove;
-            ISquare fromSquare = theBoard.GetSquare(move.FromRow, move.FromCol);
-            ISquare toSquare = theBoard.GetSquare(move.ToRow, move.ToCol);
-            if (theBoard.MoveIsValid(fromSquare, toSquare))
+            ISquare fromSquare = _theBoard.GetSquare(move.FromRow, move.FromCol);
+            ISquare toSquare = _theBoard.GetSquare(move.ToRow, move.ToCol);
+            if (_theBoard.MoveIsValid(fromSquare, toSquare))
             {
-                theBoard.Apply(fromSquare, toSquare);
-                MainWindow chessBoard = (MainWindow) sender;
-                Colour teamThatMoved = chessBoard.ColourOfTeamWithTurn;
-                if (theBoard.CheckMate)
-                {
-                    ShowCheckMateDialogue(teamThatMoved, chessBoard);
-                }
-                chessBoard.ColourOfTeamWithTurn = teamThatMoved == Colour.White ?
-                    Colour.Black : Colour.White;
+                ApplyMove((BoardFrontEnd)sender, fromSquare, toSquare);
             }
             else
             {
-                string rowColumnString = $"row {fromSquare.Row}, column {fromSquare.Col}, to row {toSquare.Row}, column {toSquare.Col}";
-                System.Windows.MessageBox.Show("Move from " + rowColumnString + "is invalid.");
+                ShowInvalidMoveDialogue(fromSquare, toSquare);
             }
         }
 
-        private void ShowCheckMateDialogue(Colour winningColour, MainWindow chessBoard)
+        private void ApplyMove(BoardFrontEnd chessBoard, ISquare fromSquare, ISquare toSquare)
+        {
+            _theBoard.Apply(fromSquare, toSquare);
+            Colour teamThatMoved = chessBoard.ColourOfTeamWithTurn;
+            if (_theBoard.CheckMate)
+            {
+                ShowCheckMateDialogue(teamThatMoved, chessBoard);
+            }
+            chessBoard.ColourOfTeamWithTurn = teamThatMoved == Colour.White ?
+                Colour.Black : Colour.White;
+        }
+
+        private void ShowInvalidMoveDialogue(ISquare fromSquare, ISquare toSquare)
+        {
+            string rowColumnString = $"row {fromSquare.Row}, column {fromSquare.Col}, to row {toSquare.Row}, column {toSquare.Col}";
+            System.Windows.MessageBox.Show("Move from " + rowColumnString + "is invalid.");
+        }
+
+        private void ShowCheckMateDialogue(Colour winningColour, BoardFrontEnd chessBoard)
         {
             const string White = "white";
             const string Black = "black";
@@ -80,9 +94,9 @@ namespace ChessGameController
             IBoardCache boardCache = new BoardCache();
             ICheckManager checkManager = GetACheckManager(boardCache);
 
-            theBoard = new Board(boardInitialiser, moveValidator, pawnManager,
+            _theBoard = new Board(boardInitialiser, moveValidator, pawnManager,
                 boardCache, checkManager);
-            return theBoard;
+            return _theBoard;
         }
 
         private IMoveValidator GetAMoveValidator()
