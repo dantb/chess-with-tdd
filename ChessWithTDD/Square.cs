@@ -29,7 +29,7 @@ namespace ChessWithTDD
             {
                 _thePiece = value;
                 OnPropertyChanged();
-            }            
+            }
         }
 
         public int Col { get; }

@@ -9,7 +9,7 @@ namespace ChessWithTDD
         void UpdateBoardCache();
 
         ISquare BlackKingSquare { get; } 
-               
+
         ISquare WhiteKingSquare { get; }
 
         IBoard TheBoard { get; }

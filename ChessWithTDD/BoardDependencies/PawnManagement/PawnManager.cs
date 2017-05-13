@@ -8,6 +8,7 @@
         {
             _enPassantManager = enPassantManager;
         }
+
         public void MakePawnSpecificAmendments(ISquare fromSquare, ISquare toSquare, IBoard theBoard)
         {
             IPawn pawn = fromSquare.Piece as IPawn;
