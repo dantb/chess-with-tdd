@@ -1,5 +1,5 @@
-﻿using ChessWithTDD;
-using ChessGameUI;
+﻿using ChessGameUI;
+using ChessWithTDD;
 using System;
 using System.Windows.Forms;
 

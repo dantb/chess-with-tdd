@@ -14,7 +14,7 @@ namespace ChessWithTDD
             TheMove = theMove;
         }
 
-        public IMove TheMove { get; private set; }
+        public IMove TheMove { get; }
     }
 
     public delegate void MoveProviderEventHandler(object sender, MoveProviderEventArgs eventArgs);

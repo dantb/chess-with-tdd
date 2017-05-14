@@ -11,15 +11,10 @@ namespace ChessGameUI
     /// </summary>
     public partial class BoardFrontEnd : Window, IMoveProvider
     {
-        IBoard _theBoard;
-        DragManager _dragManager;
+        private IBoard _theBoard;
+        private DragManager _dragManager;
 
         public event MoveProviderEventHandler MoveChosenEvent;
-
-        internal void RaiseMoveChosenEvent(MoveProviderEventArgs e)
-        {
-            MoveChosenEvent?.Invoke(this, e);
-        }
 
         public BoardFrontEnd(IBoard board, Colour playerColour)
         {
@@ -33,6 +28,11 @@ namespace ChessGameUI
         public Colour ColourOfTeamWithTurn
         {
             get; set;
+        }
+
+        internal void RaiseMoveChosenEvent(MoveProviderEventArgs e)
+        {
+            MoveChosenEvent?.Invoke(this, e);
         }
 
         private void Button_PreviewMouseMove(object sender, MouseEventArgs e)
@@ -50,8 +50,7 @@ namespace ChessGameUI
                         {
                             if (_theBoard.GetSquare(gridRow, gridCol).Piece.Colour == ColourOfTeamWithTurn)
                             {
-                                if (!_dragManager.InDrag &&
-                                    button.Content is Image &&
+                                if (button.Content is Image &&
                                     _dragManager.LastButtonLeftMousePressedIn == button)
                                 {
                                     _dragManager.BeginDrag(button);

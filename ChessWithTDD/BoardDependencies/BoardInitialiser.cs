@@ -98,7 +98,7 @@ namespace ChessWithTDD
         {
             InitialiseQueen(Colour.White, WHITE_BACK_ROW, QUEEN_COLUMN, theBoard);
 
-            InitialiseQueen(Colour.Black, BLACK_BACK_ROW, QUEEN_COLUMN, theBoard);            
+            InitialiseQueen(Colour.Black, BLACK_BACK_ROW, QUEEN_COLUMN, theBoard);
         }
 
         private void InitialiseQueen(Colour theColour, int row, int col, IBoard theBoard)
