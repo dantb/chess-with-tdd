@@ -1,9 +1,11 @@
 ﻿using Rhino.Mocks;
 using static Rhino.Mocks.MockRepository;
 using static ChessWithTDD.BoardConstants;
+using System;
 
 namespace ChessWithTDD.Tests
 {
+
     internal static class CommonTestMethods
     {
         internal static IBoard MockBoard()
