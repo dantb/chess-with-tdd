@@ -172,7 +172,7 @@ namespace ChessWithTDD.Tests
         {
             //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
-            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
             Board board = new Board(serviceLocator);
 
@@ -191,7 +191,7 @@ namespace ChessWithTDD.Tests
         {
             //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
-            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
             Board board = new Board(serviceLocator);
 
@@ -210,7 +210,7 @@ namespace ChessWithTDD.Tests
         {
             //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
-            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
             Board board = new Board(serviceLocator);
 
@@ -232,7 +232,7 @@ namespace ChessWithTDD.Tests
         {
             //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
-            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
             Board board = new Board(serviceLocator);
 

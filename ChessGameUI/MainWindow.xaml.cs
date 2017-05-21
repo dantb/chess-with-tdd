@@ -118,7 +118,6 @@ namespace ChessGameUI
             {
                 if (_dragManager.InDrag)
                 {
-                    Debug.Print("Mouse leave fired");
                     _dragManager.ButtonDragLeave(button);
                 }
             }
@@ -133,7 +132,6 @@ namespace ChessGameUI
                     e.ButtonState == MouseButtonState.Released &&
                     _dragManager.InDrag)
                 {
-                    Debug.Print("Mouse up fired");
                     _dragManager.ButtonDrop(button);
                 }
                 else

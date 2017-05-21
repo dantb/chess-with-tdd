@@ -7,9 +7,13 @@
     public interface IStrictServiceLocator
     {
         IBoardCache GetServiceBoardCache();
+
         IBoardInitialiser GetServiceBoardInitialiser();
+
         ICheckManager GetServiceCheckManager();
+
         IMoveValidator GetServiceMoveValidator();
+
         IPawnManager GetServicePawnManager();
     }
 }

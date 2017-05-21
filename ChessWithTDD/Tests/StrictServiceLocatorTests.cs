@@ -15,7 +15,7 @@ namespace ChessWithTDD.Tests
         private IMoveValidator _moveValidator;
         private IPawnManager _pawnManager;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void InstantiateServiceLocatorWithDependencies()
         {
             _boardInitialiser = GenerateMock<IBoardInitialiser>();

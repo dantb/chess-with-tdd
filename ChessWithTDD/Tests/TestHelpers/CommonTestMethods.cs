@@ -8,6 +8,42 @@ namespace ChessWithTDD.Tests
 
     internal static class CommonTestMethods
     {
+        internal static IStrictServiceLocator MockServiceLocator()
+        {
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(MockBoardInitialiser());
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(MockBoardCache());
+            serviceLocator.Stub(s => s.GetServiceCheckManager()).Return(MockCheckManager());
+            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(MockPawnManager());
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(MockMoveValidator());
+            return serviceLocator;
+        }
+
+        internal static IMoveValidator MockMoveValidator()
+        {
+            return GenerateMock<IMoveValidator>();
+        }
+
+        internal static IPawnManager MockPawnManager()
+        {
+            return GenerateMock<IPawnManager>();
+        }
+
+        internal static ICheckManager MockCheckManager()
+        {
+            return GenerateMock<ICheckManager>();
+        }
+
+        internal static IBoardInitialiser MockBoardInitialiser()
+        {
+            return GenerateMock<IBoardInitialiser>();
+        }
+
+        internal static IBoardCache MockBoardCache()
+        {
+            return GenerateMock<IBoardCache>();
+        }
+
         internal static IBoard MockBoard()
         {
             return GenerateMock<IBoard>();
