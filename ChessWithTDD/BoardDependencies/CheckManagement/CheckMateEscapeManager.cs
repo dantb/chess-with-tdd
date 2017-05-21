@@ -69,6 +69,7 @@ namespace ChessWithTDD
                         }
                     }
                 }
+                return false;
             }
             else if (kingSquare.IsMultipleSquaresWestWestOf(threateningSquare))
             {
@@ -83,6 +84,7 @@ namespace ChessWithTDD
                         }
                     }
                 }
+                return false;
             }
             else if (kingSquare.IsMultipleSquaresNorthNorthOf(threateningSquare))
             {
@@ -97,6 +99,7 @@ namespace ChessWithTDD
                         }
                     }
                 }
+                return false;
             }
             else if (kingSquare.IsMultipleSquaresSouthSouthOf(threateningSquare))
             {
@@ -111,6 +114,7 @@ namespace ChessWithTDD
                         }
                     }
                 }
+                return false;
             }
             else if (kingSquare.IsMultipleSquaresNorthWestOf(threateningSquare))
             {
@@ -127,6 +131,7 @@ namespace ChessWithTDD
                     }
                     initialCol--;
                 }
+                return false;
             }
             else if (kingSquare.IsMultipleSquaresNorthEastOf(threateningSquare))
             {
@@ -143,6 +148,7 @@ namespace ChessWithTDD
                     }
                     initialCol++;
                 }
+                return false;
             }
             else if (kingSquare.IsMultipleSquaresSouthWestOf(threateningSquare))
             {
@@ -159,6 +165,7 @@ namespace ChessWithTDD
                     }
                     initialCol--;
                 }
+                return false;
             }
             else if (kingSquare.IsMultipleSquaresSouthEastOf(threateningSquare))
             {
@@ -175,6 +182,7 @@ namespace ChessWithTDD
                     }
                     initialCol++;
                 }
+                return false;
             }
             return false;
         }
