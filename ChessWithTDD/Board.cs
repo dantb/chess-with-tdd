@@ -12,15 +12,16 @@ namespace ChessWithTDD
         private IBoardCache _boardCache;
         private ICheckManager _checkManager;
 
-        public Board(IBoardInitialiser boardInitialiser, IMoveValidator moveValidator, IPawnManager pawnManager, IBoardCache boardCache, ICheckManager checkManager)
+        public Board(IStrictServiceLocator serviceLocator)
         {
             InitialiseBoardDimensions();
+            IBoardInitialiser boardInitialiser = serviceLocator.GetServiceBoardInitialiser();
             boardInitialiser.InitialiseBoardPieces(this);
-            _moveValidator = moveValidator;
-            _pawnManager = pawnManager;
-            _boardCache = boardCache;
+            _moveValidator = serviceLocator.GetServiceMoveValidator();
+            _pawnManager = serviceLocator.GetServicePawnManager();
+            _boardCache = serviceLocator.GetServiceBoardCache();
             _boardCache.InitialiseBoardCache(this);
-            _checkManager = checkManager;
+            _checkManager = serviceLocator.GetServiceCheckManager();
         }
 
         public List<ISquare> PendingUpdates { get; set; } = new List<ISquare>();

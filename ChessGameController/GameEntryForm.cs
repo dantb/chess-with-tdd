@@ -94,8 +94,9 @@ namespace ChessGameController
             IBoardCache boardCache = new BoardCache();
             ICheckManager checkManager = GetACheckManager(boardCache);
 
-            _theBoard = new Board(boardInitialiser, moveValidator, pawnManager,
-                boardCache, checkManager);
+            IStrictServiceLocator strictServiceLocator = null;
+
+            _theBoard = new Board(strictServiceLocator);
             return _theBoard;
         }
 

@@ -29,13 +29,9 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardIsInitialisedWithCorrectDimensions()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
 
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
 
             Assert.True(board.RowCount == 8 && board.ColCount == 8);
         }       
@@ -43,13 +39,9 @@ namespace ChessWithTDD.Tests
         [Test]
         public void SquareAtPositionFiveSixOnBoardHasRowFiveAndColSix()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
 
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
 
             Assert.True(board.GetSquare(5, 6).Row == 5 && board.GetSquare(5, 6).Col == 6);
         }
@@ -58,12 +50,10 @@ namespace ChessWithTDD.Tests
         public void InitialiseBoardIsCalledWhenCreatingABoardInstance()
         {
             IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(mockBoardInitialiser);
 
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
 
             mockBoardInitialiser.AssertWasCalled(mbi => mbi.InitialiseBoardPieces(board));
         }
@@ -71,13 +61,11 @@ namespace ChessWithTDD.Tests
         [Test]
         public void InitialiseBoardCacheIsCalledWhenCreatingABoardInstance()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
             IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache);
 
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
 
             boardCache.AssertWasCalled(bc => bc.InitialiseBoardCache(board));
         }
@@ -90,16 +78,13 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveValidatorIsCalledWhenMoveIsValidIsCalled()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
             IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator);
             ISquare fromSquare = MockSquare();
             ISquare toSquare = MockSquare();
 
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
             bool isValidMove = board.MoveIsValid(fromSquare, toSquare);
 
             mockMoveValidator.AssertWasCalled(mmv => mmv.MoveIsValid(fromSquare, toSquare, board));
@@ -108,15 +93,12 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveIsNotValidIfMoveValidatorReturnsFalse()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
             IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator);
             ISquare fromSquare = MockSquare();
             ISquare toSquare = MockSquare();
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
             mockMoveValidator.Stub(mmv => mmv.MoveIsValid(fromSquare, toSquare, board)).Return(false);
 
             bool isValidMove = board.MoveIsValid(fromSquare, toSquare);
@@ -127,17 +109,14 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveIsNotValidIfMoveValidatorReturnsTrueButFromSquarePieceCannotMove()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
             IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator);
             IPiece pieceThatCannotMove = MockPiece();
             ISquare fromSquare = MockSquareWithPiece();
             ISquare toSquare = MockSquare();
             StubPieceCanMoveForSpecificSquares(pieceThatCannotMove, false, fromSquare, toSquare);
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
             mockMoveValidator.Stub(mmv => mmv.MoveIsValid(fromSquare, toSquare, board)).Return(true);
 
             bool isValidMove = board.MoveIsValid(fromSquare, toSquare);
@@ -148,16 +127,14 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveIsValidIfMoveValidatorReturnsTrueAndFromSquarePieceCanMove()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
             IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator);
             IPiece pieceThatCanMove = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(pieceThatCanMove);
             ISquare toSquare = MockSquare();
             StubPieceCanMoveForSpecificSquares(pieceThatCanMove, true, fromSquare, toSquare);
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
             mockMoveValidator.Stub(mmv => mmv.MoveIsValid(fromSquare, toSquare, board)).Return(true);
 
             bool isValidMove = board.MoveIsValid(fromSquare, toSquare);
@@ -177,17 +154,14 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledAndFromSquareContainsAPawnCallPawnManager()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
             IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager);
             IPawn pawn = MockPawn();
             ISquare fromSquare = MockSquareWithPiece(pawn);
             ISquare toSquare = MockSquare();
+            Board board = new Board(serviceLocator);
 
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
             board.Apply(fromSquare, toSquare);
 
             pawnManager.AssertWasCalled(pm => pm.MakePawnSpecificAmendments(fromSquare, toSquare, board));
@@ -196,17 +170,14 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledAndFromSquareContainsAnyPieceDoNotCallPawnManager()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
             IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager);
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
+            Board board = new Board(serviceLocator);
 
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
             board.Apply(fromSquare, toSquare);
 
             pawnManager.AssertWasNotCalled(pm => pm.MakePawnSpecificAmendments(fromSquare, toSquare, board));
@@ -215,16 +186,13 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledUnmarkEnPassantSquaresIsCalledWithTurnCounter()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
             IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager);
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
             int turnCounter = 5;
             board.TurnCounter = turnCounter;
 
@@ -236,16 +204,13 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledUpdateBoardCacheIsCalled()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
             IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache);
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
 
             board.Apply(fromSquare, toSquare);
 
@@ -255,16 +220,13 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledUpdateCheckStatesIsCalled()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
             ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceCheckManager()).Return(checkManager);
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
 
             board.Apply(fromSquare, toSquare);
 
@@ -278,21 +240,18 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledBoardCacheUpdatesBlackKingSquareIfBlackKingInFromSquareIsCalled()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            BoardCache boardCache = new BoardCache();
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache);
             IKing piece = MockKingWithColour(Colour.Black);
             Square fromSquare = new Square(3, 3);
             fromSquare.ContainsPiece = true;
             fromSquare.Piece = piece;
             Square toSquare = new Square(3, 4);
-
-            BoardCache boardCache = new BoardCache();
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
             board.SetSquare(fromSquare);
             board.SetSquare(toSquare);
+
             board.Apply(fromSquare, toSquare);
 
             Assert.AreEqual(boardCache.BlackKingSquare, toSquare);
@@ -305,21 +264,18 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledBoardCacheUpdatesWhiteKingSquareIfWhiteKingInFromSquareIsCalled()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            BoardCache boardCache = new BoardCache();
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache);
             IKing piece = MockKingWithColour(Colour.White);
             Square fromSquare = new Square(3, 3);
             fromSquare.ContainsPiece = true;
             fromSquare.Piece = piece;
             Square toSquare = new Square(3, 4);
-
-            BoardCache boardCache = new BoardCache();
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
             board.SetSquare(fromSquare);
             board.SetSquare(toSquare);
+
             board.Apply(fromSquare, toSquare);
 
             Assert.AreEqual(boardCache.WhiteKingSquare, toSquare);
@@ -331,17 +287,12 @@ namespace ChessWithTDD.Tests
         [Test]
         public void ApplyMoveToBoardChangesBoardStateCorrectly(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
             IPiece thePiece = MockPiece();
             IPiece capturedPiece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
             ISquare toSquare = MockSquareWithPiece(rowTo, colTo, capturedPiece);
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
 
             board.Apply(fromSquare, toSquare);
 
@@ -356,17 +307,12 @@ namespace ChessWithTDD.Tests
         [Test]
         public void ApplyMoveAddsToAndFromSquaresToPendingUpdatesForBoard(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
             IPiece thePiece = MockPiece();
             IPiece capturedPiece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
             ISquare toSquare = MockSquareWithPiece(rowTo, colTo, capturedPiece);
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
 
             board.Apply(fromSquare, toSquare);
 
@@ -377,18 +323,13 @@ namespace ChessWithTDD.Tests
         [Test]
         public void ApplyingMoveIncrementsTurnCounter()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
             IPiece thePiece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(thePiece);
             ISquare toSquare = MockSquareWithPiece();
-
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
             int turnCounter = board.TurnCounter;
+
             board.Apply(fromSquare, toSquare);
 
             Assert.AreEqual(board.TurnCounter, turnCounter + 1);
@@ -402,16 +343,18 @@ namespace ChessWithTDD.Tests
         [Test]
         public void TestOrderingOfCallsInApplyMethod()
         {
-            IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
             IPawnManager pawnManager = GenerateMock<IPawnManager>();
             IBoardCache boardCache = GenerateMock<IBoardCache>();
             ICheckManager checkManager = GenerateMock<ICheckManager>();
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager);
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache);
+            serviceLocator.Stub(s => s.GetServiceCheckManager()).Return(checkManager);
 
             IPawn pawn = MockPawn();
             ISquare fromSquare = MockSquareWithPiece(pawn);
             ISquare toSquare = MockSquare();
-            Board board = new Board(mockBoardInitialiser, mockMoveValidator, pawnManager, boardCache, checkManager);
+            Board board = new Board(serviceLocator);
 
             List<object> callOrder = new List<object>();
 

@@ -170,14 +170,11 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardCacheInitialisedWithWhitePawnsCorrectly()
         {
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache mockBoardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
-            //just to give me a real initialised board
+            //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
-            Board board = new Board(boardInitialiser, mockMoveValidator, pawnManager, mockBoardCache, checkManager);
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
+            Board board = new Board(serviceLocator);
 
             //System under test is a different board cache as we want to initialise here
             BoardCache boardCache = new BoardCache();
@@ -192,14 +189,11 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardCacheInitialisedWithBlackPawnsCorrectly()
         {
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache mockBoardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
-            //just to give me a real initialised board
+            //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
-            Board board = new Board(boardInitialiser, mockMoveValidator, pawnManager, mockBoardCache, checkManager);
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
+            Board board = new Board(serviceLocator);
 
             //System under test is a different board cache as we want to initialise here
             BoardCache boardCache = new BoardCache();
@@ -214,14 +208,11 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardCacheInitialisedWithWhiteBackRowCorrectly()
         {
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache mockBoardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
-            //just to give me a real initialised board
+            //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
-            Board board = new Board(boardInitialiser, mockMoveValidator, pawnManager, mockBoardCache, checkManager);
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
+            Board board = new Board(serviceLocator);
 
             //System under test is a different board cache as we want to initialise here
             BoardCache boardCache = new BoardCache();
@@ -239,14 +230,11 @@ namespace ChessWithTDD.Tests
         [Test]
         public void BoardCacheInitialisedWithBlackBackRowCorrectly()
         {
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            IBoardCache mockBoardCache = GenerateMock<IBoardCache>();
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-
-            //just to give me a real initialised board
+            //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
-            Board board = new Board(boardInitialiser, mockMoveValidator, pawnManager, mockBoardCache, checkManager);
+            IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
+            Board board = new Board(serviceLocator);
 
             //System under test is a different board cache as we want to initialise here
             BoardCache boardCache = new BoardCache();
