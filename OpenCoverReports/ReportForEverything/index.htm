@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html data-ng-app="coverageApp">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=1" />
+<title>Summary - Coverage Report</title>
+<link rel="stylesheet" type="text/css" href="report.css" />
+</head><body data-ng-controller="SummaryViewCtrl"><div class="container"><div class="containerleft">
+<h1>Summary</h1>
+<table class="overview table-fixed">
+<colgroup>
+<col class="column135" />
+<col />
+</colgroup>
+<tbody>
+<tr><th>Generated on:</th><td>21/05/2017 - 18:11:56</td></tr>
+<tr><th>Parser:</th><td>OpenCoverParser</td></tr>
+<tr><th>Assemblies:</th><td>1</td></tr>
+<tr><th>Classes:</th><td>25</td></tr>
+<tr><th>Files:</th><td>23</td></tr>
+<tr><th>Covered lines:</th><td>921</td></tr>
+<tr><th>Uncovered lines:</th><td>13</td></tr>
+<tr><th>Coverable lines:</th><td>934</td></tr>
+<tr><th>Total lines:</th><td>1499</td></tr>
+<tr><th>Line coverage:</th><td>98.6%</td></tr>
+<tr><th>Branch coverage:</th><td>96.9%</td></tr>
+</tbody>
+</table>
+<h1>Assemblies</h1>
+<div data-ng-if="filteringEnabled" data-reactive-table data-assemblies="assemblies" data-branch-coverage-available="branchCoverageAvailable"></div>
+<div data-ng-if="!filteringEnabled">
+<div class="ng-hide customizebox" data-ng-show="true"><input data-ng-click="enableFiltering()" value="Enable filtering" title="This may take some time since the report contains many classes." type="submit" /></div>
+</div>
+<table data-ng-if="!filteringEnabled" class="overview table-fixed">
+<colgroup>
+<col />
+<col class="column90" />
+<col class="column105" />
+<col class="column100" />
+<col class="column70" />
+<col class="column60" />
+<col class="column112" />
+<col class="column60" />
+<col class="column112" />
+</colgroup>
+<thead><tr><th>Name</th><th class="right">Covered</th><th class="right">Uncovered</th><th class="right">Coverable</th><th class="right">Total</th><th class="center" colspan="2">Line coverage</th><th class="center" colspan="2">Branch coverage</th></tr></thead>
+<tbody>
+<tr><th>ChessWithTDD</th><th class="right">921</th><th class="right">13</th><th class="right">934</th><th class="right">1499</th><th title="LineCoverage" class="right">98.6%</th><th><table class="coverage"><tr><td class="green covered99">&nbsp;</td><td class="red covered1">&nbsp;</td></tr></table></th><th class="right">96.9%</th><th><table class="coverage"><tr><td class="green covered97">&nbsp;</td><td class="red covered3">&nbsp;</td></tr></table></th></tr>
+<tr><td><a href="ChessWithTDD_Bishop.htm">ChessWithTDD.Bishop</a></td><td class="right">11</td><td class="right">0</td><td class="right">11</td><td class="right">25</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_BlackPawn.htm">ChessWithTDD.BlackPawn</a></td><td class="right">24</td><td class="right">1</td><td class="right">25</td><td class="right">51</td><td title="LineCoverage" class="right">96%</td><td><table class="coverage"><tr><td class="green covered96">&nbsp;</td><td class="red covered4">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_Board.htm">ChessWithTDD.Board</a></td><td class="right">60</td><td class="right">1</td><td class="right">61</td><td class="right">106</td><td title="LineCoverage" class="right">98.3%</td><td><table class="coverage"><tr><td class="green covered98">&nbsp;</td><td class="red covered2">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_BoardCache.htm">ChessWithTDD.BoardCache</a></td><td class="right">97</td><td class="right">0</td><td class="right">97</td><td class="right">136</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">85.7%</td><td><table class="coverage"><tr><td class="green covered86">&nbsp;</td><td class="red covered14">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_BoardConstants.htm">ChessWithTDD.BoardConstants</a></td><td class="right">0</td><td class="right">0</td><td class="right">0</td><td class="right">0</td><td title="MethodCoverage" class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_BoardInitialiser.htm">ChessWithTDD.BoardInitialiser</a></td><td class="right">83</td><td class="right">0</td><td class="right">83</td><td class="right">145</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_CheckManager.htm">ChessWithTDD.CheckManager</a></td><td class="right">41</td><td class="right">0</td><td class="right">41</td><td class="right">59</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">83.3%</td><td><table class="coverage"><tr><td class="green covered83">&nbsp;</td><td class="red covered17">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_CheckMateEscapeManager.htm">ChessWithTDD.CheckMateEscapeManager</a></td><td class="right">149</td><td class="right">0</td><td class="right">149</td><td class="right">193</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">98.3%</td><td><table class="coverage"><tr><td class="green covered98">&nbsp;</td><td class="red covered2">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_CheckMateManager.htm">ChessWithTDD.CheckMateManager</a></td><td class="right">33</td><td class="right">1</td><td class="right">34</td><td class="right">59</td><td title="LineCoverage" class="right">97%</td><td><table class="coverage"><tr><td class="green covered97">&nbsp;</td><td class="red covered3">&nbsp;</td></tr></table></td><td class="right">92.8%</td><td><table class="coverage"><tr><td class="green covered93">&nbsp;</td><td class="red covered7">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_EnPassantManager.htm">ChessWithTDD.EnPassantManager</a></td><td class="right">43</td><td class="right">0</td><td class="right">43</td><td class="right">64</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_GenericMoveValidator.htm">ChessWithTDD.GenericMoveValidator</a></td><td class="right">23</td><td class="right">0</td><td class="right">23</td><td class="right">38</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_King.htm">ChessWithTDD.King</a></td><td class="right">12</td><td class="right">0</td><td class="right">12</td><td class="right">27</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_Knight.htm">ChessWithTDD.Knight</a></td><td class="right">11</td><td class="right">0</td><td class="right">11</td><td class="right">25</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_Move.htm">ChessWithTDD.Move</a></td><td class="right">11</td><td class="right">0</td><td class="right">11</td><td class="right">18</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_MoveProviderEventArgs.htm">ChessWithTDD.MoveProviderEventArgs</a></td><td class="right">0</td><td class="right">5</td><td class="right">5</td><td class="right">21</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red covered100">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_MoveProviderEventHandler.htm">ChessWithTDD.MoveProviderEventHandler</a></td><td class="right">0</td><td class="right">0</td><td class="right">0</td><td class="right">0</td><td title="MethodCoverage" class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_MoveValidator.htm">ChessWithTDD.MoveValidator</a></td><td class="right">14</td><td class="right">0</td><td class="right">14</td><td class="right">27</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_MultiSquareMoveValidator.htm">ChessWithTDD.MultiSquareMoveValidator</a></td><td class="right">83</td><td class="right">0</td><td class="right">83</td><td class="right">106</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">97.9%</td><td><table class="coverage"><tr><td class="green covered98">&nbsp;</td><td class="red covered2">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_PawnManager.htm">ChessWithTDD.PawnManager</a></td><td class="right">13</td><td class="right">3</td><td class="right">16</td><td class="right">28</td><td title="LineCoverage" class="right">81.2%</td><td><table class="coverage"><tr><td class="green covered81">&nbsp;</td><td class="red covered19">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_Queen.htm">ChessWithTDD.Queen</a></td><td class="right">15</td><td class="right">0</td><td class="right">15</td><td class="right">32</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_Rook.htm">ChessWithTDD.Rook</a></td><td class="right">12</td><td class="right">0</td><td class="right">12</td><td class="right">24</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_Square.htm">ChessWithTDD.Square</a></td><td class="right">22</td><td class="right">1</td><td class="right">23</td><td class="right">50</td><td title="LineCoverage" class="right">95.6%</td><td><table class="coverage"><tr><td class="green covered96">&nbsp;</td><td class="red covered4">&nbsp;</td></tr></table></td><td class="right">50%</td><td><table class="coverage"><tr><td class="green covered50">&nbsp;</td><td class="red covered50">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_SquareExtensions.htm">ChessWithTDD.SquareExtensions</a></td><td class="right">113</td><td class="right">0</td><td class="right">113</td><td class="right">165</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_StrictServiceLocator.htm">ChessWithTDD.StrictServiceLocator</a></td><td class="right">27</td><td class="right">0</td><td class="right">27</td><td class="right">49</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td><td class="right"></td><td><table class="coverage"><tr><td class="gray covered100">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="ChessWithTDD_WhitePawn.htm">ChessWithTDD.WhitePawn</a></td><td class="right">24</td><td class="right">1</td><td class="right">25</td><td class="right">51</td><td title="LineCoverage" class="right">96%</td><td><table class="coverage"><tr><td class="green covered96">&nbsp;</td><td class="red covered4">&nbsp;</td></tr></table></td><td class="right">100%</td><td><table class="coverage"><tr><td class="green covered100">&nbsp;</td></tr></table></td></tr>
+</tbody>
+</table>
+<div class="footer">Generated by: ReportGenerator 2.5.5.0<br />21/05/2017 - 18:11:56<br /><a href="https://github.com/danielpalme/ReportGenerator">GitHub</a> | <a href="http://www.palmmedia.de">www.palmmedia.de</a></div></div></div>
+<script type="text/javascript" src="combined.js"></script>
+</body></html>

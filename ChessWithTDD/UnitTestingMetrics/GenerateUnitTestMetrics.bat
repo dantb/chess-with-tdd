@@ -44,7 +44,7 @@ REM *** The End ***
 -target:%nunitConsole% ^
 -register:user ^
 -targetargs:"%~dp0..\bin\Debug\ChessWithTDD.dll --work=%nunitResultsFolder%" ^
--filter:"+[ChessWithTDD*]* -[ChessWithTDD.Tests]*" ^
+-filter:"+[*]* -[*]*.Tests*" ^
 -output:"%openCoverResultsFolder%\oc_AllChessObjectLibraryClasses_results.xml" ^
 -searchdirs:"%~dp0..\bin\Debug"
 GOTO:EOF
