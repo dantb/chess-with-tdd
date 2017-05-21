@@ -63,12 +63,12 @@
     <Compile Include="Interfaces\BoardDependencies\MoveValidation\IMoveValidator.cs" />
     <Compile Include="Interfaces\BoardDependencies\MoveValidation\IMultiSquareMoveValidator.cs" />
     <Compile Include="Interfaces\BoardDependencies\PawnManagement\IPawnManager.cs" />
-    <Compile Include="Interfaces\IServiceLocator.cs" />
+    <Compile Include="Interfaces\IStrictServiceLocator.cs" />
     <Compile Include="Pieces\BlackPawn.cs" />
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="BoardDependencies\BoardInitialiser.cs" />
     <Compile Include="Interfaces\Pieces\IPawn.cs" />
-    <Compile Include="ServiceLocator.cs" />
+    <Compile Include="StrictServiceLocator.cs" />
     <Compile Include="SquareExtensions.cs" />
     <Compile Include="Tests\BoardDependencies\BoardCacheTests.cs" />
     <Compile Include="Tests\BoardDependencies\BoardInitialiserTests.cs" />
@@ -93,6 +93,7 @@
     <Compile Include="Tests\Pieces\KnightTests.cs" />
     <Compile Include="Tests\Pieces\QueenTests.cs" />
     <Compile Include="Tests\Pieces\RookTests.cs" />
+    <Compile Include="Tests\StrictServiceLocatorTests.cs" />
     <Compile Include="Tests\SquareExtensionsTests.cs" />
     <Compile Include="Tests\TestHelpers\CommonTestMethods.cs" />
     <Compile Include="Interfaces\IBoard.cs" />
@@ -105,7 +106,6 @@
     <Compile Include="Tests\SquareTests.cs" />
     <Compile Include="Pieces\WhitePawn.cs" />
     <Compile Include="Tests\Pieces\WhitePawnTests.cs" />
-    <Compile Include="Tests\TestHelpers\ServiceLocatorMock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
