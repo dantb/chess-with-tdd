@@ -1,4 +1,5 @@
-﻿using ChessGameUI;
+﻿using Autofac;
+using ChessGameUI;
 using ChessWithTDD;
 using System;
 using System.Windows.Forms;
@@ -7,8 +8,6 @@ namespace ChessGameController
 {
     public partial class GameEntryForm : Form
     {
-        private IBoard _theBoard;
-
         public GameEntryForm()
         {
             InitializeComponent();
@@ -30,21 +29,27 @@ namespace ChessGameController
 
         private BoardFrontEnd GetBoardUI()
         {
-            _theBoard = GetAFullyInitialisedGameBoard();
-
-            BoardFrontEnd chessBoardGUI = new BoardFrontEnd(_theBoard, BlackTeamRB.Checked ? Colour.Black : Colour.White);
-            chessBoardGUI.MoveChosenEvent += ChessBoardGUI_MoveChosenEvent;
-            return chessBoardGUI;
+            //Configure container and resolve a board
+            ContainerConfiguration.Configure();
+            using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
+            {
+                IBoard board = scope.Resolve<IBoard>();
+                BoardFrontEnd chessBoardGUI = new BoardFrontEnd(board, BlackTeamRB.Checked ? Colour.Black : Colour.White);
+                chessBoardGUI.MoveChosenEvent += ChessBoardGUI_MoveChosenEvent;
+                return chessBoardGUI;
+            }
         }
 
         private void ChessBoardGUI_MoveChosenEvent(object sender, MoveProviderEventArgs e)
         {
+            BoardFrontEnd playingBoard = (BoardFrontEnd) sender;
+            IBoard board = playingBoard.TheBoard;
             IMove move = e.TheMove;
-            ISquare fromSquare = _theBoard.GetSquare(move.FromRow, move.FromCol);
-            ISquare toSquare = _theBoard.GetSquare(move.ToRow, move.ToCol);
-            if (_theBoard.MoveIsValid(fromSquare, toSquare))
+            ISquare fromSquare = board.GetSquare(move.FromRow, move.FromCol);
+            ISquare toSquare = board.GetSquare(move.ToRow, move.ToCol);
+            if (board.MoveIsValid(fromSquare, toSquare))
             {
-                ApplyMove((BoardFrontEnd)sender, fromSquare, toSquare);
+                ApplyMove(playingBoard, board, fromSquare, toSquare);
             }
             else
             {
@@ -52,11 +57,11 @@ namespace ChessGameController
             }
         }
 
-        private void ApplyMove(BoardFrontEnd chessBoard, ISquare fromSquare, ISquare toSquare)
+        private void ApplyMove(BoardFrontEnd chessBoard, IBoard board, ISquare fromSquare, ISquare toSquare)
         {
-            _theBoard.Apply(fromSquare, toSquare);
+            board.Apply(fromSquare, toSquare);
             Colour teamThatMoved = chessBoard.ColourOfTeamWithTurn;
-            if (_theBoard.CheckMate)
+            if (board.CheckMate)
             {
                 ShowCheckMateDialogue(teamThatMoved, chessBoard);
             }
@@ -84,43 +89,6 @@ namespace ChessGameController
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation);
             chessBoard.Close();
-        }
-
-        private IBoard GetAFullyInitialisedGameBoard()
-        {
-            IBoardInitialiser boardInitialiser = new BoardInitialiser();
-            IMoveValidator moveValidator = GetAMoveValidator();
-            IPawnManager pawnManager = GetAPawnManager();
-            IBoardCache boardCache = new BoardCache();
-            ICheckManager checkManager = GetACheckManager(boardCache);
-
-            IStrictServiceLocator strictServiceLocator = null;
-
-            _theBoard = new Board(strictServiceLocator);
-            return _theBoard;
-        }
-
-        private IMoveValidator GetAMoveValidator()
-        {
-            IGenericMoveValidator genericMoveValidator = new GenericMoveValidator();
-            IMultiSquareMoveValidator multiSquareMoveValidator = new MultiSquareMoveValidator();
-            IMoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiSquareMoveValidator);
-            return moveValidator;
-        }
-
-        private IPawnManager GetAPawnManager()
-        {
-            IEnPassantManager enPassantManager = new EnPassantManager();
-            IPawnManager pawnManager = new PawnManager(enPassantManager);
-            return pawnManager;
-        }
-
-        private ICheckManager GetACheckManager(IBoardCache boardCache)
-        {
-            ICheckMateEscapeManager checkMateEscapeManager = new CheckMateEscapeManager();
-            ICheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            ICheckManager checkManager = new CheckManager(checkMateManager, boardCache);
-            return checkManager;
-        }
+        }      
     }
 }

@@ -11,24 +11,25 @@ namespace ChessGameUI
     /// </summary>
     public partial class BoardFrontEnd : Window, IMoveProvider
     {
-        private IBoard _theBoard;
         private DragManager _dragManager;
-
-        public event MoveProviderEventHandler MoveChosenEvent;
 
         public BoardFrontEnd(IBoard board, Colour playerColour)
         {
             InitializeComponent();
-            _theBoard = board;
-            _dragManager = new DragManager(_theBoard, this);
+            TheBoard = board;
+            _dragManager = new DragManager(TheBoard, this);
             ColourOfTeamWithTurn = Colour.White;
-            DataContext = _theBoard;
+            DataContext = TheBoard;
         }
 
         public Colour ColourOfTeamWithTurn
         {
             get; set;
         }
+
+        public IBoard TheBoard { get; }
+
+        public event MoveProviderEventHandler MoveChosenEvent;
 
         internal void RaiseMoveChosenEvent(MoveProviderEventArgs e)
         {
@@ -46,9 +47,9 @@ namespace ChessGameUI
                     {
                         int gridRow = Grid.GetRow(button);
                         int gridCol = Grid.GetColumn(button);
-                        if (_theBoard.GetSquare(gridRow, gridCol).ContainsPiece)
+                        if (TheBoard.GetSquare(gridRow, gridCol).ContainsPiece)
                         {
-                            if (_theBoard.GetSquare(gridRow, gridCol).Piece.Colour == ColourOfTeamWithTurn)
+                            if (TheBoard.GetSquare(gridRow, gridCol).Piece.Colour == ColourOfTeamWithTurn)
                             {
                                 if (button.Content is Image &&
                                     _dragManager.LastButtonLeftMousePressedIn == button)
@@ -93,9 +94,9 @@ namespace ChessGameUI
 
         private void SetCursorFromSquare(int row, int col)
         {
-            if (_theBoard.GetSquare(row, col).ContainsPiece)
+            if (TheBoard.GetSquare(row, col).ContainsPiece)
             {
-                if (_theBoard.GetSquare(row, col).Piece.Colour == ColourOfTeamWithTurn)
+                if (TheBoard.GetSquare(row, col).Piece.Colour == ColourOfTeamWithTurn)
                 {
                     Cursor = Cursors.Hand;
                 }
