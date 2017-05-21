@@ -1,5 +1,10 @@
 REM @ECHO OFF
 
+REM IMPORTANT NOTE: Open Cover uses pdbs to get code coverage for nunit tests.
+REM Therefore there is an issue that the pdb path information built into the binary does not correspond to local paths.
+REM This will prevent the coverage from running.
+REM The solution is to ensure you have built locally first, before running coverage and generating the report.
+
 REM Constant declarations
 set openCoverConsole="%~dp0..\..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe"
 set nunitConsole="%~dp0..\..\packages\NUnit.ConsoleRunner.3.6.1\tools\nunit3-console.exe"
@@ -14,7 +19,6 @@ set knightTests="KnightTests"
 set openCoverReportsFolder="%~dp0..\..\OpenCoverReports"
 set openCoverResultsFolder="%~dp0..\..\OpenCoverResults"
 set nunitResultsFolder="%~dp0.\NUnitResults"
-
 
 REM *** Main entry point ***
 call:DeleteFoldersAndContents
@@ -40,6 +44,7 @@ REM *** The End ***
 -target:%nunitConsole% ^
 -register:user ^
 -targetargs:"%~dp0..\bin\Debug\ChessWithTDD.dll --work=%nunitResultsFolder%" ^
+-filter:"+[ChessWithTDD*]* -[ChessWithTDD.Tests]*" ^
 -output:"%openCoverResultsFolder%\oc_AllChessObjectLibraryClasses_results.xml" ^
 -searchdirs:"%~dp0..\bin\Debug"
 GOTO:EOF
