@@ -106,6 +106,7 @@
     <Compile Include="Tests\SquareTests.cs" />
     <Compile Include="Pieces\WhitePawn.cs" />
     <Compile Include="Tests\Pieces\WhitePawnTests.cs" />
+    <Compile Include="Tests\TestHelpers\RhinoMockExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

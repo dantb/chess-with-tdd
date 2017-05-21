@@ -8,6 +8,10 @@ namespace ChessWithTDD.Tests
 
     internal static class CommonTestMethods
     {
+        /// <summary>
+        /// Get a mock service locator with all services mocked to one level deep.
+        /// If this is used remember to call OverridePrevious when stubbing the return from this.
+        /// </summary>
         internal static IStrictServiceLocator MockServiceLocator()
         {
             IStrictServiceLocator serviceLocator = GenerateMock<IStrictServiceLocator>();

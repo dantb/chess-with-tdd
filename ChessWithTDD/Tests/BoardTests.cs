@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using ChessWithTDD.Tests.TestHelpers;
+using NUnit.Framework;
 using Rhino.Mocks;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace ChessWithTDD.Tests
         {
             IBoardInitialiser mockBoardInitialiser = GenerateMock<IBoardInitialiser>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(mockBoardInitialiser);
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(mockBoardInitialiser).OverridePrevious();
 
             Board board = new Board(serviceLocator);
 
@@ -63,7 +64,7 @@ namespace ChessWithTDD.Tests
         {
             IBoardCache boardCache = GenerateMock<IBoardCache>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache);
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache).OverridePrevious();
 
             Board board = new Board(serviceLocator);
 
@@ -80,7 +81,7 @@ namespace ChessWithTDD.Tests
         {
             IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator);
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
             ISquare fromSquare = MockSquare();
             ISquare toSquare = MockSquare();
 
@@ -95,7 +96,7 @@ namespace ChessWithTDD.Tests
         {
             IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator);
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
             ISquare fromSquare = MockSquare();
             ISquare toSquare = MockSquare();
             Board board = new Board(serviceLocator);
@@ -111,7 +112,7 @@ namespace ChessWithTDD.Tests
         {
             IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator);
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
             IPiece pieceThatCannotMove = MockPiece();
             ISquare fromSquare = MockSquareWithPiece();
             ISquare toSquare = MockSquare();
@@ -129,7 +130,7 @@ namespace ChessWithTDD.Tests
         {
             IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator);
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
             IPiece pieceThatCanMove = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(pieceThatCanMove);
             ISquare toSquare = MockSquare();
@@ -156,7 +157,7 @@ namespace ChessWithTDD.Tests
         {
             IPawnManager pawnManager = GenerateMock<IPawnManager>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager);
+            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager).OverridePrevious();
             IPawn pawn = MockPawn();
             ISquare fromSquare = MockSquareWithPiece(pawn);
             ISquare toSquare = MockSquare();
@@ -172,7 +173,7 @@ namespace ChessWithTDD.Tests
         {
             IPawnManager pawnManager = GenerateMock<IPawnManager>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager);
+            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager).OverridePrevious();
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
@@ -188,7 +189,7 @@ namespace ChessWithTDD.Tests
         {
             IPawnManager pawnManager = GenerateMock<IPawnManager>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager);
+            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager).OverridePrevious();
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
@@ -206,7 +207,7 @@ namespace ChessWithTDD.Tests
         {
             IBoardCache boardCache = GenerateMock<IBoardCache>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache);
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache).OverridePrevious();
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
@@ -222,7 +223,7 @@ namespace ChessWithTDD.Tests
         {
             ICheckManager checkManager = GenerateMock<ICheckManager>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceCheckManager()).Return(checkManager);
+            serviceLocator.Stub(s => s.GetServiceCheckManager()).Return(checkManager).OverridePrevious();
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
@@ -242,7 +243,7 @@ namespace ChessWithTDD.Tests
         {
             BoardCache boardCache = new BoardCache();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache);
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache).OverridePrevious();
             IKing piece = MockKingWithColour(Colour.Black);
             Square fromSquare = new Square(3, 3);
             fromSquare.ContainsPiece = true;
@@ -266,7 +267,7 @@ namespace ChessWithTDD.Tests
         {
             BoardCache boardCache = new BoardCache();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache);
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache).OverridePrevious();
             IKing piece = MockKingWithColour(Colour.White);
             Square fromSquare = new Square(3, 3);
             fromSquare.ContainsPiece = true;
@@ -347,9 +348,9 @@ namespace ChessWithTDD.Tests
             IBoardCache boardCache = GenerateMock<IBoardCache>();
             ICheckManager checkManager = GenerateMock<ICheckManager>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager);
-            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache);
-            serviceLocator.Stub(s => s.GetServiceCheckManager()).Return(checkManager);
+            serviceLocator.Stub(s => s.GetServicePawnManager()).Return(pawnManager).OverridePrevious();
+            serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache).OverridePrevious();
+            serviceLocator.Stub(s => s.GetServiceCheckManager()).Return(checkManager).OverridePrevious();
 
             IPawn pawn = MockPawn();
             ISquare fromSquare = MockSquareWithPiece(pawn);

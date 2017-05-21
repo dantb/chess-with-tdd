@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using static Rhino.Mocks.MockRepository;
 using static ChessWithTDD.Tests.CommonTestMethods;
 using static ChessWithTDD.BoardConstants;
+using ChessWithTDD.Tests.TestHelpers;
 
 namespace ChessWithTDD.Tests
 {
@@ -173,7 +174,7 @@ namespace ChessWithTDD.Tests
             //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser).OverridePrevious();
             Board board = new Board(serviceLocator);
 
             //System under test is a different board cache as we want to initialise here
@@ -192,7 +193,7 @@ namespace ChessWithTDD.Tests
             //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser).OverridePrevious();
             Board board = new Board(serviceLocator);
 
             //System under test is a different board cache as we want to initialise here
@@ -211,7 +212,7 @@ namespace ChessWithTDD.Tests
             //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser).OverridePrevious();
             Board board = new Board(serviceLocator);
 
             //System under test is a different board cache as we want to initialise here
@@ -233,7 +234,7 @@ namespace ChessWithTDD.Tests
             //Need a real initialised board
             BoardInitialiser boardInitialiser = new BoardInitialiser();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser);
+            serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser).OverridePrevious();
             Board board = new Board(serviceLocator);
 
             //System under test is a different board cache as we want to initialise here
