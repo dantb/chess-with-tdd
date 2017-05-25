@@ -50,6 +50,7 @@
     <Compile Include="BoardDependencies\MoveValidation\MoveValidator.cs" />
     <Compile Include="BoardDependencies\MoveValidation\MultiSquareMoveValidator.cs" />
     <Compile Include="BoardDependencies\PawnManagement\PawnManager.cs" />
+    <Compile Include="Interfaces\BoardDependencies\IMoveExecuter.cs" />
     <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckMateEscapeManager.cs" />
     <Compile Include="Interfaces\IBoardCache.cs" />
     <Compile Include="Interfaces\IBoardInitialiser.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Interfaces\BoardDependencies\MoveValidation\IMultiSquareMoveValidator.cs" />
     <Compile Include="Interfaces\BoardDependencies\PawnManagement\IPawnManager.cs" />
     <Compile Include="Interfaces\IStrictServiceLocator.cs" />
+    <Compile Include="BoardDependencies\MoveExecuter.cs" />
     <Compile Include="Pieces\BlackPawn.cs" />
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="BoardDependencies\BoardInitialiser.cs" />
