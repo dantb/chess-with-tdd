@@ -74,6 +74,11 @@ namespace ChessWithTDD
             TurnCounter++;
         }
 
+        public void SetSquare(ISquare square)
+        {
+            _squares[square.Row][square.Col] = square;
+        }
+
         private void ActualApply(ISquare fromSquare, ISquare toSquare)
         {
             GetSquare(toSquare.Row, toSquare.Col).Piece = fromSquare.Piece;
@@ -82,11 +87,6 @@ namespace ChessWithTDD
             GetSquare(fromSquare.Row, fromSquare.Col).ContainsPiece = false;
             PendingUpdates.Add(fromSquare);
             PendingUpdates.Add(toSquare);
-        }           
-
-        public void SetSquare(ISquare square)
-        {
-            _squares[square.Row][square.Col] = square;
         }
 
         private void InitialiseBoardDimensions()

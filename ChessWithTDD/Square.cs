@@ -5,15 +5,15 @@ namespace ChessWithTDD
 {
     public class Square : ISquare
     {
-        IPiece _thePiece;
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        private IPiece _thePiece;
 
         public Square(int row, int col)
         {
             Row = row;
             Col = col;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public bool HasEnPassantMark { get; set; }
 
