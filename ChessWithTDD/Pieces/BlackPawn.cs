@@ -4,13 +4,13 @@
     /// A black pawn. The black team are at the top of the board in this model, occupying rows 6 and 7 intially.
     /// TODO - when it reaches end of board should be swappable. Not sure where this logic will go yet.
     /// </summary>
-    public class BlackPawn : IPawn
+    public class BlackPawn : Pawn
     {
-        public Colour Colour { get { return Colour.Black; } }
+        public new Colour Colour { get { return Colour.Black; } }
 
-        public bool HasMoved { get; set; }
+        public new bool HasMoved { get; set; }
 
-        public bool CanMove(ISquare fromSquare, ISquare toSquare)
+        public new bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
             //Normal move, one place down the board
             if (toSquare.Row == fromSquare.Row - 1

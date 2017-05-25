@@ -70,6 +70,7 @@
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="BoardDependencies\BoardInitialiser.cs" />
     <Compile Include="Interfaces\Pieces\IPawn.cs" />
+    <Compile Include="Pieces\Pawn.cs" />
     <Compile Include="StrictServiceLocator.cs" />
     <Compile Include="SquareExtensions.cs" />
     <Compile Include="Tests\BoardDependencies\BoardCacheTests.cs" />
