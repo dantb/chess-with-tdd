@@ -6,45 +6,32 @@
     /// </summary>
     public class BlackPawn : Pawn
     {
-        public new Colour Colour { get { return Colour.Black; } }
+        public override Colour Colour { get { return Colour.Black; } }
 
-        public new bool HasMoved { get; set; }
+        public override bool HasMoved { get; set; }
 
-        public new bool CanMove(ISquare fromSquare, ISquare toSquare)
+        public override bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
             //Normal move, one place down the board
             if (toSquare.Row == fromSquare.Row - 1
                     && toSquare.Col == fromSquare.Col)
             {
-                return !WhitePieceInSquare(toSquare);
+                return !OppositeColouredPieceInSquare(toSquare);
             }
 
             //Moving diagonally downwards
             if (toSquare.IsOneSquareDiagonallyBelow(fromSquare))
             {
-                return toSquare.ContainsPiece || toSquare.HasEnPassantMark;
+                return SquareContainsPieceOrHasEnPassantMark(toSquare);
             }
 
             //Moving two spaces up the board
             if (toSquare.Row == fromSquare.Row - 2
                 && toSquare.Col == fromSquare.Col)
             {
-                if (HasMoved || toSquare.ContainsPiece)
-                {
-                    return false;
-                }
-                return true;
+                return IsValidTwoSpaceInitialMove(toSquare);
             }
 
-            return false;
-        }
-
-        private bool WhitePieceInSquare(ISquare theSquare)
-        {
-            if (theSquare.ContainsPiece)
-            {
-                return theSquare.Piece.Colour == Colour.White;
-            }
             return false;
         }
     }
