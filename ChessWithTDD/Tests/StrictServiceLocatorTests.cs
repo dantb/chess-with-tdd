@@ -72,7 +72,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveExecuterServiceIsImplemented()
         {
-            IMoveExecutor moveExecutorService = _serviceLocator.GetServiceMoveExecuter();
+            IMoveExecutor moveExecutorService = _serviceLocator.GetServiceMoveExecutor();
 
             Assert.AreEqual(moveExecutorService, _moveExecutor);
         }

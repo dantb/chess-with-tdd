@@ -149,9 +149,27 @@ namespace ChessWithTDD.Tests
         #region Applying moves
 
         [Test]
+        public void ApplyingMoveCallsMoveExecutorWithCorrectArguments()
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IMoveExecutor moveExecutor = MockMoveExecutor();
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(moveExecutor);
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(thePiece);
+            ISquare toSquare = MockSquareWithPiece();
+            Board board = new Board(serviceLocator);
+            int turnCounter = board.TurnCounter;
+
+            board.Apply(fromSquare, toSquare);
+
+            moveExecutor.AssertWasCalled(m => m.ExecuteMove(board, fromSquare, toSquare));
+        }
+
+        [Test]
         public void ApplyingMoveIncrementsTurnCounter()
         {
             IStrictServiceLocator serviceLocator = MockServiceLocator();
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(MockMoveExecutor());
             IPiece thePiece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(thePiece);
             ISquare toSquare = MockSquareWithPiece();

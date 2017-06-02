@@ -29,6 +29,11 @@ namespace ChessWithTDD.Tests
             return GenerateMock<IMoveValidator>();
         }
 
+        internal static IMoveExecutor MockMoveExecutor()
+        {
+            return GenerateMock<IMoveExecutor>();
+        }
+
         internal static IPawnManager MockPawnManager()
         {
             return GenerateMock<IPawnManager>();

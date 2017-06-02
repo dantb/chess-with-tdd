@@ -18,6 +18,7 @@ namespace ChessWithTDD
             InitialiseBoardDimensions();
             IBoardInitialiser boardInitialiser = serviceLocator.GetServiceBoardInitialiser();
             boardInitialiser.InitialiseBoardPieces(this);
+            _moveExecutor = serviceLocator.GetServiceMoveExecutor();
             _moveValidator = serviceLocator.GetServiceMoveValidator();
             _pawnManager = serviceLocator.GetServicePawnManager();
             _boardCache = serviceLocator.GetServiceBoardCache();
@@ -68,22 +69,7 @@ namespace ChessWithTDD
 
         public void Apply(ISquare fromSquare, ISquare toSquare)
         {
-            if (fromSquare.Piece is IPawn)
-            {
-                _pawnManager.MakePawnSpecificAmendments(fromSquare, toSquare, this);
-            }
-
-            //Squares that had been marked two turns ago should be unmarked
-            _pawnManager.UnmarkEnPassantSquares(TurnCounter);
-
-            //This is where we actually execute the move
-            ActualApply(fromSquare, toSquare);
-
-            //Update board cache for easy access to pieces
-            _boardCache.UpdateBoardCache();
-
-            //Evaluate check states after move has been applied
-            _checkManager.UpdateCheckAndCheckMateStates(this, toSquare);
+            _moveExecutor.ExecuteMove(this, fromSquare, toSquare);
 
             TurnCounter++;
         }

@@ -41,7 +41,7 @@ namespace ChessWithTDD
             return _checkManager;
         }
 
-        public IMoveExecutor GetServiceMoveExecuter()
+        public IMoveExecutor GetServiceMoveExecutor()
         {
             return _moveExecutor;
         }

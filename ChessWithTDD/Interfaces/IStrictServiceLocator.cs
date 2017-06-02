@@ -16,6 +16,6 @@
 
         IPawnManager GetServicePawnManager();
 
-        IMoveExecutor GetServiceMoveExecuter();
+        IMoveExecutor GetServiceMoveExecutor();
     }
 }
