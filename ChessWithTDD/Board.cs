@@ -24,6 +24,14 @@ namespace ChessWithTDD
             _checkManager = serviceLocator.GetServiceCheckManager();
         }
 
+        public ISquare BlackKingSquare { get { return _boardCache.BlackKingSquare; } }
+
+        public ISquare WhiteKingSquare { get { return _boardCache.WhiteKingSquare; } }
+
+        public HashSet<ISquare> WhitePieceSquares { get { return _boardCache.WhitePieceSquares; } }
+
+        public HashSet<ISquare> BlackPieceSquares { get { return _boardCache.BlackPieceSquares; } }
+
         public List<ISquare> PendingUpdates { get; set; } = new List<ISquare>();
 
         public bool InCheck { get; set; } = false;

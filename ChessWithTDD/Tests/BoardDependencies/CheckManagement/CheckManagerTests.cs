@@ -14,8 +14,6 @@ namespace ChessWithTDD.Tests
             //Give board cache mocked black king
             IKing blackKing = MockKingWithColour(Colour.Black);
             ISquare blackKingSquare = MockSquareWithPiece(blackKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
 
             ICheckMateManager checkMateManager = GenerateMock<ICheckMateManager>();
             IPiece pieceThatJustMoved = MockPieceWithColour(Colour.White);
@@ -24,13 +22,14 @@ namespace ChessWithTDD.Tests
             //Move from to square to king square must be valid
             IBoard board = MockBoard();
             board.Stub(b => b.MoveIsValid(toSquare, blackKingSquare)).Return(true);
+            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
 
-            CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
+            CheckManager checkManager = new CheckManager(checkMateManager);
             checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = true);
             blackKing.AssertWasCalled(b => b.InCheckState = true);
-            checkMateManager.AssertWasCalled(cmm => cmm.BoardIsInCheckMate(board, boardCache, toSquare));
+            checkMateManager.AssertWasCalled(cmm => cmm.BoardIsInCheckMate(board, toSquare));
         }
 
         [TestCase(true)]
@@ -41,8 +40,6 @@ namespace ChessWithTDD.Tests
             //Give board cache mocked black king
             IKing blackKing = MockKingWithColour(Colour.Black);
             ISquare blackKingSquare = MockSquareWithPiece(blackKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
 
             IPiece pieceThatJustMoved = MockPieceWithColour(Colour.White);
             ISquare toSquare = MockSquareWithPiece(pieceThatJustMoved);
@@ -50,11 +47,12 @@ namespace ChessWithTDD.Tests
             //Move from to square to king square must be valid
             IBoard board = MockBoard();
             board.Stub(b => b.MoveIsValid(toSquare, blackKingSquare)).Return(true);
+            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
 
             ICheckMateManager checkMateManager = GenerateMock<ICheckMateManager>();
-            checkMateManager.Stub(cmm => cmm.BoardIsInCheckMate(board, boardCache, toSquare)).Return(checkMate);
+            checkMateManager.Stub(cmm => cmm.BoardIsInCheckMate(board, toSquare)).Return(checkMate);
 
-            CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
+            CheckManager checkManager = new CheckManager(checkMateManager);
             checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = true);
@@ -69,8 +67,6 @@ namespace ChessWithTDD.Tests
             //Give board cache mocked black king
             IKing whiteKing = MockKingWithColour(Colour.White);
             ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
 
             ICheckMateManager checkMateManager = GenerateMock<ICheckMateManager>();
             IPiece pieceThatJustMoved = MockPieceWithColour(Colour.Black);
@@ -79,8 +75,9 @@ namespace ChessWithTDD.Tests
             //Move from to square to king square must be valid
             IBoard board = MockBoard();
             board.Stub(b => b.MoveIsValid(toSquare, whiteKingSquare)).Return(true);
+            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
 
-            CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
+            CheckManager checkManager = new CheckManager(checkMateManager);
             checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = true);
@@ -95,8 +92,6 @@ namespace ChessWithTDD.Tests
             //Give board cache mocked black king
             IKing whiteKing = MockKingWithColour(Colour.White);
             ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
 
             IPiece pieceThatJustMoved = MockPieceWithColour(Colour.Black);
             ISquare toSquare = MockSquareWithPiece(pieceThatJustMoved);
@@ -104,11 +99,12 @@ namespace ChessWithTDD.Tests
             //Move from to square to king square must be valid
             IBoard board = MockBoard();
             board.Stub(b => b.MoveIsValid(toSquare, whiteKingSquare)).Return(true);
+            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
 
             ICheckMateManager checkMateManager = GenerateMock<ICheckMateManager>();
-            checkMateManager.Stub(cmm => cmm.BoardIsInCheckMate(board, boardCache, toSquare)).Return(checkMate);
+            checkMateManager.Stub(cmm => cmm.BoardIsInCheckMate(board, toSquare)).Return(checkMate);
 
-            CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
+            CheckManager checkManager = new CheckManager(checkMateManager);
             checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = true);
@@ -124,12 +120,9 @@ namespace ChessWithTDD.Tests
             IKing whiteKing = MockKingWithColour(Colour.White);
             whiteKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
             //Give black king square a piece although we don't care about it
             IKing king = MockKing();
             ISquare square = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.BlackKingSquare).Return(square);
 
             ICheckMateManager checkMateManager = GenerateMock<ICheckMateManager>();
             //Don't care about square, stop add check states from causing problems
@@ -138,8 +131,10 @@ namespace ChessWithTDD.Tests
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
+            board.Stub(b => b.BlackKingSquare).Return(square);
 
-            CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
+            CheckManager checkManager = new CheckManager(checkMateManager);
             checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = false);
@@ -153,12 +148,9 @@ namespace ChessWithTDD.Tests
             IKing blackKing = MockKingWithColour(Colour.White);
             blackKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare blackKingSquare = MockSquareWithPiece(blackKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
             //Give white king square a piece although we don't care about it
             IKing king = MockKing();
             ISquare square = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.WhiteKingSquare).Return(square);
 
             ICheckMateManager checkMateManager = GenerateMock<ICheckMateManager>();
             //Don't care about square, stop add check states from causing problems
@@ -167,8 +159,10 @@ namespace ChessWithTDD.Tests
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
+            board.Stub(b => b.WhiteKingSquare).Return(square);
 
-            CheckManager checkManager = new CheckManager(checkMateManager, boardCache);
+            CheckManager checkManager = new CheckManager(checkMateManager);
             checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = false);

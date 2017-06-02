@@ -45,5 +45,12 @@ namespace ChessWithTDD
 
         void SetSquare(ISquare square);
 
+        ISquare BlackKingSquare { get; } 
+
+        ISquare WhiteKingSquare { get; }
+
+        HashSet<ISquare> WhitePieceSquares { get; }
+
+        HashSet<ISquare> BlackPieceSquares { get; }
     }
 }

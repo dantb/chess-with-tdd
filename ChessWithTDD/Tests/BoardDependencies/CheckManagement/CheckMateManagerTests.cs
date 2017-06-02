@@ -13,7 +13,6 @@ namespace ChessWithTDD.Tests
         [Test]
         public void IfBoardNotInCheckThenNoCheckMate()
         {
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
 
             IBoard board = MockBoard();
@@ -24,7 +23,7 @@ namespace ChessWithTDD.Tests
             ISquare threateningSquare = MockSquareWithPiece(threateningPiece);
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.False(inCheckMate);
         }
@@ -37,7 +36,6 @@ namespace ChessWithTDD.Tests
             whiteKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
             IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -46,16 +44,17 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
+            board.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
 
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
             checkMateEscapeManager.Stub(c => c.KingCanEscape(board, whiteKingSquare)).Return(true);
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.False(inCheckMate);
         }
@@ -67,11 +66,6 @@ namespace ChessWithTDD.Tests
             IKing whiteKing = MockKingWithColour(Colour.White);
             whiteKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
-
-            HashSet<ISquare> cacheWhitePieces = new HashSet<ISquare>();
-            boardCache.Stub(bc => bc.WhitePieceSquares).Return(cacheWhitePieces);
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -80,16 +74,19 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
+            board.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
+            HashSet<ISquare> cacheWhitePieces = new HashSet<ISquare>();
+            board.Stub(bc => bc.WhitePieceSquares).Return(cacheWhitePieces);
 
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
-            checkMateEscapeManager.Stub(c => c.ThreateningPieceCanBeCaptured(boardCache.WhitePieceSquares, board, threateningSquare)).Return(true);
+            checkMateEscapeManager.Stub(c => c.ThreateningPieceCanBeCaptured(board.WhitePieceSquares, board, threateningSquare)).Return(true);
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.False(inCheckMate);
         }
@@ -101,9 +98,7 @@ namespace ChessWithTDD.Tests
             IKing whiteKing = MockKingWithColour(Colour.White);
             whiteKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
-            boardCache.Stub(b => b.WhitePieceSquares).Return(new HashSet<ISquare>());
+ 
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -112,15 +107,18 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
+            board.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
+            board.Stub(b => b.WhitePieceSquares).Return(new HashSet<ISquare>());
+
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
             checkMateEscapeManager.Stub(c => c.ThreateningPieceIsUnblockable(threateningSquare, whiteKingSquare)).Return(true);
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.True(inCheckMate);
         }
@@ -132,10 +130,6 @@ namespace ChessWithTDD.Tests
             IKing whiteKing = MockKingWithColour(Colour.White);
             whiteKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
-            HashSet<ISquare> cacheWhitePieces = new HashSet<ISquare>();
-            boardCache.Stub(bc => bc.WhitePieceSquares).Return(cacheWhitePieces);
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -144,15 +138,19 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
+            HashSet<ISquare> cacheWhitePieces = new HashSet<ISquare>();
+            board.Stub(bc => bc.WhitePieceSquares).Return(cacheWhitePieces);
+            board.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
+
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
-            checkMateEscapeManager.Stub(c => c.LineOfSightToKingCanBeBlockedByFriendlyPiece(board, threateningSquare, whiteKingSquare, boardCache.WhitePieceSquares)).Return(true);
+            checkMateEscapeManager.Stub(c => c.LineOfSightToKingCanBeBlockedByFriendlyPiece(board, threateningSquare, whiteKingSquare, board.WhitePieceSquares)).Return(true);
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.False(inCheckMate);
         }
@@ -164,10 +162,6 @@ namespace ChessWithTDD.Tests
             IKing whiteKing = MockKingWithColour(Colour.White);
             whiteKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
-            HashSet<ISquare> cacheWhitePieces = new HashSet<ISquare>();
-            boardCache.Stub(bc => bc.WhitePieceSquares).Return(cacheWhitePieces);
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -176,14 +170,17 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
+            board.Stub(b => b.BlackKingSquare).Return(otherKingSquare);
+            HashSet<ISquare> cacheWhitePieces = new HashSet<ISquare>();
+            board.Stub(bc => bc.WhitePieceSquares).Return(cacheWhitePieces);
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.True(inCheckMate);
         }
@@ -196,8 +193,6 @@ namespace ChessWithTDD.Tests
             IKing blackKing = MockKingWithColour(Colour.Black);
             blackKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare blackKingSquare = MockSquareWithPiece(blackKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -206,15 +201,17 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
+            board.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
+
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
             checkMateEscapeManager.Stub(c => c.KingCanEscape(board, blackKingSquare)).Return(true);
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.False(inCheckMate);
         }
@@ -226,11 +223,6 @@ namespace ChessWithTDD.Tests
             IKing blackKing = MockKingWithColour(Colour.Black);
             blackKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare blackKingSquare = MockSquareWithPiece(blackKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
-
-            HashSet<ISquare> cacheWhitePieces = new HashSet<ISquare>();
-            boardCache.Stub(bc => bc.BlackPieceSquares).Return(cacheWhitePieces);
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -239,16 +231,19 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
+            HashSet<ISquare> cacheWhitePieces = new HashSet<ISquare>();
+            board.Stub(bc => bc.BlackPieceSquares).Return(cacheWhitePieces);
+            board.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
 
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
-            checkMateEscapeManager.Stub(c => c.ThreateningPieceCanBeCaptured(boardCache.BlackPieceSquares, board, threateningSquare)).Return(true);
+            checkMateEscapeManager.Stub(c => c.ThreateningPieceCanBeCaptured(board.BlackPieceSquares, board, threateningSquare)).Return(true);
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.False(inCheckMate);
         }
@@ -260,8 +255,6 @@ namespace ChessWithTDD.Tests
             IKing blackKing = MockKingWithColour(Colour.Black);
             blackKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare blackKingSquare = MockSquareWithPiece(blackKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -270,15 +263,17 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
+            board.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
+
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
             checkMateEscapeManager.Stub(c => c.ThreateningPieceIsUnblockable(threateningSquare, blackKingSquare)).Return(true);
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.True(inCheckMate);
         }
@@ -290,10 +285,6 @@ namespace ChessWithTDD.Tests
             IKing blackKing = MockKingWithColour(Colour.Black);
             blackKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare blackKingSquare = MockSquareWithPiece(blackKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
-            HashSet<ISquare> cacheBlackPieces = new HashSet<ISquare>();
-            boardCache.Stub(bc => bc.BlackPieceSquares).Return(cacheBlackPieces);
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -301,15 +292,19 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
+            HashSet<ISquare> cacheBlackPieces = new HashSet<ISquare>();
+            board.Stub(bc => bc.BlackPieceSquares).Return(cacheBlackPieces);
+            board.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
+
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
-            checkMateEscapeManager.Stub(c => c.LineOfSightToKingCanBeBlockedByFriendlyPiece(board, threateningSquare, blackKingSquare, boardCache.BlackPieceSquares)).Return(true);
+            checkMateEscapeManager.Stub(c => c.LineOfSightToKingCanBeBlockedByFriendlyPiece(board, threateningSquare, blackKingSquare, board.BlackPieceSquares)).Return(true);
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.False(inCheckMate);
         }
@@ -321,10 +316,6 @@ namespace ChessWithTDD.Tests
             IKing blackKing = MockKingWithColour(Colour.Black);
             blackKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare blackKingSquare = MockSquareWithPiece(blackKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
-            HashSet<ISquare> cacheBlackPieces = new HashSet<ISquare>();
-            boardCache.Stub(bc => bc.BlackPieceSquares).Return(cacheBlackPieces);
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -332,14 +323,18 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
+            HashSet<ISquare> cacheBlackPieces = new HashSet<ISquare>();
+            board.Stub(bc => bc.BlackPieceSquares).Return(cacheBlackPieces);
+            board.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
+
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.True(inCheckMate);
         }
@@ -357,10 +352,6 @@ namespace ChessWithTDD.Tests
             IKing blackKing = MockKingWithColour(Colour.White);
             blackKing.Stub(wk => wk.InCheckState).Return(true);
             ISquare blackKingSquare = MockSquareWithPiece(blackKing);
-            IBoardCache boardCache = GenerateMock<IBoardCache>();
-            boardCache.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
-            HashSet<ISquare> cacheBlackPieces = new HashSet<ISquare>();
-            boardCache.Stub(bc => bc.BlackPieceSquares).Return(cacheBlackPieces);
 
             //square with threatening piece in
             IPiece threateningPiece = MockPiece();
@@ -368,7 +359,6 @@ namespace ChessWithTDD.Tests
             //give other king a mocked one in board cache
             IKing king = MockKing();
             ISquare otherKingSquare = MockSquareWithPiece(king);
-            boardCache.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
 
             List<int> callOrder = new List<int>();
             int kingEscapeKey = 0;
@@ -400,14 +390,19 @@ namespace ChessWithTDD.Tests
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
+            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
+            HashSet<ISquare> cacheBlackPieces = new HashSet<ISquare>();
+            board.Stub(bc => bc.BlackPieceSquares).Return(cacheBlackPieces);
+            board.Stub(b => b.WhiteKingSquare).Return(otherKingSquare);
+
             ICheckMateEscapeManager checkMateEscapeManager = GenerateMock<ICheckMateEscapeManager>();
             checkMateEscapeManager.Stub(c => c.KingCanEscape(board, blackKingSquare)).Do(addKingEscapeKey);
-            checkMateEscapeManager.Stub(c => c.ThreateningPieceCanBeCaptured(boardCache.BlackPieceSquares, board, threateningSquare)).Do(addCaptureKey);
+            checkMateEscapeManager.Stub(c => c.ThreateningPieceCanBeCaptured(board.BlackPieceSquares, board, threateningSquare)).Do(addCaptureKey);
             checkMateEscapeManager.Stub(c => c.ThreateningPieceIsUnblockable(threateningSquare, blackKingSquare)).Do(addUnblockableKey);
-            checkMateEscapeManager.Stub(c => c.LineOfSightToKingCanBeBlockedByFriendlyPiece(board, threateningSquare, blackKingSquare, boardCache.BlackPieceSquares)).Do(addBlockAttackKey);
+            checkMateEscapeManager.Stub(c => c.LineOfSightToKingCanBeBlockedByFriendlyPiece(board, threateningSquare, blackKingSquare, board.BlackPieceSquares)).Do(addBlockAttackKey);
 
             CheckMateManager checkMateManager = new CheckMateManager(checkMateEscapeManager);
-            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, boardCache, threateningSquare);
+            bool inCheckMate = checkMateManager.BoardIsInCheckMate(board, threateningSquare);
 
             Assert.AreEqual(callOrder[0], kingEscapeKey);
             Assert.AreEqual(callOrder[1], captureKey);

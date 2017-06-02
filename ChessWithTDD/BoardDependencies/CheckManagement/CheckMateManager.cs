@@ -11,28 +11,26 @@ namespace ChessWithTDD
             _checkMateEscapeManager = checkMateEscapeManager;
         }
 
-        public bool BoardIsInCheckMate(IBoard theBoard, IBoardCache boardCache, ISquare threateningSquare)
+        public bool BoardIsInCheckMate(IBoard theBoard, ISquare threateningSquare)
         {
             if (theBoard.InCheck)
             {
-                if ((boardCache.WhiteKingSquare.Piece as IKing).InCheckState)
+                if ((theBoard.WhiteKingSquare.Piece as IKing).InCheckState)
                 {
-                    ISquare kingSquare = boardCache.WhiteKingSquare;
-                    return !CheckMateCanBePrevented(theBoard, boardCache, threateningSquare, kingSquare, boardCache.WhitePieceSquares);
+                    ISquare kingSquare = theBoard.WhiteKingSquare;
+                    return !CheckMateCanBePrevented(theBoard, threateningSquare, kingSquare, theBoard.WhitePieceSquares);
                 }
-                else if ((boardCache.BlackKingSquare.Piece as IKing).InCheckState)
+                else if ((theBoard.BlackKingSquare.Piece as IKing).InCheckState)
                 {
-                    ISquare kingSquare = boardCache.BlackKingSquare;
-                    return !CheckMateCanBePrevented(theBoard, boardCache, threateningSquare, kingSquare, boardCache.BlackPieceSquares);
+                    ISquare kingSquare = theBoard.BlackKingSquare;
+                    return !CheckMateCanBePrevented(theBoard, threateningSquare, kingSquare, theBoard.BlackPieceSquares);
                 }
             }
             return false;
         }
 
-        private bool CheckMateCanBePrevented(IBoard theBoard, IBoardCache boardCache, ISquare threateningSquare, ISquare kingSquare, HashSet<ISquare> friendlySquares)
+        private bool CheckMateCanBePrevented(IBoard theBoard, ISquare threateningSquare, ISquare kingSquare, HashSet<ISquare> friendlySquares)
         {
-            IKing king = kingSquare.Piece as IKing;
-
             if (_checkMateEscapeManager.KingCanEscape(theBoard, kingSquare))
             {
                 return true;

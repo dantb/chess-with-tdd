@@ -2,6 +2,6 @@
 {
     public interface ICheckMateManager
     {
-        bool BoardIsInCheckMate(IBoard theBoard, IBoardCache boardCache, ISquare threateningSquare);
+        bool BoardIsInCheckMate(IBoard theBoard, ISquare threateningSquare);
     }
 }

@@ -3,12 +3,10 @@
     public class CheckManager : ICheckManager
     {
         private ICheckMateManager _checkMateManager;
-        private IBoardCache _boardCache;
 
-        public CheckManager(ICheckMateManager checkMateManager, IBoardCache boardCache)
+        public CheckManager(ICheckMateManager checkMateManager)
         {
             _checkMateManager = checkMateManager;
-            _boardCache = boardCache;
         }
 
         public void UpdateCheckAndCheckMateStates(IBoard theBoard, ISquare toSquare)
@@ -21,11 +19,11 @@
         {
             if (threateningSquare.Piece.Colour == Colour.White)
             {
-                SetBoardAndKingCheckAndCheckMateStatesIfThreatened(theBoard, threateningSquare, _boardCache.BlackKingSquare);
+                SetBoardAndKingCheckAndCheckMateStatesIfThreatened(theBoard, threateningSquare, theBoard.BlackKingSquare);
             }
             else if (threateningSquare.Piece.Colour == Colour.Black)
             {
-                SetBoardAndKingCheckAndCheckMateStatesIfThreatened(theBoard, threateningSquare, _boardCache.WhiteKingSquare);
+                SetBoardAndKingCheckAndCheckMateStatesIfThreatened(theBoard, threateningSquare, theBoard.WhiteKingSquare);
             }
         }
 
@@ -35,7 +33,7 @@
             {
                 theBoard.InCheck = true;
                 (kingSquare.Piece as IKing).InCheckState = true;
-                theBoard.CheckMate = _checkMateManager.BoardIsInCheckMate(theBoard, _boardCache, threateningSquare);
+                theBoard.CheckMate = _checkMateManager.BoardIsInCheckMate(theBoard, threateningSquare);
             }
         }
 
@@ -44,13 +42,13 @@
             if (theBoard.InCheck)
             {
                 //If we get here then we know for sure the previous move removed the king's check state
-                if ((_boardCache.WhiteKingSquare.Piece as IKing).InCheckState)
+                if ((theBoard.WhiteKingSquare.Piece as IKing).InCheckState)
                 {
-                    (_boardCache.WhiteKingSquare.Piece as IKing).InCheckState = false;
+                    (theBoard.WhiteKingSquare.Piece as IKing).InCheckState = false;
                 }
-                else if ((_boardCache.BlackKingSquare.Piece as IKing).InCheckState)
+                else if ((theBoard.BlackKingSquare.Piece as IKing).InCheckState)
                 {
-                    (_boardCache.BlackKingSquare.Piece as IKing).InCheckState = false;
+                    (theBoard.BlackKingSquare.Piece as IKing).InCheckState = false;
                 }
                 theBoard.InCheck = false;
             }
