@@ -14,6 +14,8 @@ namespace ChessWithTDD
 
         bool CheckMate { get; set; }
 
+        void UpdateBoardCache();
+
         List<List<ISquare>> Squares { get; }
 
         /// <summary>

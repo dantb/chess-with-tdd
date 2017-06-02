@@ -52,6 +52,11 @@ namespace ChessWithTDD
             return _squares[row][col];
         }
 
+        public void UpdateBoardCache()
+        {
+            _boardCache.UpdateBoardCache();
+        }
+
         public bool MoveIsValid(ISquare fromSquare, ISquare toSquare)
         {
             if (!_moveValidator.MoveIsValid(fromSquare, toSquare, this))
