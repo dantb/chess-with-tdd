@@ -8,6 +8,7 @@ namespace ChessWithTDD
     {
         private List<List<ISquare>> _squares;
         private IMoveValidator _moveValidator;
+        private IMoveExecutor _moveExecutor;
         private IPawnManager _pawnManager;
         private IBoardCache _boardCache;
         private ICheckManager _checkManager;

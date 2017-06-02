@@ -15,5 +15,7 @@
         IMoveValidator GetServiceMoveValidator();
 
         IPawnManager GetServicePawnManager();
+
+        IMoveExecutor GetServiceMoveExecuter();
     }
 }

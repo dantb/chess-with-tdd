@@ -12,6 +12,7 @@ namespace ChessWithTDD.Tests
         private IBoardCache _boardCache;
         private IBoardInitialiser _boardInitialiser;
         private ICheckManager _checkManager;
+        private IMoveExecutor _moveExecutor;
         private IMoveValidator _moveValidator;
         private IPawnManager _pawnManager;
 
@@ -23,8 +24,9 @@ namespace ChessWithTDD.Tests
             _pawnManager = GenerateMock<IPawnManager>();
             _boardCache = GenerateMock<IBoardCache>();
             _checkManager = GenerateMock<ICheckManager>();
+            _moveExecutor = GenerateMock<IMoveExecutor>();
             _serviceLocator =
-                new StrictServiceLocator(_boardCache, _boardInitialiser, _checkManager, _moveValidator, _pawnManager);
+                new StrictServiceLocator(_boardCache, _boardInitialiser, _checkManager, _moveExecutor, _moveValidator, _pawnManager);
         }
 
         [Test]
@@ -65,6 +67,14 @@ namespace ChessWithTDD.Tests
             IPawnManager pawnManagerService = _serviceLocator.GetServicePawnManager();
 
             Assert.AreEqual(pawnManagerService, _pawnManager);
+        }
+
+        [Test]
+        public void MoveExecuterServiceIsImplemented()
+        {
+            IMoveExecutor moveExecutorService = _serviceLocator.GetServiceMoveExecuter();
+
+            Assert.AreEqual(moveExecutorService, _moveExecutor);
         }
     }
 }
