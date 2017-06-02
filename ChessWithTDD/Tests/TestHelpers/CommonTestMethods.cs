@@ -2,6 +2,7 @@
 using static Rhino.Mocks.MockRepository;
 using static ChessWithTDD.BoardConstants;
 using System;
+using System.Collections.Generic;
 
 namespace ChessWithTDD.Tests
 {
@@ -51,6 +52,15 @@ namespace ChessWithTDD.Tests
         internal static IBoard MockBoard()
         {
             return GenerateMock<IBoard>();
+        }
+
+        internal static IBoard MockBoardWithGetSquareAndPendingUpdates()
+        {
+            IBoard board = GenerateMock<IBoard>();
+            board.Stub(b => b.GetSquare(Arg<int>.Is.Anything, Arg<int>.Is.Anything))
+                .Return(MockSquare());
+            board.Stub(b => b.PendingUpdates).Return(new List<ISquare>());
+            return board;
         }
 
         internal static IBoard MockBoardWithGetSquaresMocked()
