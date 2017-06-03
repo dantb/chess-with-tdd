@@ -38,6 +38,8 @@ namespace ChessGameController
             builder.RegisterType<PawnManager>().As<IPawnManager>().InstancePerLifetimeScope();
             builder.RegisterType<EnPassantManager>().As<IEnPassantManager>().InstancePerLifetimeScope();
 
+            builder.RegisterType<MoveExecutor>().As<IMoveExecutor>().InstancePerLifetimeScope();
+
             Container = builder.Build();
         }
 

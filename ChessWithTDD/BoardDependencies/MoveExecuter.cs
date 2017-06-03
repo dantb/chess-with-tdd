@@ -5,10 +5,10 @@
         private IPawnManager _pawnManager;
         private ICheckManager _checkManager;
 
-        public MoveExecutor(IStrictServiceLocator serviceLocator)
+        public MoveExecutor(IPawnManager pawnManager, ICheckManager checkManager)
         {
-            _pawnManager = serviceLocator.GetServicePawnManager();
-            _checkManager = serviceLocator.GetServiceCheckManager();
+            _pawnManager = pawnManager;
+            _checkManager = checkManager;
         }
 
         public void ExecuteMove(IBoard board, ISquare fromSquare, ISquare toSquare)

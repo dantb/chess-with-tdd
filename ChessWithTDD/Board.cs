@@ -79,16 +79,6 @@ namespace ChessWithTDD
             _squares[square.Row][square.Col] = square;
         }
 
-        private void ActualApply(ISquare fromSquare, ISquare toSquare)
-        {
-            GetSquare(toSquare.Row, toSquare.Col).Piece = fromSquare.Piece;
-            GetSquare(toSquare.Row, toSquare.Col).ContainsPiece = true;
-            GetSquare(fromSquare.Row, fromSquare.Col).Piece = null;
-            GetSquare(fromSquare.Row, fromSquare.Col).ContainsPiece = false;
-            PendingUpdates.Add(fromSquare);
-            PendingUpdates.Add(toSquare);
-        }
-
         private void InitialiseBoardDimensions()
         {
             _squares = new List<List<ISquare>>();
