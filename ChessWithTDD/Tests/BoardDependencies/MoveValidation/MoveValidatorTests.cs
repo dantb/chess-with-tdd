@@ -9,7 +9,7 @@ namespace ChessWithTDD.Tests
     public class MoveValidatorTests
     {
         [Test]
-        public void MoveIsValidReturnsTrueIfGenericMoveValidationPassesAndMultiSquareValidationPasses()
+        public void MoveIsValidReturnsTrueIfAllValidationPasses()
         {
             ISquare fromSquare = MockSquare();
             ISquare toSquare = MockSquare();
@@ -22,15 +22,19 @@ namespace ChessWithTDD.Tests
             multiMoveValidator.Stub(mmv =>
                 mmv.MultiSquareMoveIsBlockedByAnObstacle(fromSquare, toSquare, board))
                 .Return(false);
+            IMoveIntoCheckValidator moveIntoCheckValidator = GenerateMock<IMoveIntoCheckValidator>();
+            moveIntoCheckValidator.Stub(m => 
+                m.MoveIsIntoCheck(board, fromSquare, toSquare))
+                .Return(false);
 
-            MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator);
+            MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator, moveIntoCheckValidator);
             bool isValidMove = moveValidator.MoveIsValid(fromSquare, toSquare, board);
 
             Assert.True(isValidMove);
         }
 
         [Test]
-        public void MoveIsValidReturnsFalseIfGenericMoveValidationFailsButMultiSquareValidationPasses()
+        public void MoveIsValidReturnsFalseIfJustGenericMoveValidationFails()
         {
             ISquare fromSquare = MockSquare();
             ISquare toSquare = MockSquare();
@@ -43,15 +47,19 @@ namespace ChessWithTDD.Tests
             multiMoveValidator.Stub(mmv =>
                 mmv.MultiSquareMoveIsBlockedByAnObstacle(fromSquare, toSquare, board))
                 .Return(false);
+            IMoveIntoCheckValidator moveIntoCheckValidator = GenerateMock<IMoveIntoCheckValidator>();
+            moveIntoCheckValidator.Stub(m =>
+                m.MoveIsIntoCheck(board, fromSquare, toSquare))
+                .Return(false);
 
-            MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator);
+            MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator, moveIntoCheckValidator);
             bool isValidMove = moveValidator.MoveIsValid(fromSquare, toSquare, board);
 
             Assert.False(isValidMove);
         }
 
         [Test]
-        public void MoveIsValidReturnsFalseIfMultiSquareValidationFailsButGenericMoveValidationPasses()
+        public void MoveIsValidReturnsFalseIfJustMultiSquareValidationFails()
         {
             ISquare fromSquare = MockSquare();
             ISquare toSquare = MockSquare();
@@ -64,8 +72,37 @@ namespace ChessWithTDD.Tests
             multiMoveValidator.Stub(mmv =>
                 mmv.MultiSquareMoveIsBlockedByAnObstacle(fromSquare, toSquare, board))
                 .Return(true);
+            IMoveIntoCheckValidator moveIntoCheckValidator = GenerateMock<IMoveIntoCheckValidator>();
+            moveIntoCheckValidator.Stub(m =>
+                m.MoveIsIntoCheck(board, fromSquare, toSquare))
+                .Return(false);
 
-            MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator);
+            MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator, moveIntoCheckValidator);
+            bool isValidMove = moveValidator.MoveIsValid(fromSquare, toSquare, board);
+
+            Assert.False(isValidMove);
+        }
+
+        [Test]
+        public void MoveIsValidReturnsFalseIfJustMoveIntoCheckValidationFails()
+        {
+            ISquare fromSquare = MockSquare();
+            ISquare toSquare = MockSquare();
+            IBoard board = MockBoard();
+            IGenericMoveValidator genericMoveValidator = GenerateMock<IGenericMoveValidator>();
+            genericMoveValidator.Stub(gmv =>
+                gmv.GenericSquareMoveValidationPasses(fromSquare, toSquare))
+                .Return(true);
+            IMultiSquareMoveValidator multiMoveValidator = GenerateMock<IMultiSquareMoveValidator>();
+            multiMoveValidator.Stub(mmv =>
+                mmv.MultiSquareMoveIsBlockedByAnObstacle(fromSquare, toSquare, board))
+                .Return(false);
+            IMoveIntoCheckValidator moveIntoCheckValidator = GenerateMock<IMoveIntoCheckValidator>();
+            moveIntoCheckValidator.Stub(m =>
+                m.MoveIsIntoCheck(board, fromSquare, toSquare))
+                .Return(true);
+
+            MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator, moveIntoCheckValidator);
             bool isValidMove = moveValidator.MoveIsValid(fromSquare, toSquare, board);
 
             Assert.False(isValidMove);
