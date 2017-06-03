@@ -9,9 +9,7 @@ namespace ChessWithTDD
         private List<List<ISquare>> _squares;
         private IMoveValidator _moveValidator;
         private IMoveExecutor _moveExecutor;
-        private IPawnManager _pawnManager;
         private IBoardCache _boardCache;
-        private ICheckManager _checkManager;
 
         public Board(IStrictServiceLocator serviceLocator)
         {
@@ -20,10 +18,8 @@ namespace ChessWithTDD
             boardInitialiser.InitialiseBoardPieces(this);
             _moveExecutor = serviceLocator.GetServiceMoveExecutor();
             _moveValidator = serviceLocator.GetServiceMoveValidator();
-            _pawnManager = serviceLocator.GetServicePawnManager();
             _boardCache = serviceLocator.GetServiceBoardCache();
             _boardCache.InitialiseBoardCache(this);
-            _checkManager = serviceLocator.GetServiceCheckManager();
         }
 
         public ISquare BlackKingSquare { get { return _boardCache.BlackKingSquare; } }
