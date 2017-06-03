@@ -6,7 +6,7 @@ namespace ChessWithTDD
     {
         public bool MoveIsIntoCheck(IBoard theBoard, ISquare fromSquare, ISquare toSquare)
         {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }

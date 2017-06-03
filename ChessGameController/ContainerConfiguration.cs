@@ -34,6 +34,7 @@ namespace ChessGameController
             builder.RegisterType<MoveValidator>().As<IMoveValidator>().InstancePerLifetimeScope();
             builder.RegisterType<GenericMoveValidator>().As<IGenericMoveValidator>().InstancePerLifetimeScope();
             builder.RegisterType<MultiSquareMoveValidator>().As<IMultiSquareMoveValidator>().InstancePerLifetimeScope();
+            builder.RegisterType<MoveIntoCheckValidator>().As<IMoveIntoCheckValidator>().InstancePerLifetimeScope();
 
             builder.RegisterType<PawnManager>().As<IPawnManager>().InstancePerLifetimeScope();
             builder.RegisterType<EnPassantManager>().As<IEnPassantManager>().InstancePerLifetimeScope();
