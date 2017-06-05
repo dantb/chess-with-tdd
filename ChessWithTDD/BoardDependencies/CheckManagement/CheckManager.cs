@@ -17,22 +17,11 @@
 
         private void AddCheckAndCheckMateStates(IBoard theBoard, ISquare threateningSquare)
         {
-            if (threateningSquare.Piece.Colour == Colour.White)
-            {
-                SetBoardAndKingCheckAndCheckMateStatesIfThreatened(theBoard, threateningSquare, theBoard.BlackKingSquare);
-            }
-            else if (threateningSquare.Piece.Colour == Colour.Black)
-            {
-                SetBoardAndKingCheckAndCheckMateStatesIfThreatened(theBoard, threateningSquare, theBoard.WhiteKingSquare);
-            }
-        }
-
-        private void SetBoardAndKingCheckAndCheckMateStatesIfThreatened(IBoard theBoard, ISquare threateningSquare, ISquare kingSquare)
-        {
-            if (theBoard.MoveIsValid(threateningSquare, kingSquare))
+            ISquare kingUnderThreatSquare = theBoard.OtherTeamKingSquare;
+            if (theBoard.MoveIsValid(threateningSquare, kingUnderThreatSquare))
             {
                 theBoard.InCheck = true;
-                (kingSquare.Piece as IKing).InCheckState = true;
+                (kingUnderThreatSquare.Piece as IKing).InCheckState = true;
                 theBoard.CheckMate = _checkMateManager.BoardIsInCheckMate(theBoard, threateningSquare);
             }
         }
@@ -41,15 +30,8 @@
         {
             if (theBoard.InCheck)
             {
-                //If we get here then we know for sure the previous move removed the king's check state
-                if ((theBoard.WhiteKingSquare.Piece as IKing).InCheckState)
-                {
-                    (theBoard.WhiteKingSquare.Piece as IKing).InCheckState = false;
-                }
-                else if ((theBoard.BlackKingSquare.Piece as IKing).InCheckState)
-                {
-                    (theBoard.BlackKingSquare.Piece as IKing).InCheckState = false;
-                }
+                //If we get here then we know for sure the previous move removed check from the moving team's king
+                (theBoard.MovingTeamKingSquare.Piece as IKing).InCheckState = false;
                 theBoard.InCheck = false;
             }
         }

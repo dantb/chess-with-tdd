@@ -15,15 +15,10 @@ namespace ChessWithTDD
         {
             if (theBoard.InCheck)
             {
-                if ((theBoard.WhiteKingSquare.Piece as IKing).InCheckState)
+                ISquare kingSquare = theBoard.OtherTeamKingSquare;
+                if ((kingSquare.Piece as IKing).InCheckState)
                 {
-                    ISquare kingSquare = theBoard.WhiteKingSquare;
-                    return !CheckMateCanBePrevented(theBoard, threateningSquare, kingSquare, theBoard.WhitePieceSquares);
-                }
-                else if ((theBoard.BlackKingSquare.Piece as IKing).InCheckState)
-                {
-                    ISquare kingSquare = theBoard.BlackKingSquare;
-                    return !CheckMateCanBePrevented(theBoard, threateningSquare, kingSquare, theBoard.BlackPieceSquares);
+                    return !CheckMateCanBePrevented(theBoard, threateningSquare, kingSquare, theBoard.OtherTeamPieceSquares);
                 }
             }
             return false;

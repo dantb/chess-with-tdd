@@ -8,55 +8,42 @@ namespace ChessWithTDD
         {
             if (fromSquare.Piece is IKing)
             {
-                if (fromSquare.Piece.Colour == Colour.White)
+                foreach (ISquare square in theBoard.OtherTeamPieceSquares)
                 {
-                    foreach (ISquare square in theBoard.BlackPieceSquares)
+                    if (theBoard.MoveIsValid(square, toSquare))
                     {
-                        if (theBoard.MoveIsValid(square, toSquare))
-                        {
-                            return true;
-                        }
+                        return true;
                     }
-                    return false;
                 }
-                else if (fromSquare.Piece.Colour == Colour.Black)
-                {
-                    foreach (ISquare square in theBoard.WhitePieceSquares)
-                    {
-                        if (theBoard.MoveIsValid(square, toSquare))
-                        {
-                            return true;
-                        }
-                    }
-                    return false;
-                }
+                return false;
             }
             else
             {
-                if (fromSquare.Piece.Colour == Colour.White)
-                {
-                    bool intoCheck = false;
-                    //remember contents of to square
-                    IPiece toSquarePiece = toSquare.Piece;
-                    bool toSquareContainsPiece = toSquare.ContainsPiece;
-                    //fake apply the move
-                    FakeApply(theBoard, fromSquare, toSquare);
-                    //check whether there's a black piece that can take the king now
-                    foreach (ISquare square in theBoard.BlackPieceSquares)
-                    {
-                        if (theBoard.MoveIsValid(square, theBoard.WhiteKingSquare))
-                        {
-                            intoCheck = true;
-                        }
-                    }
-                    //undo the move
-                    FakeApply(theBoard, toSquare, fromSquare);
-                    //reset the to square
-                    toSquare.Piece = toSquarePiece;
-                    toSquare.ContainsPiece = toSquareContainsPiece;
-                    return intoCheck;
-                }
+                //if (fromSquare.Piece.Colour == Colour.White)
+                //{
+                //    bool intoCheck = false;
+                //    //remember contents of to square
+                //    IPiece toSquarePiece = toSquare.Piece;
+                //    bool toSquareContainsPiece = toSquare.ContainsPiece;
+                //    //fake apply the move
+                //    FakeApply(theBoard, fromSquare, toSquare);
+                //    //check whether there's a black piece that can take the king now
+                //    foreach (ISquare square in theBoard.BlackPieceSquares)
+                //    {
+                //        if (theBoard.MoveIsValid(square, theBoard.WhiteKingSquare))
+                //        {
+                //            intoCheck = true;
+                //        }
+                //    }
+                //    //undo the move
+                //    FakeApply(theBoard, toSquare, fromSquare);
+                //    //reset the to square
+                //    toSquare.Piece = toSquarePiece;
+                //    toSquare.ContainsPiece = toSquareContainsPiece;
+                //    return intoCheck;
+                //}
             }
+            return false;
             throw new NotImplementedException();
         }
 

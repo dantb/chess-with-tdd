@@ -22,9 +22,9 @@ namespace ChessWithTDD.Tests
             //Move from to square to king square must be valid
             IBoard board = MockBoard();
             board.Stub(b => b.MoveIsValid(toSquare, blackKingSquare)).Return(true);
-            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
-
+            board.Stub(b => b.OtherTeamKingSquare).Return(blackKingSquare);
             CheckManager checkManager = new CheckManager(checkMateManager);
+
             checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = true);
@@ -47,7 +47,7 @@ namespace ChessWithTDD.Tests
             //Move from to square to king square must be valid
             IBoard board = MockBoard();
             board.Stub(b => b.MoveIsValid(toSquare, blackKingSquare)).Return(true);
-            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
+            board.Stub(b => b.OtherTeamKingSquare).Return(blackKingSquare);
 
             ICheckMateManager checkMateManager = GenerateMock<ICheckMateManager>();
             checkMateManager.Stub(cmm => cmm.BoardIsInCheckMate(board, toSquare)).Return(checkMate);
@@ -75,7 +75,7 @@ namespace ChessWithTDD.Tests
             //Move from to square to king square must be valid
             IBoard board = MockBoard();
             board.Stub(b => b.MoveIsValid(toSquare, whiteKingSquare)).Return(true);
-            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
+            board.Stub(b => b.OtherTeamKingSquare).Return(whiteKingSquare);
 
             CheckManager checkManager = new CheckManager(checkMateManager);
             checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
@@ -99,7 +99,7 @@ namespace ChessWithTDD.Tests
             //Move from to square to king square must be valid
             IBoard board = MockBoard();
             board.Stub(b => b.MoveIsValid(toSquare, whiteKingSquare)).Return(true);
-            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
+            board.Stub(b => b.OtherTeamKingSquare).Return(whiteKingSquare);
 
             ICheckMateManager checkMateManager = GenerateMock<ICheckMateManager>();
             checkMateManager.Stub(cmm => cmm.BoardIsInCheckMate(board, toSquare)).Return(checkMate);
@@ -131,8 +131,8 @@ namespace ChessWithTDD.Tests
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
-            board.Stub(b => b.WhiteKingSquare).Return(whiteKingSquare);
-            board.Stub(b => b.BlackKingSquare).Return(square);
+            board.Stub(b => b.MovingTeamKingSquare).Return(whiteKingSquare);
+            board.Stub(b => b.OtherTeamKingSquare).Return(square);
 
             CheckManager checkManager = new CheckManager(checkMateManager);
             checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
@@ -159,14 +159,14 @@ namespace ChessWithTDD.Tests
 
             IBoard board = MockBoard();
             board.Stub(b => b.InCheck).Return(true);
-            board.Stub(b => b.BlackKingSquare).Return(blackKingSquare);
-            board.Stub(b => b.WhiteKingSquare).Return(square);
+            board.Stub(b => b.MovingTeamKingSquare).Return(blackKingSquare);
+            board.Stub(b => b.OtherTeamKingSquare).Return(square);
 
             CheckManager checkManager = new CheckManager(checkMateManager);
             checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
 
             board.AssertWasCalled(b => b.InCheck = false);
             blackKing.AssertWasCalled(b => b.InCheckState = false);
-        }     
+        }
     }
 }

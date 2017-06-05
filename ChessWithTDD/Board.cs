@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using static ChessWithTDD.BoardConstants;
 
@@ -22,14 +23,6 @@ namespace ChessWithTDD
             _boardCache.InitialiseBoardCache(this);
         }
 
-        public ISquare BlackKingSquare { get { return _boardCache.BlackKingSquare; } }
-
-        public ISquare WhiteKingSquare { get { return _boardCache.WhiteKingSquare; } }
-
-        public HashSet<ISquare> WhitePieceSquares { get { return _boardCache.WhitePieceSquares; } }
-
-        public HashSet<ISquare> BlackPieceSquares { get { return _boardCache.BlackPieceSquares; } }
-
         public List<ISquare> PendingUpdates { get; set; } = new List<ISquare>();
 
         public bool InCheck { get; set; } = false;
@@ -43,6 +36,38 @@ namespace ChessWithTDD
         public int RowCount { get { return _squares.FirstOrDefault().Count; } }
 
         public List<List<ISquare>> Squares { get { return _squares; } }
+
+        public ISquare MovingTeamKingSquare
+        {
+            get
+            {
+                return TurnCounter % 2 == 0 ? _boardCache.WhiteKingSquare : _boardCache.BlackKingSquare;
+            }
+        }
+
+        public HashSet<ISquare> MovingTeamPieceSquares
+        {
+            get
+            {
+                return TurnCounter % 2 == 0 ? _boardCache.WhitePieceSquares : _boardCache.BlackPieceSquares;
+            }
+        }
+
+        public ISquare OtherTeamKingSquare
+        {
+            get
+            {
+                return TurnCounter % 2 == 0 ? _boardCache.BlackKingSquare : _boardCache.WhiteKingSquare;
+            }
+        }
+
+        public HashSet<ISquare> OtherTeamPieceSquares
+        {
+            get
+            {
+                return TurnCounter % 2 == 0 ? _boardCache.BlackPieceSquares : _boardCache.WhitePieceSquares;
+            }
+        }
 
         public ISquare GetSquare(int row, int col)
         {

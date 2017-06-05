@@ -47,12 +47,24 @@ namespace ChessWithTDD
 
         void SetSquare(ISquare square);
 
-        ISquare BlackKingSquare { get; } 
+        /// <summary>
+        /// Square of the king belonging to the team whose turn it currently is.
+        /// </summary>
+        ISquare MovingTeamKingSquare { get; }
 
-        ISquare WhiteKingSquare { get; }
+        /// <summary>
+        /// Square of the king belonging to the team not making a move.
+        /// </summary>
+        ISquare OtherTeamKingSquare { get; }
 
-        HashSet<ISquare> WhitePieceSquares { get; }
+        /// <summary>
+        /// Squares containing pieces of the team whose turn it currently is.
+        /// </summary>
+        HashSet<ISquare> MovingTeamPieceSquares { get; }
 
-        HashSet<ISquare> BlackPieceSquares { get; }
+        /// <summary>
+        /// Squares containing pieces of the team not making a move.
+        /// </summary>
+        HashSet<ISquare> OtherTeamPieceSquares { get; }
     }
 }
