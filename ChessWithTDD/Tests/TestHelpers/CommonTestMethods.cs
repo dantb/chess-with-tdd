@@ -3,12 +3,18 @@ using static Rhino.Mocks.MockRepository;
 using static ChessWithTDD.BoardConstants;
 using System;
 using System.Collections.Generic;
+using ChessWithTDD.Tests.TestHelpers;
 
 namespace ChessWithTDD.Tests
 {
 
     internal static class CommonTestMethods
     {
+        internal static void StubSquareWithPiece(ISquare settingSquare, IPiece thePiece)
+        {
+            settingSquare.Stub(s => s.Piece).Return(thePiece).OverridePrevious();
+        }
+
         /// <summary>
         /// Get a mock service locator with all services mocked to one level deep.
         /// If this is used remember to call OverridePrevious when stubbing the return from this.
