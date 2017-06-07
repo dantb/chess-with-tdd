@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ChessWithTDD
+﻿namespace ChessWithTDD
 {
     public class MoveIntoCheckValidator : IMoveIntoCheckValidator
     {
@@ -19,32 +17,10 @@ namespace ChessWithTDD
             }
             else
             {
-                //if (fromSquare.Piece.Colour == Colour.White)
-                //{
-                //    bool intoCheck = false;
-                //    //remember contents of to square
-                //    IPiece toSquarePiece = toSquare.Piece;
-                //    bool toSquareContainsPiece = toSquare.ContainsPiece;
-                //    //fake apply the move
-                //    FakeApply(theBoard, fromSquare, toSquare);
-                //    //check whether there's a black piece that can take the king now
-                //    foreach (ISquare square in theBoard.BlackPieceSquares)
-                //    {
-                //        if (theBoard.MoveIsValid(square, theBoard.WhiteKingSquare))
-                //        {
-                //            intoCheck = true;
-                //        }
-                //    }
-                //    //undo the move
-                //    FakeApply(theBoard, toSquare, fromSquare);
-                //    //reset the to square
-                //    toSquare.Piece = toSquarePiece;
-                //    toSquare.ContainsPiece = toSquareContainsPiece;
-                //    return intoCheck;
-                //}
+                //TODO
+                //other piece that previously blocked the way is trying to unblock the way
             }
             return false;
-            throw new NotImplementedException();
         }
 
         private void FakeApply(IBoard theBoard, ISquare fromSquare, ISquare toSquare)
