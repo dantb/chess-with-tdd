@@ -29,7 +29,10 @@
                 </Border>
             </Label>
             <TextBox HorizontalAlignment="Left" Height="30" Margin="276,10,0,0" TextWrapping="Wrap" Text="Enter moves" VerticalAlignment="Top" Width="480"/>
-            <Button Content="Apply" HorizontalAlignment="Left" Margin="774,10,0,0" VerticalAlignment="Top" Width="61" RenderTransformOrigin="-0.44,1.3" Height="30"/>
+            <Button Content="Apply" HorizontalAlignment="Left" 
+                    Margin="774,10,0,0" VerticalAlignment="Top" 
+                    Width="61" RenderTransformOrigin="-0.44,1.3" 
+                    Height="30"/>
 
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0" Height="900" Width="900">
