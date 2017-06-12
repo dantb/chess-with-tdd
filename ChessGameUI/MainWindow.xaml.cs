@@ -148,5 +148,21 @@ namespace ChessGameUI
             _dragManager.LastButtonLeftMousePressedIn = sender as Button;
             e.Handled = true;
         }
+
+        private void ApplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            AlgebraicNotationParser parser = new AlgebraicNotationParser(TheBoard);
+            string input = MoveNotationInputTextbox.Text;
+
+            IMove theMove = parser.Parse(input);
+            ISquare fromSquare = TheBoard.GetSquare(theMove.FromRow, theMove.FromCol);
+            ISquare toSquare = TheBoard.GetSquare(theMove.ToRow, theMove.ToCol);
+            if (TheBoard.MoveIsValid(fromSquare, toSquare))
+            {
+                TheBoard.Apply(fromSquare, toSquare);
+                ColourOfTeamWithTurn = ColourOfTeamWithTurn == Colour.White ?
+                    Colour.Black : Colour.White;
+            }
+        }
     }
 }

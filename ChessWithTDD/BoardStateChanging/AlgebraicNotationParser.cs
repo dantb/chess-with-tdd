@@ -21,14 +21,14 @@ namespace ChessWithTDD
         };
         private static Dictionary<char, int> LetterNumberMap = new Dictionary<char, int>()
         {
-            { 'a', 1 },
-            { 'b', 2 },
-            { 'c', 3 },
-            { 'd', 4 },
-            { 'e', 5 },
-            { 'f', 6 },
-            { 'g', 7 },
-            { 'h', 8 }
+            { 'a', 0 },
+            { 'b', 1 },
+            { 'c', 2 },
+            { 'd', 3 },
+            { 'e', 4 },
+            { 'f', 5 },
+            { 'g', 6 },
+            { 'h', 7 }
         };
         private static List<string> SpecialCases = new List<string>()
         {
@@ -56,11 +56,11 @@ namespace ChessWithTDD
                 {
                     //this is a pawn move
                     string piecePos = oneMoveInNotation.Substring(0, 2);
-                    int row = LetterNumberMap[piecePos[0]];
-                    int col = int.Parse(piecePos[1].ToString());
+                    int col = LetterNumberMap[piecePos[0]];
+                    int row = int.Parse(piecePos[1].ToString()) - 1;
                     string toPos = oneMoveInNotation.Substring(3, 2);
-                    int rowTo = LetterNumberMap[toPos[0]];
-                    int colTo = int.Parse(toPos[1].ToString());
+                    int colTo = LetterNumberMap[toPos[0]];
+                    int rowTo = int.Parse(toPos[1].ToString()) - 1;
                     if (oneMoveInNotation.Length > 6)
                     {
                         //not well formed
