@@ -21,7 +21,9 @@ namespace ChessWithTDD.Tests
 
         static object[] PawnMoveParseTestCases =
         {
-            new object[] { "f2-f4", new Move(1, 5, 3, 5) }
+            new object[] { "f2-f4", new Move(1, 5, 3, 5) },
+            new object[] { "e2-e4", new Move(1, 4, 3, 4) },
+            new object[] { "a5-a6", new Move(4, 0, 5, 0) }
         };
     }
 }
