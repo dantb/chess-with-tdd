@@ -95,6 +95,7 @@
     <Compile Include="Tests\BoardDependencies\MoveValidation\MultiSquareMoveValidatorTests.cs" />
     <Compile Include="Tests\BoardDependencies\PawnManagement\EnPassantManagerTests.cs" />
     <Compile Include="Tests\BoardDependencies\PawnManagement\PawnManagerTests.cs" />
+    <Compile Include="Tests\BoardStateChanging\AlgebraicNotationParserTests.cs" />
     <Compile Include="Tests\Pieces\BishopTests.cs" />
     <Compile Include="Tests\Pieces\BlackPawnTests.cs" />
     <Compile Include="Board.cs" />

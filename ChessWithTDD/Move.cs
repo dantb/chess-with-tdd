@@ -10,6 +10,19 @@
             ToCol = colTo;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is IMove)
+            {
+                IMove move = obj as IMove;
+                return move.FromCol.Equals(FromCol) 
+                    && move.FromRow.Equals(FromRow) 
+                    && move.ToCol.Equals(ToCol) 
+                    && move.ToRow.Equals(ToRow);
+            }
+            return base.Equals(obj);
+        }
+
         public int FromRow { get; }
         public int FromCol { get; }
         public int ToRow { get; }

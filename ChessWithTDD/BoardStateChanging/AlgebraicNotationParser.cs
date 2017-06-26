@@ -13,11 +13,11 @@ namespace ChessWithTDD
         private IBoard _theBoard;
         private static List<char> PieceCharacters = new List<char>()
         {
-            'K',
-            'Q',
-            'R',
-            'B',
-            'N'
+            'K', //King
+            'Q', //Queen
+            'R', //Rook
+            'B', //Bishop
+            'N'  //Knight
         };
         private static Dictionary<char, int> LetterNumberMap = new Dictionary<char, int>()
         {
@@ -40,6 +40,10 @@ namespace ChessWithTDD
         public AlgebraicNotationParser(IBoard theBoard)
         {
             _theBoard = theBoard;
+        }
+
+        public AlgebraicNotationParser()
+        {
         }
 
         /// <summary>
