@@ -36,6 +36,15 @@ namespace ChessWithTDD
             "++",
             "#"
         };
+        private static List<char> ConnectorCharacters = new List<char>()
+        {
+            '-',
+            'x'
+        };
+        private static HashSet<int> ValidBoardRows = new HashSet<int>()
+        {
+            0, 1, 2, 3, 4, 5, 6, 7
+        };
 
         public AlgebraicNotationParser(IBoard theBoard)
         {
@@ -59,6 +68,10 @@ namespace ChessWithTDD
                 if (!PieceCharacters.Contains(firstChar))
                 {
                     //this is a pawn move
+                    if (!ConnectorCharacters.Contains(oneMoveInNotation[2]))
+                    {
+                        return null;
+                    }
                     string piecePos = oneMoveInNotation.Substring(0, 2);
                     int col = LetterNumberMap[piecePos[0]];
                     int row = int.Parse(piecePos[1].ToString()) - 1;
@@ -73,6 +86,11 @@ namespace ChessWithTDD
                     else if (oneMoveInNotation.Length == 6 && !SpecialCases.Contains(oneMoveInNotation[5].ToString()))
                     {
                         //not an allowed special character
+                        return null;
+                    }
+                    if (!ValidBoardRows.Contains(row) ||
+                        !ValidBoardRows.Contains(rowTo))
+                    {
                         return null;
                     }
                     return new Move(row, col, rowTo, colTo);
