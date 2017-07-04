@@ -57,6 +57,7 @@
     <Compile Include="BoardDependencies\MoveValidation\MultiSquareMoveValidator.cs" />
     <Compile Include="BoardDependencies\PawnManagement\PawnManager.cs" />
     <Compile Include="BoardStateChanging\AlgebraicNotationParser.cs" />
+    <Compile Include="BoardStateChanging\ParsingConstants.cs" />
     <Compile Include="CloningExtensions.cs" />
     <Compile Include="Interfaces\BoardDependencies\IMoveExecutor.cs" />
     <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckMateEscapeManager.cs" />

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using static ChessWithTDD.ParsingConstants;
 
 namespace ChessWithTDD
 {
@@ -11,75 +10,24 @@ namespace ChessWithTDD
     /// </summary>
     public class AlgebraicNotationParser
     {
-        private IBoard _theBoard;
-        private static List<char> PieceCharacters = new List<char>()
-        {
-            'K', //King
-            'Q', //Queen
-            'R', //Rook
-            'B', //Bishop
-            'N'  //Knight
-        };
-        private static Dictionary<char, int> LetterNumberMap = new Dictionary<char, int>()
-        {
-            { 'a', 0 },
-            { 'b', 1 },
-            { 'c', 2 },
-            { 'd', 3 },
-            { 'e', 4 },
-            { 'f', 5 },
-            { 'g', 6 },
-            { 'h', 7 }
-        };
-        private static List<char> SpecialCases = new List<char>()
-        {
-            '+',
-            '#'
-        };
-        private static List<char> ConnectorCharacters = new List<char>()
-        {
-            '-', //move
-            'x'  //capture
-        };
-        private static HashSet<int> ValidBoardRows = new HashSet<int>()
-        {
-            0, 1, 2, 3, 4, 5, 6, 7
-        };
-
-        public AlgebraicNotationParser(IBoard theBoard)
-        {
-            _theBoard = theBoard;
-        }
-
-        public AlgebraicNotationParser()
-        {
-        }
-
         /// <summary>
         /// Parses the string in chess algebraic notation and returns the move if valid notation
         /// or null otherwise
         /// </summary>
         public IMove Parse(string oneMoveInNotation)
         {
-            //try
-            //{
-                IMove theMove = null;
-                char firstChar = oneMoveInNotation.First();
-                if (!PieceCharacters.Contains(firstChar))
-                {
-                    return PawnMove(oneMoveInNotation);
-                }
-                else
-                {
-                    return NonPawnMove(oneMoveInNotation);
-                }
+            IMove theMove = null;
+            char firstChar = oneMoveInNotation.First();
+            if (!PieceCharacters.Contains(firstChar))
+            {
+                return PawnMove(oneMoveInNotation);
+            }
+            else
+            {
+                return NonPawnMove(oneMoveInNotation);
+            }
 
-                return theMove;
-            //}
-            //catch
-            //{
-            //    return null;
-            //}
+            return theMove;
         }
 
         private IMove NonPawnMove(string oneMoveInNotation)
