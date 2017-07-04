@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using Rhino.Mocks;
 using static Rhino.Mocks.MockRepository;
 using static ChessWithTDD.Tests.CommonTestMethods;
-using System;
 
 namespace ChessWithTDD.Tests
 {

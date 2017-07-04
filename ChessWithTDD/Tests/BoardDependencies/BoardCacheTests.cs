@@ -1,10 +1,9 @@
-﻿using NUnit.Framework;
+﻿using ChessWithTDD.Tests.TestHelpers;
+using NUnit.Framework;
 using Rhino.Mocks;
 using System.Collections.Generic;
-using static Rhino.Mocks.MockRepository;
 using static ChessWithTDD.Tests.CommonTestMethods;
 using static ChessWithTDD.BoardConstants;
-using ChessWithTDD.Tests.TestHelpers;
 
 namespace ChessWithTDD.Tests
 {
