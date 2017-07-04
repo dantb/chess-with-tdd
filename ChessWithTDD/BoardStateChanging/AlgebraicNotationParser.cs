@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ChessWithTDD
@@ -30,11 +31,10 @@ namespace ChessWithTDD
             { 'g', 6 },
             { 'h', 7 }
         };
-        private static List<string> SpecialCases = new List<string>()
+        private static List<char> SpecialCases = new List<char>()
         {
-            "+",
-            "++",
-            "#"
+            '+',
+            '#'
         };
         private static List<char> ConnectorCharacters = new List<char>()
         {
@@ -67,33 +67,7 @@ namespace ChessWithTDD
                 char firstChar = oneMoveInNotation.First();
                 if (!PieceCharacters.Contains(firstChar))
                 {
-                    //this is a pawn move
-                    if (!ConnectorCharacters.Contains(oneMoveInNotation[2]))
-                    {
-                        return null;
-                    }
-                    string piecePos = oneMoveInNotation.Substring(0, 2);
-                    int col = LetterNumberMap[piecePos[0]];
-                    int row = int.Parse(piecePos[1].ToString()) - 1;
-                    string toPos = oneMoveInNotation.Substring(3, 2);
-                    int colTo = LetterNumberMap[toPos[0]];
-                    int rowTo = int.Parse(toPos[1].ToString()) - 1;
-                    if (oneMoveInNotation.Length > 6)
-                    {
-                        //not well formed
-                        return null;
-                    }
-                    else if (oneMoveInNotation.Length == 6 && !SpecialCases.Contains(oneMoveInNotation[5].ToString()))
-                    {
-                        //not an allowed special character
-                        return null;
-                    }
-                    if (!ValidBoardRows.Contains(row) ||
-                        !ValidBoardRows.Contains(rowTo))
-                    {
-                        return null;
-                    }
-                    return new Move(row, col, rowTo, colTo);
+                    return PawnMove(oneMoveInNotation);
                 }
 
                 return theMove;
@@ -102,6 +76,56 @@ namespace ChessWithTDD
             {
                 return null;
             }
-        } 
+        }
+
+        private IMove PawnMove(string oneMoveInNotation)
+        {
+            if (ConnectorCharacters.Contains(oneMoveInNotation[2]))
+            {
+                string fromPos = oneMoveInNotation.Substring(0, 2);
+                string toPos = oneMoveInNotation.Substring(3, 2);
+                if (ValidColumns(fromPos[0], toPos[0]))
+                {
+                    int colFrom = LetterNumberMap[fromPos[0]];
+                    int colTo = LetterNumberMap[toPos[0]];
+                    int rowFrom = int.Parse(fromPos[1].ToString()) - 1;
+                    int rowTo = int.Parse(toPos[1].ToString()) - 1;
+                    if (PawnStringHasValidLength(oneMoveInNotation) &&
+                        ValidRows(rowFrom, rowTo))
+                    {
+                        return new Move(rowFrom, colFrom, rowTo, colTo);
+                    }
+                }
+            }
+            return null;
+        }
+
+        private bool PawnStringHasValidLength(string oneMoveInNotation)
+        {
+            bool tooLong = oneMoveInNotation.Length > 6;
+            bool tooLongWithoutCheckOrMate =
+                oneMoveInNotation.Length == 6 && !SpecialCases.Contains(oneMoveInNotation[5]);
+            return !tooLong && !tooLongWithoutCheckOrMate;
+        }
+
+        private bool ValidColumns(char colFrom, char colTo)
+        {
+            if (LetterNumberMap.ContainsKey(colFrom) &&
+                LetterNumberMap.ContainsKey(colTo))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool ValidRows(int rowFrom, int rowTo)
+        {
+            if (ValidBoardRows.Contains(rowFrom) &&
+                ValidBoardRows.Contains(rowTo))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

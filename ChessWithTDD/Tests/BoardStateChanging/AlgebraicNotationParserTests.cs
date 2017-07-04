@@ -97,7 +97,7 @@ namespace ChessWithTDD.Tests
             //bad cells
             new object[] { "z2-a4" },
             new object[] { "b66-b4" },
-            new object[] { "c2-c9" },
+            new object[] { "c2-c999" },
             new object[] { "e0-e4" }
         };
     }
