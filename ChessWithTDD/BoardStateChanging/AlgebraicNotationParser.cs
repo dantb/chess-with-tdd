@@ -16,7 +16,6 @@ namespace ChessWithTDD
         /// </summary>
         public IMove Parse(string oneMoveInNotation)
         {
-            IMove theMove = null;
             char firstChar = oneMoveInNotation.First();
             if (!PieceCharacters.Contains(firstChar))
             {
@@ -26,16 +25,14 @@ namespace ChessWithTDD
             {
                 return NonPawnMove(oneMoveInNotation);
             }
-
-            return theMove;
         }
 
         private IMove NonPawnMove(string oneMoveInNotation)
         {
-            if (ValidConnectorCharacter(oneMoveInNotation[3]))
+            if (ValidConnectorCharacter(oneMoveInNotation[NonPawnConnectorIndex]))
             {
-                string fromPos = oneMoveInNotation.Substring(1, 2);
-                string toPos = oneMoveInNotation.Substring(4, 2);
+                string fromPos = oneMoveInNotation.Substring(NonPawnFromStartIndex, 2);
+                string toPos = oneMoveInNotation.Substring(NonPawnToStartIndex, 2);
                 if (ValidColumns(fromPos[0], toPos[0]))
                 {
                     int colFrom = LetterNumberMap[fromPos[0]];
@@ -54,18 +51,18 @@ namespace ChessWithTDD
 
         private bool NonPawnStringHasValidLength(string oneMoveInNotation)
         {
-            bool tooLong = oneMoveInNotation.Length > 7;
+            bool tooLong = oneMoveInNotation.Length > NonPawnMaxLength;
             bool tooLongWithoutCheckOrMate =
-                oneMoveInNotation.Length == 7 && !SpecialCases.Contains(oneMoveInNotation[6]);
+                oneMoveInNotation.Length == NonPawnMaxLength && !SpecialCases.Contains(oneMoveInNotation[6]);
             return !tooLong && !tooLongWithoutCheckOrMate;
         }
 
         private IMove PawnMove(string oneMoveInNotation)
         {
-            if (ValidConnectorCharacter(oneMoveInNotation[2]))
+            if (ValidConnectorCharacter(oneMoveInNotation[PawnConnectorIndex]))
             {
-                string fromPos = oneMoveInNotation.Substring(0, 2);
-                string toPos = oneMoveInNotation.Substring(3, 2);
+                string fromPos = oneMoveInNotation.Substring(PawnFromStartIndex, 2);
+                string toPos = oneMoveInNotation.Substring(PawnToStartIndex, 2);
                 if (ValidColumns(fromPos[0], toPos[0]))
                 {
                     int colFrom = LetterNumberMap[fromPos[0]];
@@ -84,9 +81,9 @@ namespace ChessWithTDD
 
         private bool PawnStringHasValidLength(string oneMoveInNotation)
         {
-            bool tooLong = oneMoveInNotation.Length > 6;
+            bool tooLong = oneMoveInNotation.Length > PawnMaxLength;
             bool tooLongWithoutCheckOrMate =
-                oneMoveInNotation.Length == 6 && !SpecialCases.Contains(oneMoveInNotation[5]);
+                oneMoveInNotation.Length == PawnMaxLength && !SpecialCases.Contains(oneMoveInNotation[5]);
             return !tooLong && !tooLongWithoutCheckOrMate;
         }
 

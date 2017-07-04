@@ -151,7 +151,7 @@ namespace ChessGameUI
 
         private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
-            AlgebraicNotationParser parser = new AlgebraicNotationParser(TheBoard);
+            AlgebraicNotationParser parser = new AlgebraicNotationParser();
             string input = MoveNotationInputTextbox.Text;
 
             IMove theMove = parser.Parse(input);

@@ -41,5 +41,19 @@ namespace ChessWithTDD
         {
             0, 1, 2, 3, 4, 5, 6, 7
         };
+
+        //numeric constants for parsed string
+
+        internal const int PawnConnectorIndex = 2;
+        internal const int NonPawnConnectorIndex = 3;
+
+        internal const int PawnMaxLength = 6;
+        internal const int NonPawnMaxLength = 7;
+
+        internal const int PawnFromStartIndex = 0;
+        internal const int NonPawnFromStartIndex = 1;
+
+        internal const int PawnToStartIndex = 3;
+        internal const int NonPawnToStartIndex = 4;
     }
 }
