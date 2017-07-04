@@ -39,6 +39,16 @@ namespace ChessWithTDD.Tests
             Assert.AreEqual(expectedMove, move);
         }
 
+        [Test, TestCaseSource("NonPawnInvalidMoveParseTestCases")]
+        public void NonPawnMoveParseFails(string input)
+        {
+            AlgebraicNotationParser parser = new AlgebraicNotationParser();
+
+            IMove move = parser.Parse(input);
+
+            Assert.AreEqual(null, move);
+        }
+
         static object[] PawnMoveParseTestCases =
         {
             //double move up
@@ -182,6 +192,29 @@ namespace ChessWithTDD.Tests
             new object[] { "Kb2xc3#", new Move(1, 1, 2, 2) },
             new object[] { "Ng7-g6+", new Move(6, 6, 5, 6) },
             new object[] { "Bh7-h6#", new Move(6, 7, 5, 7) },
+        };
+
+        static object[] NonPawnInvalidMoveParseTestCases =
+{
+            //bad connector
+            new object[] { "Ka2ga4" },
+            new object[] { "Bb25b4" },
+            new object[] { "Qc26c4" },
+            new object[] { "Nd2ld4" },
+            new object[] { "Re2;e4" },
+            new object[] { "Kf2+f4" },
+            new object[] { "Bg2--g4" },
+            new object[] { "Qh2=h4" },
+
+            //bad cells
+            new object[] { "Nz2-a4" },
+            new object[] { "Ra2-z4" },
+            new object[] { "Kb9-b4" },
+            new object[] { "Bc2-c9" },
+            new object[] { "Qc29-c9" },
+            new object[] { "Nc2-c7x" },
+            new object[] { "Re0-e4" },
+            new object[] { "Ke4-e0" }
         };
     }
 }

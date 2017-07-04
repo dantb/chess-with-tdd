@@ -38,8 +38,8 @@ namespace ChessWithTDD
         };
         private static List<char> ConnectorCharacters = new List<char>()
         {
-            '-',
-            'x'
+            '-', //move
+            'x'  //capture
         };
         private static HashSet<int> ValidBoardRows = new HashSet<int>()
         {
@@ -61,26 +61,60 @@ namespace ChessWithTDD
         /// </summary>
         public IMove Parse(string oneMoveInNotation)
         {
-            try
-            {
+            //try
+            //{
                 IMove theMove = null;
                 char firstChar = oneMoveInNotation.First();
                 if (!PieceCharacters.Contains(firstChar))
                 {
                     return PawnMove(oneMoveInNotation);
                 }
+                else
+                {
+                    return NonPawnMove(oneMoveInNotation);
+                }
 
                 return theMove;
-            }
-            catch
+            //}
+            //catch
+            //{
+            //    return null;
+            //}
+        }
+
+        private IMove NonPawnMove(string oneMoveInNotation)
+        {
+            if (ValidConnectorCharacter(oneMoveInNotation[3]))
             {
-                return null;
+                string fromPos = oneMoveInNotation.Substring(1, 2);
+                string toPos = oneMoveInNotation.Substring(4, 2);
+                if (ValidColumns(fromPos[0], toPos[0]))
+                {
+                    int colFrom = LetterNumberMap[fromPos[0]];
+                    int colTo = LetterNumberMap[toPos[0]];
+                    int rowFrom = int.Parse(fromPos[1].ToString()) - 1;
+                    int rowTo = int.Parse(toPos[1].ToString()) - 1;
+                    if (NonPawnStringHasValidLength(oneMoveInNotation) &&
+                        ValidRows(rowFrom, rowTo))
+                    {
+                        return new Move(rowFrom, colFrom, rowTo, colTo);
+                    }
+                }
             }
+            return null;
+        }
+
+        private bool NonPawnStringHasValidLength(string oneMoveInNotation)
+        {
+            bool tooLong = oneMoveInNotation.Length > 7;
+            bool tooLongWithoutCheckOrMate =
+                oneMoveInNotation.Length == 7 && !SpecialCases.Contains(oneMoveInNotation[6]);
+            return !tooLong && !tooLongWithoutCheckOrMate;
         }
 
         private IMove PawnMove(string oneMoveInNotation)
         {
-            if (ConnectorCharacters.Contains(oneMoveInNotation[2]))
+            if (ValidConnectorCharacter(oneMoveInNotation[2]))
             {
                 string fromPos = oneMoveInNotation.Substring(0, 2);
                 string toPos = oneMoveInNotation.Substring(3, 2);
@@ -106,6 +140,11 @@ namespace ChessWithTDD
             bool tooLongWithoutCheckOrMate =
                 oneMoveInNotation.Length == 6 && !SpecialCases.Contains(oneMoveInNotation[5]);
             return !tooLong && !tooLongWithoutCheckOrMate;
+        }
+
+        private bool ValidConnectorCharacter(char con)
+        {
+            return ConnectorCharacters.Contains(con);
         }
 
         private bool ValidColumns(char colFrom, char colTo)
