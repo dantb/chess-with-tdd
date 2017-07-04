@@ -80,6 +80,12 @@ namespace ChessWithTDD.Tests
             new object[] { "f2xg3", new Move(1, 5, 2, 6) },
             new object[] { "g2xh3", new Move(1, 6, 2, 7) },
             new object[] { "h2xg3", new Move(1, 7, 2, 6) },
+
+            //special moves
+            new object[] { "a2xb3+", new Move(1, 0, 2, 1) },
+            new object[] { "b2xc3#", new Move(1, 1, 2, 2) },
+            new object[] { "g7-g6+", new Move(6, 6, 5, 6) },
+            new object[] { "h7-h6#", new Move(6, 7, 5, 7) },
         };
 
         static object[] PawnInvalidMoveParseTestCases =
@@ -96,9 +102,13 @@ namespace ChessWithTDD.Tests
 
             //bad cells
             new object[] { "z2-a4" },
-            new object[] { "b66-b4" },
-            new object[] { "c2-c999" },
-            new object[] { "e0-e4" }
+            new object[] { "a2-z4" },
+            new object[] { "b9-b4" },
+            new object[] { "c2-c9" },
+            new object[] { "c29-c9" },
+            new object[] { "c2-c7x" },
+            new object[] { "e0-e4" },
+            new object[] { "e4-e0" }
         };
     }
 }
