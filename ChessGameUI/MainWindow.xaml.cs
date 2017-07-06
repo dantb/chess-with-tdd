@@ -142,19 +142,5 @@ namespace ChessGameUI
             _dragManager.LastButtonLeftMousePressedIn = sender as Button;
             e.Handled = true;
         }
-
-        private void ApplyButton_Click(object sender, RoutedEventArgs e)
-        {
-            AlgebraicNotationParser parser = new AlgebraicNotationParser();
-            string input = MoveNotationInputTextbox.Text;
-
-            IMove theMove = parser.Parse(input);
-            ISquare fromSquare = Board.GetSquare(theMove.FromRow, theMove.FromCol);
-            ISquare toSquare = Board.GetSquare(theMove.ToRow, theMove.ToCol);
-            if (Board.MoveIsValid(fromSquare, toSquare))
-            {
-                Board.Apply(fromSquare, toSquare);
-            }
-        }
     }
 }
