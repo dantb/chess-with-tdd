@@ -336,6 +336,34 @@ namespace ChessWithTDD.Tests
             Assert.AreEqual(currentTeam, whiteTeam);
         }
 
+        [TestCase(0)]
+        [TestCase(2)]
+        [TestCase(22)]
+        [Test]
+        public void TeamWithTurnIsWhiteForEvenTurnCounters(int turnCounter)
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            Board board = new Board(serviceLocator);
+
+            board.TurnCounter = turnCounter;
+
+            Assert.AreEqual(board.TeamWithTurn, Colour.White);
+        }
+
+        [TestCase(1)]
+        [TestCase(3)]
+        [TestCase(19)]
+        [Test]
+        public void TeamWithTurnIsBlackForOddTurnCounters(int turnCounter)
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            Board board = new Board(serviceLocator);
+
+            board.TurnCounter = turnCounter;
+
+            Assert.AreEqual(board.TeamWithTurn, Colour.Black);
+        }
+
         #endregion Properties
 
     }

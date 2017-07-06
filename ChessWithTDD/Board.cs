@@ -40,7 +40,7 @@ namespace ChessWithTDD
         {
             get
             {
-                return TurnCounter % 2 == 0 ? _boardCache.WhiteKingSquare : _boardCache.BlackKingSquare;
+                return TeamWithTurn == Colour.White ? _boardCache.WhiteKingSquare : _boardCache.BlackKingSquare;
             }
         }
 
@@ -48,7 +48,7 @@ namespace ChessWithTDD
         {
             get
             {
-                return TurnCounter % 2 == 0 ? _boardCache.WhitePieceSquares : _boardCache.BlackPieceSquares;
+                return TeamWithTurn == Colour.White ? _boardCache.WhitePieceSquares : _boardCache.BlackPieceSquares;
             }
         }
 
@@ -56,7 +56,7 @@ namespace ChessWithTDD
         {
             get
             {
-                return TurnCounter % 2 == 0 ? _boardCache.BlackKingSquare : _boardCache.WhiteKingSquare;
+                return TeamWithTurn == Colour.White ? _boardCache.BlackKingSquare : _boardCache.WhiteKingSquare;
             }
         }
 
@@ -64,7 +64,15 @@ namespace ChessWithTDD
         {
             get
             {
-                return TurnCounter % 2 == 0 ? _boardCache.BlackPieceSquares : _boardCache.WhitePieceSquares;
+                return TeamWithTurn == Colour.White ? _boardCache.BlackPieceSquares : _boardCache.WhitePieceSquares;
+            }
+        }
+
+        public Colour TeamWithTurn
+        {
+            get
+            {
+                return TurnCounter % 2 == 0 ? Colour.White : Colour.Black;
             }
         }
 
