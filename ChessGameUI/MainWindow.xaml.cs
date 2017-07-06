@@ -16,18 +16,12 @@ namespace ChessGameUI
         public BoardFrontEnd(IBoard board, Colour playerColour)
         {
             InitializeComponent();
-            TheBoard = board;
-            _dragManager = new DragManager(TheBoard, this);
-            ColourOfTeamWithTurn = Colour.White;
-            DataContext = TheBoard;
+            Board = board;
+            _dragManager = new DragManager(Board, this);
+            DataContext = Board;
         }
 
-        public Colour ColourOfTeamWithTurn
-        {
-            get; set;
-        }
-
-        public IBoard TheBoard { get; }
+        public IBoard Board { get; }
 
         public event MoveProviderEventHandler MoveChosenEvent;
 
@@ -47,9 +41,9 @@ namespace ChessGameUI
                     {
                         int gridRow = Grid.GetRow(button);
                         int gridCol = Grid.GetColumn(button);
-                        if (TheBoard.GetSquare(gridRow, gridCol).ContainsPiece)
+                        if (Board.GetSquare(gridRow, gridCol).ContainsPiece)
                         {
-                            if (TheBoard.GetSquare(gridRow, gridCol).Piece.Colour == ColourOfTeamWithTurn)
+                            if (Board.GetSquare(gridRow, gridCol).Piece.Colour == Board.TeamWithTurn)
                             {
                                 if (button.Content is Image &&
                                     _dragManager.LastButtonLeftMousePressedIn == button)
@@ -94,9 +88,9 @@ namespace ChessGameUI
 
         private void SetCursorFromSquare(int row, int col)
         {
-            if (TheBoard.GetSquare(row, col).ContainsPiece)
+            if (Board.GetSquare(row, col).ContainsPiece)
             {
-                if (TheBoard.GetSquare(row, col).Piece.Colour == ColourOfTeamWithTurn)
+                if (Board.GetSquare(row, col).Piece.Colour == Board.TeamWithTurn)
                 {
                     Cursor = Cursors.Hand;
                 }
@@ -155,13 +149,11 @@ namespace ChessGameUI
             string input = MoveNotationInputTextbox.Text;
 
             IMove theMove = parser.Parse(input);
-            ISquare fromSquare = TheBoard.GetSquare(theMove.FromRow, theMove.FromCol);
-            ISquare toSquare = TheBoard.GetSquare(theMove.ToRow, theMove.ToCol);
-            if (TheBoard.MoveIsValid(fromSquare, toSquare))
+            ISquare fromSquare = Board.GetSquare(theMove.FromRow, theMove.FromCol);
+            ISquare toSquare = Board.GetSquare(theMove.ToRow, theMove.ToCol);
+            if (Board.MoveIsValid(fromSquare, toSquare))
             {
-                TheBoard.Apply(fromSquare, toSquare);
-                ColourOfTeamWithTurn = ColourOfTeamWithTurn == Colour.White ?
-                    Colour.Black : Colour.White;
+                Board.Apply(fromSquare, toSquare);
             }
         }
     }

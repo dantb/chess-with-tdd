@@ -43,7 +43,7 @@ namespace ChessGameController
         private void ChessBoardGUI_MoveChosenEvent(object sender, MoveProviderEventArgs e)
         {
             BoardFrontEnd playingBoard = (BoardFrontEnd) sender;
-            IBoard board = playingBoard.TheBoard;
+            IBoard board = playingBoard.Board;
             IMove move = e.TheMove;
             ISquare fromSquare = board.GetSquare(move.FromRow, move.FromCol);
             ISquare toSquare = board.GetSquare(move.ToRow, move.ToCol);
@@ -59,14 +59,13 @@ namespace ChessGameController
 
         private void ApplyMove(BoardFrontEnd chessBoard, IBoard board, ISquare fromSquare, ISquare toSquare)
         {
+            Colour teamThatMoved = board.TeamWithTurn;
+            //after applying the move, the team with turn will switch
             board.Apply(fromSquare, toSquare);
-            Colour teamThatMoved = chessBoard.ColourOfTeamWithTurn;
             if (board.CheckMate)
             {
                 ShowCheckMateDialogue(teamThatMoved, chessBoard);
             }
-            chessBoard.ColourOfTeamWithTurn = teamThatMoved == Colour.White ?
-                Colour.Black : Colour.White;
         }
 
         private void ShowInvalidMoveDialogue(ISquare fromSquare, ISquare toSquare)

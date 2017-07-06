@@ -66,5 +66,7 @@ namespace ChessWithTDD
         /// Squares containing pieces of the team not making a move.
         /// </summary>
         HashSet<ISquare> OtherTeamPieceSquares { get; }
+
+        Colour TeamWithTurn { get; }
     }
 }
