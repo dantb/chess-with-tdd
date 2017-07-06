@@ -11,7 +11,7 @@ namespace ChessWithTDD
     public class AlgebraicNotationParser
     {
         /// <summary>
-        /// Parses the string in chess algebraic notation and returns the move if valid notation
+        /// Parses the string in chess algebraic notation and returns the move if valid notation,
         /// or null otherwise
         /// </summary>
         public IMove Parse(string oneMoveInNotation)

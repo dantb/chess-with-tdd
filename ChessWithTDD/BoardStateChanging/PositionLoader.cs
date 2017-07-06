@@ -17,7 +17,7 @@ namespace ChessGameController
         /// 
         /// <para>a1-a3,a6-a5</para>
         /// <para>c1-c2,e6-e3</para>
-        /// <para>Kb0-a2,f6-f4</para>
+        /// <para>Nb0-a2,f6-f4</para>
         /// 
         /// So that's comma separated moves for each turn, with each line representing a single turn.
         /// For full formatting details see <see cref="AlgebraicNotationParser"/>
