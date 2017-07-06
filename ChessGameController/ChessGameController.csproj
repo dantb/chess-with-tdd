@@ -62,6 +62,7 @@
     <Compile Include="GameEntryForm.Designer.cs">
       <DependentUpon>GameEntryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PositionLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GameEntryForm.resx">
