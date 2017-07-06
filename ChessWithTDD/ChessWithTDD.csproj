@@ -43,13 +43,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardDependencies\BoardCache.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckManager.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckMateEscapeManager.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckMateManager.cs" />
-    <Compile Include="BoardDependencies\FakeMoveExecutor.cs" />
     <Compile Include="BoardDependencies\MoveValidation\MoveIntoCheckValidator.cs" />
     <Compile Include="BoardDependencies\PawnManagement\EnPassantManager.cs" />
     <Compile Include="BoardDependencies\MoveValidation\GenericMoveValidator.cs" />
@@ -58,6 +58,7 @@
     <Compile Include="BoardDependencies\PawnManagement\PawnManager.cs" />
     <Compile Include="BoardStateChanging\AlgebraicNotationParser.cs" />
     <Compile Include="BoardStateChanging\ParsingConstants.cs" />
+    <Compile Include="BoardStateChanging\PositionLoader.cs" />
     <Compile Include="CloningExtensions.cs" />
     <Compile Include="Interfaces\BoardDependencies\IMoveExecutor.cs" />
     <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckMateEscapeManager.cs" />
@@ -68,7 +69,6 @@
     <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckMateManager.cs" />
     <Compile Include="Interfaces\BoardDependencies\PawnManagement\IEnPassantManager.cs" />
     <Compile Include="Interfaces\BoardDependencies\MoveValidation\IGenericMoveValidator.cs" />
-    <Compile Include="Interfaces\IFakeMoveExecutor.cs" />
     <Compile Include="Interfaces\IMoveProvider.cs" />
     <Compile Include="Interfaces\Pieces\IKing.cs" />
     <Compile Include="Interfaces\Pieces\IKnight.cs" />
