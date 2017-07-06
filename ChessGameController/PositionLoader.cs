@@ -27,15 +27,18 @@ namespace ChessGameController
         {
             try
             {
+                AlgebraicNotationParser parser = new AlgebraicNotationParser();
+
                 if (File.Exists(file))
                 {
                     var lines = File.ReadAllLines(file);
                     foreach (var line in lines)
                     {
                         string[] moves = line.Split(',');
-                        string whiteMove = moves[0];
-                        string blackMove = moves[1];
-
+                        IMove whiteMove = parser.Parse(moves[0]);
+                        IMove blackMove = parser.Parse((moves[1]));
+                        TryToApplyMove(board, moves, whiteMove);
+                        TryToApplyMove(board, moves, blackMove);
                     }
                 }
                 else
@@ -51,6 +54,29 @@ namespace ChessGameController
                     string.Concat(message, e.Message);
                 }
                 MessageBox.Show(message);
+            }
+        }
+
+        private static void TryToApplyMove(IBoard board, string[] moves, IMove theMove)
+        {
+            if (theMove != null)
+            {
+                //parsed correctly
+                ISquare whiteFrom = board.GetSquare(theMove.FromRow, theMove.FromCol);
+                ISquare whiteTo = board.GetSquare(theMove.ToRow, theMove.ToCol);
+                if (board.MoveIsValid(whiteFrom, whiteTo))
+                {
+                    board.Apply(whiteFrom, whiteTo);
+                }
+                else
+                {
+                    throw new PositionLoadingException($"The move from ({theMove.FromRow},{theMove.FromCol}) " +
+                        $"to ({theMove.ToRow},{theMove.ToCol}) is invalid on this board.");
+                }
+            }
+            else
+            {
+                throw new PositionLoadingException($"Failed to parse the move {moves[0]} correctly.");
             }
         }
 
