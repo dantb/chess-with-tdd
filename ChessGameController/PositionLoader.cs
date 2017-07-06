@@ -23,7 +23,7 @@ namespace ChessGameController
         /// </summary>
         /// <param name="board">The board to apply moves to in order to load a position</param>
         /// <param name="file">File to load the moves to apply to the board</param>
-        public void LoadPositionIntoBoard(IBoard board, string file)
+        public bool LoadPositionIntoBoard(IBoard board, string file)
         {
             try
             {
@@ -45,15 +45,17 @@ namespace ChessGameController
                 {
                     throw new PositionLoadingException("Could not find file to load the position from.");
                 }
+                return true;
             }
             catch (Exception e)
             {
                 string message = "There was a problem loading the position. ";
                 if (e is PositionLoadingException)
                 {
-                    string.Concat(message, e.Message);
+                    message += e.Message;
                 }
                 MessageBox.Show(message);
+                return false;
             }
         }
 

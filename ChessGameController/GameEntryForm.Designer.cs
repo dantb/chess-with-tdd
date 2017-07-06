@@ -34,6 +34,11 @@
             this.YourTeamLabel = new System.Windows.Forms.Label();
             this.WhiteTeamRB = new System.Windows.Forms.RadioButton();
             this.ButtonTeamSplitter = new System.Windows.Forms.SplitContainer();
+            this.BrowsePositionFilesButton = new System.Windows.Forms.Button();
+            this.PositionFilePathTextBox = new System.Windows.Forms.TextBox();
+            this.LoadPositionLabel = new System.Windows.Forms.Label();
+            this.LoadPositionButton = new System.Windows.Forms.Button();
+            this.BrowsePositionFileDialogue = new System.Windows.Forms.OpenFileDialog();
             this.TeamRadioButtonsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ButtonTeamSplitter)).BeginInit();
             this.ButtonTeamSplitter.Panel1.SuspendLayout();
@@ -53,7 +58,7 @@
             this.StartGameButton.ForeColor = System.Drawing.Color.BurlyWood;
             this.StartGameButton.Location = new System.Drawing.Point(0, 0);
             this.StartGameButton.Name = "StartGameButton";
-            this.StartGameButton.Size = new System.Drawing.Size(206, 109);
+            this.StartGameButton.Size = new System.Drawing.Size(377, 182);
             this.StartGameButton.TabIndex = 0;
             this.StartGameButton.Text = "Start Game";
             this.StartGameButton.UseVisualStyleBackColor = false;
@@ -75,13 +80,17 @@
             // TeamRadioButtonsPanel
             // 
             this.TeamRadioButtonsPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.TeamRadioButtonsPanel.Controls.Add(this.LoadPositionButton);
+            this.TeamRadioButtonsPanel.Controls.Add(this.LoadPositionLabel);
+            this.TeamRadioButtonsPanel.Controls.Add(this.PositionFilePathTextBox);
+            this.TeamRadioButtonsPanel.Controls.Add(this.BrowsePositionFilesButton);
             this.TeamRadioButtonsPanel.Controls.Add(this.YourTeamLabel);
             this.TeamRadioButtonsPanel.Controls.Add(this.WhiteTeamRB);
             this.TeamRadioButtonsPanel.Controls.Add(this.BlackTeamRB);
             this.TeamRadioButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TeamRadioButtonsPanel.Location = new System.Drawing.Point(0, 0);
             this.TeamRadioButtonsPanel.Name = "TeamRadioButtonsPanel";
-            this.TeamRadioButtonsPanel.Size = new System.Drawing.Size(206, 109);
+            this.TeamRadioButtonsPanel.Size = new System.Drawing.Size(382, 182);
             this.TeamRadioButtonsPanel.TabIndex = 2;
             // 
             // YourTeamLabel
@@ -90,9 +99,9 @@
             this.YourTeamLabel.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.YourTeamLabel.Location = new System.Drawing.Point(16, 14);
             this.YourTeamLabel.Name = "YourTeamLabel";
-            this.YourTeamLabel.Size = new System.Drawing.Size(126, 14);
+            this.YourTeamLabel.Size = new System.Drawing.Size(238, 14);
             this.YourTeamLabel.TabIndex = 3;
-            this.YourTeamLabel.Text = "Choose your team:";
+            this.YourTeamLabel.Text = "Choose your team and click start:";
             // 
             // WhiteTeamRB
             // 
@@ -122,16 +131,60 @@
             // 
             this.ButtonTeamSplitter.Panel2.Controls.Add(this.TeamRadioButtonsPanel);
             this.ButtonTeamSplitter.Panel2MinSize = 206;
-            this.ButtonTeamSplitter.Size = new System.Drawing.Size(416, 109);
-            this.ButtonTeamSplitter.SplitterDistance = 206;
+            this.ButtonTeamSplitter.Size = new System.Drawing.Size(763, 182);
+            this.ButtonTeamSplitter.SplitterDistance = 377;
             this.ButtonTeamSplitter.TabIndex = 3;
+            // 
+            // BrowsePositionFilesButton
+            // 
+            this.BrowsePositionFilesButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BrowsePositionFilesButton.Location = new System.Drawing.Point(322, 113);
+            this.BrowsePositionFilesButton.Name = "BrowsePositionFilesButton";
+            this.BrowsePositionFilesButton.Size = new System.Drawing.Size(40, 20);
+            this.BrowsePositionFilesButton.TabIndex = 4;
+            this.BrowsePositionFilesButton.Text = "...";
+            this.BrowsePositionFilesButton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.BrowsePositionFilesButton.UseVisualStyleBackColor = true;
+            this.BrowsePositionFilesButton.Click += new System.EventHandler(this.BrowsePositionFilesButton_Click);
+            // 
+            // PositionFilePathTextBox
+            // 
+            this.PositionFilePathTextBox.Location = new System.Drawing.Point(19, 113);
+            this.PositionFilePathTextBox.Name = "PositionFilePathTextBox";
+            this.PositionFilePathTextBox.Size = new System.Drawing.Size(297, 20);
+            this.PositionFilePathTextBox.TabIndex = 5;
+            // 
+            // LoadPositionLabel
+            // 
+            this.LoadPositionLabel.AutoSize = true;
+            this.LoadPositionLabel.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LoadPositionLabel.Location = new System.Drawing.Point(19, 94);
+            this.LoadPositionLabel.Name = "LoadPositionLabel";
+            this.LoadPositionLabel.Size = new System.Drawing.Size(343, 14);
+            this.LoadPositionLabel.TabIndex = 6;
+            this.LoadPositionLabel.Text = "Alternatively, load the board position from file";
+            // 
+            // LoadPositionButton
+            // 
+            this.LoadPositionButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LoadPositionButton.Location = new System.Drawing.Point(19, 140);
+            this.LoadPositionButton.Name = "LoadPositionButton";
+            this.LoadPositionButton.Size = new System.Drawing.Size(343, 25);
+            this.LoadPositionButton.TabIndex = 7;
+            this.LoadPositionButton.Text = "Load position";
+            this.LoadPositionButton.UseVisualStyleBackColor = true;
+            this.LoadPositionButton.Click += new System.EventHandler(this.LoadPositionButton_Click);
+            // 
+            // BrowsePositionFileDialogue
+            // 
+            this.BrowsePositionFileDialogue.FileName = "openFileDialog1";
             // 
             // GameEntryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.BurlyWood;
-            this.ClientSize = new System.Drawing.Size(441, 136);
+            this.ClientSize = new System.Drawing.Size(788, 209);
             this.Controls.Add(this.ButtonTeamSplitter);
             this.MinimumSize = new System.Drawing.Size(457, 175);
             this.Name = "GameEntryForm";
@@ -154,6 +207,11 @@
         private System.Windows.Forms.RadioButton WhiteTeamRB;
         private System.Windows.Forms.Label YourTeamLabel;
         private System.Windows.Forms.SplitContainer ButtonTeamSplitter;
+        private System.Windows.Forms.Button BrowsePositionFilesButton;
+        private System.Windows.Forms.TextBox PositionFilePathTextBox;
+        private System.Windows.Forms.Label LoadPositionLabel;
+        private System.Windows.Forms.Button LoadPositionButton;
+        private System.Windows.Forms.OpenFileDialog BrowsePositionFileDialogue;
     }
 }
 

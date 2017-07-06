@@ -16,6 +16,11 @@ namespace ChessGameController
         private void StartGameButton_Click(object sender, EventArgs e)
         {
             BoardFrontEnd chessBoardGUI = GetBoardUI();
+            RunChessGame(chessBoardGUI);
+        }
+
+        private static void RunChessGame(BoardFrontEnd chessBoardGUI)
+        {
             try
             {
                 chessBoardGUI.ShowDialog();
@@ -88,6 +93,29 @@ namespace ChessGameController
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation);
             chessBoard.Close();
-        }      
+        }
+
+        private void BrowsePositionFilesButton_Click(object sender, EventArgs e)
+        {
+            if (BrowsePositionFileDialogue.ShowDialog() == DialogResult.OK)
+            {
+                PositionFilePathTextBox.Text = BrowsePositionFileDialogue.FileName;
+                BrowsePositionFileDialogue.Reset();
+            }
+        }
+
+        private void LoadPositionButton_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(PositionFilePathTextBox.Text))
+            {
+                PositionLoader loader = new PositionLoader();
+                BoardFrontEnd boardUI = GetBoardUI();
+                //now load up the position
+                if (loader.LoadPositionIntoBoard(boardUI.Board, PositionFilePathTextBox.Text))
+                {
+                    RunChessGame(boardUI);
+                }
+            }
+        }
     }
 }
