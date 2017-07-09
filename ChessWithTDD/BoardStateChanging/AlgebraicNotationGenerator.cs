@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ChessWithTDD
+﻿namespace ChessWithTDD
 {
     /// <summary>
     /// Converts moves into algebraic notation strings. Uses long notation.

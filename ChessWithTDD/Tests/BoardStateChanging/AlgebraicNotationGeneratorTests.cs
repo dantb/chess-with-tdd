@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace ChessWithTDD.Tests.BoardStateChanging
+namespace ChessWithTDD.Tests
 {
     /// <summary>
     /// Tests for algebraic notation generator. Every piece type should be tested, plus the case when an
