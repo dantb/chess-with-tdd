@@ -27,8 +27,8 @@ namespace ChessWithTDD
 
         internal static HashSet<char> SpecialCases = new HashSet<char>()
         {
-            '+',
-            '#'
+            '+', //check
+            '#'  //checkmate
         };
 
         internal static HashSet<char> ConnectorCharacters = new HashSet<char>()
