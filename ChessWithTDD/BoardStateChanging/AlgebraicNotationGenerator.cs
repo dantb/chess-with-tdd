@@ -1,4 +1,6 @@
-﻿namespace ChessWithTDD
+﻿using System;
+
+namespace ChessWithTDD
 {
     /// <summary>
     /// Converts moves into algebraic notation strings. Uses long notation.
@@ -8,12 +10,15 @@
     public class AlgebraicNotationGenerator
     {
         /// <summary>
-        /// Converts the move provided as input to its string representation. 
-        /// Does no move validation, this should be ensured when the move is provided.
+        /// <para>Converts the move provided as input to its string representation. </para> 
+        /// <para>Does no move validation for specific pieces, this should be ensured when the move is provided.</para> 
+        /// <para>The only case where a move can be invalid is if the row or col dimensions on the moves are out 
+        /// of a board's dimensions. In this case an empty string is returned.</para>
         /// </summary>
         /// <param name="move">The move to be converted to string format.</param>
-        /// <returns>Move as a string in algebraic notation.</returns>
-        public string Convert(IMove move)
+        /// <param name="thePiece">The piece must be provided since the move contains only dimension values.</param>
+        /// <returns>Move as a string in algebraic notation, or empty string for an invalid move.</returns>
+        public string Convert(IMove move, IPiece thePiece)
         {
             string result = string.Empty;
 
