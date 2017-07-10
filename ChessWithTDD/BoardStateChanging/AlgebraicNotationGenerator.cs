@@ -16,7 +16,7 @@
         /// <param name="move">The move to be converted to string format.</param>
         /// <param name="thePiece">The piece must be provided since the move contains only dimension values.</param>
         /// <returns>Move as a string in algebraic notation, or empty string for an invalid move.</returns>
-        public string Convert(IMove move, IPiece thePiece)
+        public string Convert(IMoveConversionData data)
         {
             string result = string.Empty;
 
