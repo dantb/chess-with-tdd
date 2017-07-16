@@ -50,3 +50,7 @@
 /ChessWithTDD/obj/Debug
 /ChessGameUI/obj/Debug/TempPE/Properties.Resources.Designer.cs.dll
 /OpenCoverReports/ReportForEverything
+/packages/OpenCover.4.6.519/SampleSln/BomTest/obj/Release/CoreCompileInputs.cache
+/packages/OpenCover.4.6.519/SampleSln/BomTest/obj/Debug/CoreCompileInputs.cache
+/packages/OpenCover.4.6.519/SampleSln/Bom/obj/Release/CoreCompileInputs.cache
+/packages/OpenCover.4.6.519/SampleSln/Bom/obj/Debug/CoreCompileInputs.cache
