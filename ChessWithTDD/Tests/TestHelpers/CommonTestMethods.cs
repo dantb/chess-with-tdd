@@ -1,8 +1,8 @@
-﻿using Rhino.Mocks;
-using static Rhino.Mocks.MockRepository;
-using static ChessWithTDD.BoardConstants;
+﻿using ChessWithTDD.Tests.TestHelpers;
+using Rhino.Mocks;
 using System.Collections.Generic;
-using ChessWithTDD.Tests.TestHelpers;
+using static ChessWithTDD.BoardConstants;
+using static Rhino.Mocks.MockRepository;
 
 namespace ChessWithTDD.Tests
 {

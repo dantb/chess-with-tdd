@@ -2,8 +2,8 @@
 using NUnit.Framework;
 using Rhino.Mocks;
 using System.Collections.Generic;
-using static ChessWithTDD.Tests.CommonTestMethods;
 using static ChessWithTDD.BoardConstants;
+using static ChessWithTDD.Tests.CommonTestMethods;
 
 namespace ChessWithTDD.Tests
 {
