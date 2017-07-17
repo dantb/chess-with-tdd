@@ -1,7 +1,6 @@
 ﻿using Rhino.Mocks;
 using static Rhino.Mocks.MockRepository;
 using static ChessWithTDD.BoardConstants;
-using System;
 using System.Collections.Generic;
 using ChessWithTDD.Tests.TestHelpers;
 
@@ -147,21 +146,6 @@ namespace ChessWithTDD.Tests
             theSquare.Stub(s => s.Piece).Return(thePiece);
             theSquare.Stub(s => s.ContainsPiece).Return(true);
             return theSquare;
-        }
-
-        internal static IMove MockMove()
-        {
-            return GenerateMock<IMove>();
-        }
-
-        internal static IMove MockMoveWithFromSquareAndToSquare(ISquare fromSquare, ISquare toSquare)
-        {
-            IMove move = MockMove();
-            move.Stub(m => m.FromRow).Return(fromSquare.Row);
-            move.Stub(m => m.FromCol).Return(fromSquare.Col);
-            move.Stub(m => m.ToRow).Return(toSquare.Row);
-            move.Stub(m => m.ToCol).Return(toSquare.Col);
-            return move;
         }
 
         internal static IPiece MockPieceWithColour(Colour theColour)
