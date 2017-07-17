@@ -8,23 +8,19 @@ namespace ChessWithTDD
     /// Input should use a '-' for a move, and an 'x' for a capture.
     /// See http://www.chesscorner.com/tutorial/basic/notation/notate.htm for more details.
     /// </summary>
-    public class AlgebraicNotationParser
+    public class AlgebraicNotationParser : IAlgebraicNotationParser
     {
         /// <summary>
         /// Parses the string in chess algebraic notation and returns the move if valid notation,
         /// or null otherwise
+        /// TODO - this will return a move conversion data
         /// </summary>
         public IMove Parse(string oneMoveInNotation)
         {
             char firstChar = oneMoveInNotation.First();
-            if (!PieceCharacters.Contains(firstChar))
-            {
-                return PawnMove(oneMoveInNotation);
-            }
-            else
-            {
-                return NonPawnMove(oneMoveInNotation);
-            }
+            return !PieceCharacters.Contains(firstChar) 
+                ? PawnMove(oneMoveInNotation) 
+                : NonPawnMove(oneMoveInNotation);
         }
 
         private IMove NonPawnMove(string oneMoveInNotation)

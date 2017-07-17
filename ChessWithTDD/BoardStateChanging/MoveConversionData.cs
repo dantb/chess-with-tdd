@@ -6,18 +6,28 @@
     public class MoveConversionData : IMoveConversionData
     {
         public IMove Move { get; }
-        public IPiece Piece { get; }
         public bool Check { get; }
         public bool CheckMate { get; }
 
         /// <summary>
-        /// Extracts the necessary information from the squares, piece and state of the board to ascertain
-        /// the data required by the string move generator. The check and checkmate state must be taken from
-        /// the board.
+        /// Extracts the necessary information from the squares and state of the board. 
+        /// The check and checkmate state must be taken from the board so the move must have already been applied.
         /// </summary>
-        public MoveConversionData(ISquare fromSquare, ISquare toSquare, IPiece piece, IBoard board)
+        public MoveConversionData(ISquare fromSquare, ISquare toSquare, IBoard board)
         {
+            Move = new Move(fromSquare.Row, fromSquare.Col, toSquare.Row, toSquare.Col);
+            Check = board.InCheck;
+            CheckMate = board.CheckMate;
+        }
 
+        /// <summary>
+        /// Creates an instance of <see cref="MoveConversionData"/> directly from the arguments provided.
+        /// </summary>
+        public MoveConversionData(IMove move, bool check, bool checkMate)
+        {
+            Move = move;
+            Check = check;
+            CheckMate = checkMate;
         }
     }
 }

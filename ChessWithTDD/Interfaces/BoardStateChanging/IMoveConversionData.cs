@@ -14,9 +14,5 @@
         {
             get;
         }
-        IPiece Piece
-        {
-            get;
-        }
     }
 }

@@ -58,6 +58,8 @@
     <Compile Include="BoardDependencies\PawnManagement\PawnManager.cs" />
     <Compile Include="BoardStateChanging\AlgebraicNotationGenerator.cs" />
     <Compile Include="BoardStateChanging\AlgebraicNotationParser.cs" />
+    <Compile Include="Interfaces\BoardStateChanging\IAlgebraicNotationParser.cs" />
+    <Compile Include="BoardStateChanging\MoveGenerationData.cs" />
     <Compile Include="Interfaces\BoardStateChanging\IMoveConversionData.cs" />
     <Compile Include="BoardStateChanging\MoveConversionData.cs" />
     <Compile Include="BoardStateChanging\ParsingConstants.cs" />
