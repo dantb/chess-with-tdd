@@ -15,7 +15,7 @@ namespace ChessWithTDD
         /// or null otherwise
         /// TODO - this will return a move conversion data
         /// </summary>
-        public IMove Parse(string oneMoveInNotation)
+        public Move Parse(string oneMoveInNotation)
         {
             char firstChar = oneMoveInNotation.First();
             return !PieceCharacters.Contains(firstChar) 
@@ -23,7 +23,7 @@ namespace ChessWithTDD
                 : NonPawnMove(oneMoveInNotation);
         }
 
-        private IMove NonPawnMove(string oneMoveInNotation)
+        private Move NonPawnMove(string oneMoveInNotation)
         {
             if (ValidConnectorCharacter(oneMoveInNotation[NonPawnConnectorIndex]))
             {
@@ -53,7 +53,7 @@ namespace ChessWithTDD
             return !tooLong && !tooLongWithoutCheckOrMate;
         }
 
-        private IMove PawnMove(string oneMoveInNotation)
+        private Move PawnMove(string oneMoveInNotation)
         {
             if (ValidConnectorCharacter(oneMoveInNotation[PawnConnectorIndex]))
             {

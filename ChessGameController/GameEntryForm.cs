@@ -49,7 +49,7 @@ namespace ChessGameController
         {
             BoardFrontEnd playingBoard = (BoardFrontEnd) sender;
             IBoard board = playingBoard.Board;
-            IMove move = e.TheMove;
+            Move move = e.TheMove;
             ISquare fromSquare = board.GetSquare(move.FromRow, move.FromCol);
             ISquare toSquare = board.GetSquare(move.ToRow, move.ToCol);
             if (board.MoveIsValid(fromSquare, toSquare))

@@ -9,12 +9,12 @@ namespace ChessWithTDD
 
     public class MoveProviderEventArgs : EventArgs
     {
-        public MoveProviderEventArgs(IMove theMove)
+        public MoveProviderEventArgs(Move theMove)
         {
             TheMove = theMove;
         }
 
-        public IMove TheMove { get; }
+        public Move TheMove { get; }
     }
 
     public delegate void MoveProviderEventHandler(object sender, MoveProviderEventArgs eventArgs);

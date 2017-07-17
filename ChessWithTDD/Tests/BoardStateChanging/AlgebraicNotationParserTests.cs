@@ -10,11 +10,11 @@ namespace ChessWithTDD.Tests
     public class AlgebraicNotationParserTests
     {
         [Test, TestCaseSource("PawnMoveParseTestCases")]
-        public void PawnMoveParse(string input, IMove expectedMove)
+        public void PawnMoveParse(string input, Move expectedMove)
         {
             AlgebraicNotationParser parser = new AlgebraicNotationParser();
 
-            IMove move = parser.Parse(input);
+            Move move = parser.Parse(input);
 
             Assert.AreEqual(expectedMove, move);
         }
@@ -24,17 +24,17 @@ namespace ChessWithTDD.Tests
         {
             AlgebraicNotationParser parser = new AlgebraicNotationParser();
 
-            IMove move = parser.Parse(input);
+            Move move = parser.Parse(input);
 
             Assert.AreEqual(null, move);
         }
 
         [Test, TestCaseSource("NonPawnMoveParseTestCases")]
-        public void NonPawnMoveParse(string input, IMove expectedMove)
+        public void NonPawnMoveParse(string input, Move expectedMove)
         {
             AlgebraicNotationParser parser = new AlgebraicNotationParser();
 
-            IMove move = parser.Parse(input);
+            Move move = parser.Parse(input);
 
             Assert.AreEqual(expectedMove, move);
         }
@@ -44,7 +44,7 @@ namespace ChessWithTDD.Tests
         {
             AlgebraicNotationParser parser = new AlgebraicNotationParser();
 
-            IMove move = parser.Parse(input);
+            Move move = parser.Parse(input);
 
             Assert.AreEqual(null, move);
         }

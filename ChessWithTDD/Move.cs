@@ -1,6 +1,6 @@
 ﻿namespace ChessWithTDD
 {
-    public class Move : IMove
+    public class Move
     {
         public Move(int rowFrom, int colFrom, int rowTo, int colTo)
         {
@@ -12,9 +12,9 @@
 
         public override bool Equals(object obj)
         {
-            if (obj is IMove)
+            if (obj is Move)
             {
-                IMove move = obj as IMove;
+                Move move = obj as Move;
                 return move.FromCol.Equals(FromCol) 
                     && move.FromRow.Equals(FromRow) 
                     && move.ToCol.Equals(ToCol) 

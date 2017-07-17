@@ -10,7 +10,7 @@
         {
             get;
         }
-        IMove Move
+        Move Move
         {
             get;
         }

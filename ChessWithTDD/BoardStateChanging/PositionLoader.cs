@@ -35,8 +35,8 @@ namespace ChessGameController
                     foreach (var line in lines)
                     {
                         string[] moves = line.Split(',');
-                        IMove whiteMove = parser.Parse(moves[0]);
-                        IMove blackMove = parser.Parse((moves[1]));
+                        Move whiteMove = parser.Parse(moves[0]);
+                        Move blackMove = parser.Parse((moves[1]));
                         TryToApplyMove(board, moves, whiteMove);
                         TryToApplyMove(board, moves, blackMove);
                     }
@@ -59,7 +59,7 @@ namespace ChessGameController
             }
         }
 
-        private static void TryToApplyMove(IBoard board, string[] moves, IMove theMove)
+        private static void TryToApplyMove(IBoard board, string[] moves, Move theMove)
         {
             if (theMove != null)
             {

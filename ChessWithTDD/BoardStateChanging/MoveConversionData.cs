@@ -5,7 +5,7 @@
     /// </summary>
     public class MoveConversionData : IMoveConversionData
     {
-        public IMove Move { get; }
+        public Move Move { get; }
         public bool Check { get; }
         public bool CheckMate { get; }
 
@@ -23,7 +23,7 @@
         /// <summary>
         /// Creates an instance of <see cref="MoveConversionData"/> directly from the arguments provided.
         /// </summary>
-        public MoveConversionData(IMove move, bool check, bool checkMate)
+        public MoveConversionData(Move move, bool check, bool checkMate)
         {
             Move = move;
             Check = check;

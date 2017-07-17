@@ -108,7 +108,6 @@
     <Compile Include="Tests\Pieces\BlackPawnTests.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Tests\BoardTests.cs" />
-    <Compile Include="Interfaces\IMove.cs" />
     <Compile Include="Pieces\Knight.cs" />
     <Compile Include="Pieces\Rook.cs" />
     <Compile Include="Pieces\King.cs" />
