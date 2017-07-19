@@ -3,7 +3,7 @@
     /// <summary>
     /// Contains the data required to convert a move to a notation string. This class should be immutable.
     /// </summary>
-    public class MoveGenerationData : MoveConversionData
+    public class MoveGenerationData
     {
         public IPiece Piece
         {
@@ -15,7 +15,7 @@
         /// the data required by the string move generator. The check and checkmate state must be taken from
         /// the board.
         /// </summary>
-        public MoveGenerationData(ISquare fromSquare, ISquare toSquare, IPiece piece, IBoard board) : base(fromSquare, toSquare, board)
+        public MoveGenerationData(ISquare fromSquare, ISquare toSquare, IPiece piece, IBoard board)
         {
             Piece = piece;
         }
