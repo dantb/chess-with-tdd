@@ -14,7 +14,7 @@
         /// Creates an instance from the base constructor but additionally sets the Piece property as required.
         /// the board.
         /// </summary>
-        public MoveGenerationData(ISquare fromSquare, ISquare toSquare, IPiece piece, IBoard board)
+        public MoveGenerationData(ISquare fromSquare, ISquare toSquare, IBoard board, IPiece piece)
             : base(fromSquare, toSquare, board)
         {
             Piece = piece;
