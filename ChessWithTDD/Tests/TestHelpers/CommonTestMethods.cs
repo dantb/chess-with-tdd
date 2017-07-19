@@ -64,6 +64,14 @@ namespace ChessWithTDD.Tests
             return GenerateMock<IBoard>();
         }
 
+        internal static IBoard MockBoardWithCheckAndMateStates(bool check, bool checkMate)
+        {
+            IBoard board = MockBoard();
+            board.Stub(b => b.InCheck).Return(check);
+            board.Stub(b => b.CheckMate).Return(checkMate);
+            return board;
+        }
+
         internal static IBoard MockBoardWithGetSquareAndPendingUpdates()
         {
             IBoard board = GenerateMock<IBoard>();
