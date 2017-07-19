@@ -14,7 +14,7 @@
         /// of a board's dimensions. In this case an empty string is returned.</para>
         /// </summary>
         /// <returns>Move as a string in algebraic notation, or empty string for an invalid move.</returns>
-        public string Convert(IMoveConversionData data)
+        public string Convert(MoveGenerationData data)
         {
             string result = string.Empty;
 
