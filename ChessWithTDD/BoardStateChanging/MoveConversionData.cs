@@ -1,7 +1,7 @@
 ﻿namespace ChessWithTDD
 {
     /// <summary>
-    /// Contains the data required to convert a move to a notation string. This class should be immutable.
+    /// Contains the data required to convert a notation string to a move. This class should be immutable.
     /// </summary>
     public class MoveConversionData
     {
