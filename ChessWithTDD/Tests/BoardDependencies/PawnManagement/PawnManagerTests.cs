@@ -67,5 +67,17 @@ namespace ChessWithTDD.Tests
 
             mockEnPassantManager.AssertWasCalled(epm => epm.CapturePieceThroughEnPassantIfApplicable(fromSquare, toSquare, theBoard));
         }
+
+        [Test]
+        public void UnmarkEnPassantCallsEnPassantManagerToUnmark()
+        {
+            IEnPassantManager mockEnPassantManager = GenerateMock<IEnPassantManager>();
+            int turnCounter = 99;
+
+            PawnManager pawnManager = new PawnManager(mockEnPassantManager);
+            pawnManager.UnmarkEnPassantSquares(turnCounter);
+
+            mockEnPassantManager.AssertWasCalled(epm => epm.UnmarkEnPassantSquares(turnCounter));
+        }
     }
 }
