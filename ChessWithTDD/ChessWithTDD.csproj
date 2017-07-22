@@ -131,6 +131,7 @@
     <Compile Include="Tests\Pieces\WhitePawnTests.cs" />
     <Compile Include="Tests\TestHelpers\RhinoMockExtensions.cs" />
     <Compile Include="Tests\TestHelpers\TestCaseSourceParameters\AlgebraicNotationParserTestParameters.cs" />
+    <Compile Include="Tests\TestHelpers\TestCaseSourceParameters\SquareExtensionTestParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

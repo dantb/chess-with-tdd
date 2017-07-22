@@ -2,6 +2,11 @@
 {
     public class Move
     {
+        public int FromRow { get; }
+        public int FromCol { get; }
+        public int ToRow { get; }
+        public int ToCol { get; }
+
         public Move(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             FromRow = rowFrom;
@@ -22,10 +27,5 @@
             }
             return base.Equals(obj);
         }
-
-        public int FromRow { get; }
-        public int FromCol { get; }
-        public int ToRow { get; }
-        public int ToCol { get; }
     }
 }
