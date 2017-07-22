@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using static ChessWithTDD.Tests.CommonTestMethods;
+using static ChessWithTDD.Tests.TestHelpers.CommonTestMethods;
 
 namespace ChessWithTDD.Tests
 {

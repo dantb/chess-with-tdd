@@ -2,7 +2,7 @@
 using Rhino.Mocks;
 using System;
 using System.Collections.Generic;
-using static ChessWithTDD.Tests.CommonTestMethods;
+using static ChessWithTDD.Tests.TestHelpers.CommonTestMethods;
 using static Rhino.Mocks.MockRepository;
 
 namespace ChessWithTDD.Tests

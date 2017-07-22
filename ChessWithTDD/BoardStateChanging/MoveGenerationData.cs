@@ -5,10 +5,7 @@
     /// </summary>
     public class MoveGenerationData : MoveConversionData
     {
-        public IPiece Piece
-        {
-            get;
-        }
+        public IPiece Piece { get; }
 
         /// <summary>
         /// Creates an instance from the base constructor but additionally sets the Piece property as required.

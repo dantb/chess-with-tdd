@@ -1,10 +1,10 @@
-﻿using ChessWithTDD.Tests.TestHelpers;
-using Rhino.Mocks;
+﻿using Rhino.Mocks;
 using System.Collections.Generic;
 using static ChessWithTDD.BoardConstants;
 using static Rhino.Mocks.MockRepository;
+using static ChessWithTDD.Tests.TestHelpers.RhinoMockExtensions;
 
-namespace ChessWithTDD.Tests
+namespace ChessWithTDD.Tests.TestHelpers
 {
 
     internal static class CommonTestMethods

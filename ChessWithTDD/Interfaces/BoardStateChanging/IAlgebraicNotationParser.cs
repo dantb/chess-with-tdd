@@ -2,6 +2,6 @@
 {
     public interface IAlgebraicNotationParser
     {
-        Move Parse(string oneMoveInNotation);
+        MoveConversionData Parse(string oneMoveInNotation);
     }
 }

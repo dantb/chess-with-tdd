@@ -15,12 +15,13 @@ namespace ChessWithTDD
         /// or null otherwise
         /// TODO - this will return a move conversion data
         /// </summary>
-        public Move Parse(string oneMoveInNotation)
+        public MoveConversionData Parse(string oneMoveInNotation)
         {
             char firstChar = oneMoveInNotation.First();
-            return !PieceCharacters.Contains(firstChar) 
+            Move move = !PieceCharacters.Contains(firstChar) 
                 ? PawnMove(oneMoveInNotation) 
                 : NonPawnMove(oneMoveInNotation);
+            return new MoveConversionData(move, false, false);
         }
 
         private Move NonPawnMove(string oneMoveInNotation)
