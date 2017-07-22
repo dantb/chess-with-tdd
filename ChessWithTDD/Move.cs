@@ -27,5 +27,10 @@
             }
             return base.Equals(obj);
         }
+
+        public override int GetHashCode()
+        {
+            return string.Format($"{FromRow}_{FromCol}_{ToRow}_{ToCol}").GetHashCode();
+        }
     }
 }
