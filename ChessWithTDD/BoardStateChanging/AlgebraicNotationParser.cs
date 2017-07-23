@@ -13,7 +13,6 @@ namespace ChessWithTDD
         /// <summary>
         /// Parses the string in chess algebraic notation and returns the move if valid notation,
         /// or null otherwise
-        /// TODO - this will return a move conversion data
         /// </summary>
         public MoveConversionData Parse(string oneMoveInNotation)
         {
