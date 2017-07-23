@@ -17,10 +17,38 @@ namespace ChessWithTDD
         public MoveConversionData Parse(string oneMoveInNotation)
         {
             char firstChar = oneMoveInNotation.First();
-            Move move = !PieceCharacters.Contains(firstChar) 
+            Move move = !NonPawnPieces.Contains(firstChar) 
                 ? PawnMove(oneMoveInNotation) 
                 : NonPawnMove(oneMoveInNotation);
+            if (move != null)
+            {
+                //only do work if this is a valid string and start with checkmate (since this implies check)
+                var result = GetCheckAndCheckMateFromString(oneMoveInNotation, firstChar);
+                return new MoveConversionData(move, result.Check, result.CheckMate);
+            }
             return new MoveConversionData(move, false, false);
+        }
+
+        private (bool Check, bool CheckMate) GetCheckAndCheckMateFromString(string oneMoveInNotation, char firstChar)
+        {
+            bool check = false;
+            bool checkMate = false;
+            //only do work if this is a valid string and start with checkmate (since this implies check)
+            if (oneMoveInNotation.Contains(CheckMateChar))
+            {
+                checkMate = NonPawnPieces.Contains(firstChar)
+                    ? oneMoveInNotation[NonPawnMaxLength - 1] == CheckMateChar
+                    : oneMoveInNotation[PawnMaxLength - 1] == CheckMateChar;
+                check = checkMate;
+            }
+            else if (oneMoveInNotation.Contains(CheckChar))
+            {
+                check = NonPawnPieces.Contains(firstChar)
+                    ? oneMoveInNotation[NonPawnMaxLength - 1] == CheckChar
+                    : oneMoveInNotation[PawnMaxLength - 1] == CheckChar;
+                checkMate = false; //would have contained check mate char otherwise
+            }
+            return (check, checkMate);
         }
 
         private Move NonPawnMove(string oneMoveInNotation)

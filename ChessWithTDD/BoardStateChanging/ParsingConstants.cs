@@ -4,7 +4,7 @@ namespace ChessWithTDD
 {
     internal class ParsingConstants
     {
-        internal static HashSet<char> PieceCharacters = new HashSet<char>()
+        internal static HashSet<char> NonPawnPieces = new HashSet<char>()
         {
             'K', //King
             'Q', //Queen
@@ -27,8 +27,8 @@ namespace ChessWithTDD
 
         internal static HashSet<char> SpecialCases = new HashSet<char>()
         {
-            '+', //check
-            '#'  //checkmate
+            CheckChar,
+            CheckMateChar
         };
 
         internal static HashSet<char> ConnectorCharacters = new HashSet<char>()
@@ -41,6 +41,9 @@ namespace ChessWithTDD
         {
             0, 1, 2, 3, 4, 5, 6, 7
         };
+
+        internal const char CheckChar = '+';
+        internal const char CheckMateChar = '#';
 
         //numeric constants for parsed string
 
