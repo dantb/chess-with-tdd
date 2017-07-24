@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using ChessWithTDD.Tests.TestHelpers;
 
 namespace ChessWithTDD.Tests
 {
@@ -9,5 +10,16 @@ namespace ChessWithTDD.Tests
     [TestFixture]
     public class AlgebraicNotationGeneratorTests
     {
+        [Test, TestCaseSource(typeof(AlgebraicNotationParserTestParameters), "PawnMoveParseTestCases")]
+        public void PawnMoveParse(string expectedString, Move move)
+        {
+            AlgebraicNotationGenerator parser = new AlgebraicNotationGenerator();
+            Pawn pawn = new BlackPawn();
+            MoveGenerationData data = new MoveGenerationData(move, false, false, pawn);
+
+            string output = parser.Convert(data);
+
+            Assert.AreEqual(expectedString, output);
+        }
     }
 }
