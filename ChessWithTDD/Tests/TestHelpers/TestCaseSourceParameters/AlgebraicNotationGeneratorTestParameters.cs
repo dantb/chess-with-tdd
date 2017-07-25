@@ -61,6 +61,11 @@
             new object[] { "", new Move(6, -1, 5, 7), true },
             new object[] { "", new Move(6, 2, -1, 7), false},
             new object[] { "", new Move(6, 3, 5, -1), true },
+            new object[] { "", new Move(8, 7, 5, 7), false },
+            new object[] { "", new Move(6, 8, 5, 7), true },
+            new object[] { "", new Move(6, 2, 8, 7), false},
+            new object[] { "", new Move(6, 3, 5, 8), true },
+
         };
 
         internal static object[] PawnGenerationCheckAndMateTestCases =
@@ -86,15 +91,15 @@
         //    new object[] { "a2ga4" },
         //    new object[] { "b25b4" },
         //    new object[] { "c26c4" },
-        //    new object[] { "d2ld4" },
-        //    new object[] { "e2;e4" },
-        //    new object[] { "f2+f4" },
+        //    new object[] { "d2ld4" }, 
+        //    new object[] { "e2;e4" }, 
+        //    new object[] { "f2+f4" }, 
         //    new object[] { "g2--g4" },
-        //    new object[] { "h2=h4" },
+        //    new object[] { "h2=h4" },  
 
         //    //bad cells
         //    new object[] { "z2-a4" },
-        //    new object[] { "a2-z4" },
+        //    new object[] { "a2-z4" }, 
         //    new object[] { "b9-b4" },
         //    new object[] { "c2-c9" },
         //    new object[] { "c29-c9" },

@@ -21,13 +21,20 @@ namespace ChessWithTDD
         {
             string result = string.Empty;
 
-            int fromRow = data.Move.FromRow + 1;
+
+
+            int fromRow = data.Move.FromRow;
             int fromCol = data.Move.FromCol;
             char fromColChar = LetterNumberMap.First(p => p.Value == fromCol).Key;
 
-            int toRow = data.Move.ToRow + 1;
+            int toRow = data.Move.ToRow;
             int toCol = data.Move.ToCol;
             char toColChar = LetterNumberMap.First(p => p.Value == toCol).Key;
+
+            //if (fromRow < 0)
+            //{
+
+            //}
 
             char connector = data.Capture ? CaptureChar : MoveChar;
 
@@ -48,7 +55,7 @@ namespace ChessWithTDD
                 specialCase = CheckChar.ToString();
             }
 
-            result = string.Concat(fromColChar, fromRow, connector, toColChar, toRow, specialCase);
+            result = string.Concat(fromColChar, fromRow + 1, connector, toColChar, toRow + 1, specialCase);
 
             return result;
         }
