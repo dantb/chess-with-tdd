@@ -1,4 +1,7 @@
-﻿namespace ChessWithTDD
+﻿using System.Linq;
+using static ChessWithTDD.ParsingConstants;
+
+namespace ChessWithTDD
 {
     /// <summary>
     /// Converts moves into algebraic notation strings. Uses long notation.
@@ -17,6 +20,35 @@
         public string Convert(MoveGenerationData data)
         {
             string result = string.Empty;
+
+            int fromRow = data.Move.FromRow + 1;
+            int fromCol = data.Move.FromCol;
+            char fromColChar = LetterNumberMap.First(p => p.Value == fromCol).Key;
+
+            int toRow = data.Move.ToRow + 1;
+            int toCol = data.Move.ToCol;
+            char toColChar = LetterNumberMap.First(p => p.Value == toCol).Key;
+
+            char connector = data.Capture ? CaptureChar : MoveChar;
+
+            string specialCase = string.Empty;
+            if (data.CheckMate)
+            {
+                if (!data.Check)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    specialCase = CheckMateChar.ToString();
+                }
+            }
+            else if (data.Check)
+            {
+                specialCase = CheckChar.ToString();
+            }
+
+            result = string.Concat(fromColChar, fromRow, connector, toColChar, toRow, specialCase);
 
             return result;
         }

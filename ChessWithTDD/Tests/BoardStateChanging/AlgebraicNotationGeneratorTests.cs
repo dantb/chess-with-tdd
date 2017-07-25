@@ -10,16 +10,29 @@ namespace ChessWithTDD.Tests
     [TestFixture]
     public class AlgebraicNotationGeneratorTests
     {
-        [Test, TestCaseSource(typeof(AlgebraicNotationParserTestParameters), "PawnMoveParseTestCases")]
-        public void PawnMoveParseCheckAndMateFalse(string expectedString, Move move)
+        [Test, TestCaseSource(typeof(AlgebraicNotationGeneratorTestParameters), "PawnMoveAndCaptureGenerationTestCases")]
+        public void PawnMoveTestCaptureAndSquaresForConstantCheckAndMateAsFalse(string expectedString, Move move, bool capture)
         {
-            AlgebraicNotationGenerator parser = new AlgebraicNotationGenerator();
+            AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
             Pawn pawn = new BlackPawn();
             bool check = false;
             bool checkMate = false;
-            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, pawn);
+            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, pawn, capture);
 
-            string output = parser.Convert(data);
+            string output = generator.Convert(data);
+
+            Assert.AreEqual(expectedString, output);
+        }
+
+        [Test, TestCaseSource(typeof(AlgebraicNotationGeneratorTestParameters), "PawnGenerationCheckAndMateTestCases")]
+        public void PawnMoveTestCheckAndMateForConstantCaptureAsFalse(string expectedString, Move move, bool check, bool checkMate)
+        {
+            AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
+            Pawn pawn = new WhitePawn();
+            bool capture = false;
+            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, pawn, capture);
+
+            string output = generator.Convert(data);
 
             Assert.AreEqual(expectedString, output);
         }

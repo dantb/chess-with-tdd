@@ -33,14 +33,17 @@ namespace ChessWithTDD
 
         internal static HashSet<char> ConnectorCharacters = new HashSet<char>()
         {
-            '-', //move
-            'x'  //capture
+            MoveChar,
+            CaptureChar
         };
 
         internal static HashSet<int> ValidBoardRows = new HashSet<int>()
         {
             0, 1, 2, 3, 4, 5, 6, 7
         };
+
+        internal const char MoveChar = '-';
+        internal const char CaptureChar = 'x';
 
         internal const char CheckChar = '+';
         internal const char CheckMateChar = '#';
