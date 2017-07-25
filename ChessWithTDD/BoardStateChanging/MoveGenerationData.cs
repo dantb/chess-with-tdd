@@ -6,14 +6,16 @@
     public class MoveGenerationData : MoveConversionData
     {
         public IPiece Piece { get; }
+        public bool Capture { get; }
 
         /// <summary>
         /// Creates an instance directly and additionally sets the Piece property as required.
         /// </summary>
-        public MoveGenerationData(Move move, bool check, bool checkMate, IPiece piece)
+        public MoveGenerationData(Move move, bool check, bool checkMate, IPiece piece, bool capture)
             : base(move, check, checkMate)
         {
             Piece = piece;
+            Capture = capture;
         }
 
         /// <summary>
@@ -24,6 +26,7 @@
             : base(fromSquare, toSquare, board)
         {
             Piece = piece;
+            Capture = toSquare.ContainsPiece;
         }
     }
 }
