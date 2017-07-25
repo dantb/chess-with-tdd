@@ -11,11 +11,13 @@ namespace ChessWithTDD.Tests
     public class AlgebraicNotationGeneratorTests
     {
         [Test, TestCaseSource(typeof(AlgebraicNotationParserTestParameters), "PawnMoveParseTestCases")]
-        public void PawnMoveParse(string expectedString, Move move)
+        public void PawnMoveParseCheckAndMateFalse(string expectedString, Move move)
         {
             AlgebraicNotationGenerator parser = new AlgebraicNotationGenerator();
             Pawn pawn = new BlackPawn();
-            MoveGenerationData data = new MoveGenerationData(move, false, false, pawn);
+            bool check = false;
+            bool checkMate = false;
+            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, pawn);
 
             string output = parser.Convert(data);
 

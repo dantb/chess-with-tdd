@@ -22,7 +22,7 @@ namespace ChessGameController
         /// For full formatting details see <see cref="AlgebraicNotationParser"/>
         /// </summary>
         /// <param name="board">The board to apply moves to in order to load a position</param>
-        /// <param name="file">File to load the moves to apply to the board</param>
+        /// <param name="file">Path to the file to load the moves to apply to the board</param>
         public bool LoadPositionIntoBoard(IBoard board, string file)
         {
             try
