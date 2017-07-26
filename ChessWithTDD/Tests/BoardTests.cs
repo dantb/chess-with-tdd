@@ -152,7 +152,7 @@ namespace ChessWithTDD.Tests
         {
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             IMoveExecutor moveExecutor = MockMoveExecutor();
-            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(moveExecutor);
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(moveExecutor).OverridePrevious();
             IPiece thePiece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(thePiece);
             ISquare toSquare = MockSquareWithPiece();
@@ -168,7 +168,6 @@ namespace ChessWithTDD.Tests
         public void ApplyingMoveIncrementsTurnCounter()
         {
             IStrictServiceLocator serviceLocator = MockServiceLocator();
-            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(MockMoveExecutor());
             IPiece thePiece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(thePiece);
             ISquare toSquare = MockSquareWithPiece();

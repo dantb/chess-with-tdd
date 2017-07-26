@@ -26,6 +26,7 @@ namespace ChessWithTDD.Tests.TestHelpers
             serviceLocator.Stub(s => s.GetServiceCheckManager()).Return(MockCheckManager());
             serviceLocator.Stub(s => s.GetServicePawnManager()).Return(MockPawnManager());
             serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(MockMoveValidator());
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(MockMoveExecutor());
             return serviceLocator;
         }
 
