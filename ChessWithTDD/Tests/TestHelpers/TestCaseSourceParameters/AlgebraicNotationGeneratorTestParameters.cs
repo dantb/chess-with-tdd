@@ -65,7 +65,6 @@
             new object[] { "", new Move(6, 8, 5, 7), true },
             new object[] { "", new Move(6, 2, 8, 7), false},
             new object[] { "", new Move(6, 3, 5, 8), true },
-
         };
 
         internal static object[] PawnGenerationCheckAndMateTestCases =
@@ -148,27 +147,34 @@
             new object[] { "Bh7-h6#", new Move(6, 7, 5, 7), false, new King(Colour.Invalid) },
         };
 
-        //internal static object[] NonPawnInvalidMoveParseTestCases =
-        //{
-        //    //bad connector
-        //    new object[] { "Ka2ga4" },
-        //    new object[] { "Bb25b4" },
-        //    new object[] { "Qc26c4" },
-        //    new object[] { "Nd2ld4" },
-        //    new object[] { "Re2;e4" },
-        //    new object[] { "Kf2+f4" },
-        //    new object[] { "Bg2--g4" },
-        //    new object[] { "Qh2=h4" },
 
-        //    //bad cells
-        //    new object[] { "Nz2-a4" },
-        //    new object[] { "Ra2-z4" },
-        //    new object[] { "Kb9-b4" },
-        //    new object[] { "Bc2-c9" },
-        //    new object[] { "Qc29-c9" },
-        //    new object[] { "Nc2-c7x" },
-        //    new object[] { "Re0-e4" },
-        //    new object[] { "Ke4-e0" }
-        //};
+        internal static object[] NonPawnMoveAndCaptureGenerationInvalidMoveTestCases =
+        {
+            new object[] { "", new Move(-1, 7, 5, 7), false, new King(Colour.Invalid) },
+            new object[] { "", new Move(6, -1, 5, 7), true, new King(Colour.Invalid) },
+            new object[] { "", new Move(6, 2, -1, 7), false, new King(Colour.Invalid) },
+            new object[] { "", new Move(6, 3, 5, -1), true, new King(Colour.Invalid) },
+            new object[] { "", new Move(8, 7, 5, 7), false, new King(Colour.Invalid) },
+            new object[] { "", new Move(6, 8, 5, 7), true, new King(Colour.Invalid) },
+            new object[] { "", new Move(6, 2, 8, 7), false, new King(Colour.Invalid) },
+            new object[] { "", new Move(6, 3, 5, 8), true, new King(Colour.Invalid) },
+        };
+
+        internal static object[] NonPawnGenerationCheckAndMateTestCases =
+        {
+            new object[] { "Ka2-b3", new Move(1, 0, 2, 1), false, false, new King(Colour.Invalid) },
+            new object[] { "Qb2-c3", new Move(1, 1, 2, 2), false, false, new Queen(Colour.Invalid) },
+            new object[] { "Rc2-d3+", new Move(1, 2, 2, 3), true, false, new Rook(Colour.Invalid) },
+            new object[] { "Nd2-e3+", new Move(1, 3, 2, 4), true, false, new Knight(Colour.Invalid) },
+            new object[] { "Be2-f3#", new Move(1, 4, 2, 5), true, true, new Bishop(Colour.Invalid) },
+            new object[] { "Kf2-g3#", new Move(1, 5, 2, 6), true, true, new King(Colour.Invalid) },
+        };
+
+        internal static object[] NonPawnGenerationCheckAndMateInvalidTestCases =
+        {
+            //empty string should be returned for invalid check/mate combination
+            new object[] { "", new Move(1, 5, 2, 6), false, true, new Queen(Colour.Invalid) },
+            new object[] { "", new Move(6, 7, 5, 7), false, true, new Queen(Colour.Invalid) },
+        };
     }
 }
