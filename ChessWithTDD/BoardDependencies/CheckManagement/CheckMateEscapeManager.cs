@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using static ChessWithTDD.BoardConstants;
 
 namespace ChessWithTDD
 {
@@ -229,8 +230,8 @@ namespace ChessWithTDD
 
         private bool SquareOnBoardAndKingCanEscape(IBoard theBoard, ISquare kingSquare, int escapeRow, int escapeCol)
         {
-            if (escapeRow < 0 || escapeRow >= BoardConstants.BOARD_DIMENSION ||
-                escapeCol < 0 || escapeCol >= BoardConstants.BOARD_DIMENSION)
+            if (escapeRow < 0 || escapeRow >= BOARD_DIMENSION ||
+                escapeCol < 0 || escapeCol >= BOARD_DIMENSION)
             {
                 return false;
             }

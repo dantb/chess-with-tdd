@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardDependencies\BoardCache.cs" />
+    <Compile Include="BoardDependencies\BoardConstants.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckManager.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckMateEscapeManager.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckMateManager.cs" />
