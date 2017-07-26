@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using static ChessWithTDD.BoardConstants;
 using static ChessWithTDD.ParsingConstants;
 
 namespace ChessWithTDD
@@ -11,53 +12,45 @@ namespace ChessWithTDD
     public class AlgebraicNotationGenerator
     {
         /// <summary>
-        /// <para>Converts the move provided as input to its string representation. </para> 
-        /// <para>Does no move validation for specific pieces, this should be ensured when the move is provided.</para> 
-        /// <para>The only case where a move can be invalid is if the row or col dimensions on the moves are out 
-        /// of a board's dimensions. In this case an empty string is returned.</para>
+        /// <para>Converts the move provided as input to its string representation. </para>
+        /// <para>Does no move validation for specific pieces, this should be ensured when the move is provided.</para>
+        /// <para>The cases where a move can be invalid are if the row or col dimensions on the moves are out
+        /// of a board's dimensions, or the data has checkmate true and check false. In this case an empty string is returned.</para>
         /// </summary>
-        /// <returns>Move as a string in algebraic notation, or empty string for an invalid move.</returns>
+        /// <returns>Move as a string in algebraic notation, or empty string for invalid data.</returns>
         public string Convert(MoveGenerationData data)
         {
-            string result = string.Empty;
-
-
-
             int fromRow = data.Move.FromRow;
             int fromCol = data.Move.FromCol;
-            char fromColChar = LetterNumberMap.First(p => p.Value == fromCol).Key;
-
             int toRow = data.Move.ToRow;
             int toCol = data.Move.ToCol;
-            char toColChar = LetterNumberMap.First(p => p.Value == toCol).Key;
 
-            //if (fromRow < 0)
-            //{
-
-            //}
-
-            char connector = data.Capture ? CaptureChar : MoveChar;
-
-            string specialCase = string.Empty;
-            if (data.CheckMate)
+            if (!DataInvalid(data, fromRow, fromCol, toRow, toCol))
             {
-                if (!data.Check)
-                {
-                    return string.Empty;
-                }
-                else
-                {
-                    specialCase = CheckMateChar.ToString();
-                }
-            }
-            else if (data.Check)
-            {
-                specialCase = CheckChar.ToString();
-            }
+                string specialCase = data.CheckMate
+                    ? CheckMateChar.ToString()
+                    : (data.Check ? CheckChar.ToString() : string.Empty);
 
-            result = string.Concat(fromColChar, fromRow + 1, connector, toColChar, toRow + 1, specialCase);
+                char fromColChar = LetterNumberMap.First(p => p.Value == fromCol).Key;
+                char toColChar = LetterNumberMap.First(p => p.Value == toCol).Key;
+                char connector = data.Capture ? CaptureChar : MoveChar;
 
-            return result;
+                return string.Concat(fromColChar, fromRow + 1, connector, toColChar, toRow + 1, specialCase);
+            }
+            return string.Empty;
+        }
+
+        private bool DataInvalid(MoveGenerationData data, int fromRow, int fromCol, int toRow, int toCol)
+        {
+            return MoveInvalid(fromRow, fromCol, toRow, toCol) || (data.CheckMate && !data.Check);
+        }
+
+        private bool MoveInvalid(int fromRow, int fromCol, int toRow, int toCol)
+        {
+            return fromRow < BOARD_LOWER_DIMENSION || fromCol < BOARD_LOWER_DIMENSION ||
+                   toRow < BOARD_LOWER_DIMENSION || toCol < BOARD_LOWER_DIMENSION ||
+                   fromRow >= BOARD_DIMENSION || fromCol >= BOARD_DIMENSION ||
+                   toRow >= BOARD_DIMENSION || toCol >= BOARD_DIMENSION;
         }
     }
 }
