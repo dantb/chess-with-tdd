@@ -63,5 +63,18 @@ namespace ChessWithTDD.Tests
 
             Assert.AreEqual(expectedString, output);
         }
+
+        [Test, TestCaseSource(typeof(AlgebraicNotationGeneratorTestParameters), "NonPawnMoveAndCaptureGenerationTestCases")]
+        public void NonPawnMoveTestCaptureAndSquaresForConstantCheckAndMateAsFalse(string expectedString, Move move, bool capture, IPiece piece)
+        {
+            AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
+            bool check = false;
+            bool checkMate = false;
+            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, piece, capture);
+
+            string output = generator.Convert(data);
+
+            Assert.AreEqual(expectedString, output);
+        }
     }
 }
