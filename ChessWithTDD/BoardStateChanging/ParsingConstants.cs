@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ChessWithTDD
 {
@@ -6,11 +7,11 @@ namespace ChessWithTDD
     {
         internal static HashSet<char> NonPawnPieces = new HashSet<char>()
         {
-            'K', //King
-            'Q', //Queen
-            'R', //Rook
-            'B', //Bishop
-            'N'  //Knight
+            KingChar,
+            QueenChar,
+            RookChar,
+            BishopChar,
+            KnightChar
         };
 
         internal static Dictionary<char, int> LetterNumberMap = new Dictionary<char, int>()
@@ -24,6 +25,16 @@ namespace ChessWithTDD
             { 'g', 6 },
             { 'h', 7 }
         };
+
+        internal static Dictionary<Type, char> PieceTypeToCharacterMap = new Dictionary<Type, char>()
+        {
+            { typeof(King), KingChar },
+            { typeof(Queen), QueenChar },
+            { typeof(Rook), RookChar},
+            { typeof(Bishop), BishopChar},
+            { typeof(Knight), KnightChar}
+        };
+
 
         internal static HashSet<char> SpecialCases = new HashSet<char>()
         {
@@ -41,6 +52,12 @@ namespace ChessWithTDD
         {
             0, 1, 2, 3, 4, 5, 6, 7
         };
+
+        internal const char KingChar = 'K';
+        internal const char QueenChar = 'Q';
+        internal const char RookChar = 'R';
+        internal const char BishopChar = 'B';
+        internal const char KnightChar = 'N';
 
         internal const char MoveChar = '-';
         internal const char CaptureChar = 'x';

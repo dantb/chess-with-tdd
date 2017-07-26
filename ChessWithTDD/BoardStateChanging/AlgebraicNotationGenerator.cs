@@ -31,11 +31,15 @@ namespace ChessWithTDD
                     ? CheckMateChar.ToString()
                     : (data.Check ? CheckChar.ToString() : string.Empty);
 
+                string piecePart = data.Piece == null || data.Piece is IPawn
+                    ? string.Empty
+                    : PieceTypeToCharacterMap[data.Piece.GetType()].ToString();
+
                 char fromColChar = LetterNumberMap.First(p => p.Value == fromCol).Key;
                 char toColChar = LetterNumberMap.First(p => p.Value == toCol).Key;
                 char connector = data.Capture ? CaptureChar : MoveChar;
 
-                return string.Concat(fromColChar, fromRow + 1, connector, toColChar, toRow + 1, specialCase);
+                return string.Concat(piecePart, fromColChar, fromRow + 1, connector, toColChar, toRow + 1, specialCase);
             }
             return string.Empty;
         }

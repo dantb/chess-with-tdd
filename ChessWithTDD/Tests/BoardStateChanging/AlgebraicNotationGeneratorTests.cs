@@ -81,10 +81,9 @@ namespace ChessWithTDD.Tests
         public void NonPawnMoveTestInvalidMove(string expectedString, Move move, bool capture, IPiece piece)
         {
             AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
-            Pawn pawn = new BlackPawn();
             bool check = false;
             bool checkMate = false;
-            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, pawn, capture);
+            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, piece, capture);
 
             string output = generator.Convert(data);
 
@@ -95,9 +94,8 @@ namespace ChessWithTDD.Tests
         public void NonPawnMoveTestCheckAndMateForConstantCaptureAsFalse(string expectedString, Move move, bool check, bool checkMate, IPiece piece)
         {
             AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
-            Pawn pawn = new WhitePawn();
             bool capture = false;
-            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, pawn, capture);
+            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, piece, capture);
 
             string output = generator.Convert(data);
 
@@ -108,9 +106,8 @@ namespace ChessWithTDD.Tests
         public void NonPawnMoveTestInvalidCheckAndMate(string expectedString, Move move, bool check, bool checkMate, IPiece piece)
         {
             AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
-            Pawn pawn = new WhitePawn();
             bool capture = false;
-            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, pawn, capture);
+            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, piece, capture);
 
             string output = generator.Convert(data);
 

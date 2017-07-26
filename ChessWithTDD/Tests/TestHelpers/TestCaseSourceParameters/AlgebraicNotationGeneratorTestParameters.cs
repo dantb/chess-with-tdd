@@ -139,14 +139,7 @@
             new object[] { "Nf2xg3", new Move(1, 5, 2, 6), true, new Knight(Colour.Invalid) },
             new object[] { "Ng2xh3", new Move(1, 6, 2, 7), true, new Knight(Colour.Invalid) },
             new object[] { "Nh2xg3", new Move(1, 7, 2, 6), true, new Knight(Colour.Invalid) },
-
-            //special moves
-            new object[] { "Qa2xb3+", new Move(1, 0, 2, 1), false, new King(Colour.Invalid) },
-            new object[] { "Kb2xc3#", new Move(1, 1, 2, 2), false, new King(Colour.Invalid) },
-            new object[] { "Ng7-g6+", new Move(6, 6, 5, 6), false, new King(Colour.Invalid) },
-            new object[] { "Bh7-h6#", new Move(6, 7, 5, 7), false, new King(Colour.Invalid) },
         };
-
 
         internal static object[] NonPawnMoveAndCaptureGenerationInvalidMoveTestCases =
         {
