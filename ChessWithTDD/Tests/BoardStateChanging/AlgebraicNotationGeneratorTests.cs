@@ -76,5 +76,45 @@ namespace ChessWithTDD.Tests
 
             Assert.AreEqual(expectedString, output);
         }
+
+        [Test, TestCaseSource(typeof(AlgebraicNotationGeneratorTestParameters), "NonPawnMoveAndCaptureGenerationInvalidMoveTestCases")]
+        public void NonPawnMoveTestInvalidMove(string expectedString, Move move, bool capture, IPiece piece)
+        {
+            AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
+            Pawn pawn = new BlackPawn();
+            bool check = false;
+            bool checkMate = false;
+            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, pawn, capture);
+
+            string output = generator.Convert(data);
+
+            Assert.AreEqual(expectedString, output);
+        }
+
+        [Test, TestCaseSource(typeof(AlgebraicNotationGeneratorTestParameters), "NonPawnGenerationCheckAndMateTestCases")]
+        public void NonPawnMoveTestCheckAndMateForConstantCaptureAsFalse(string expectedString, Move move, bool check, bool checkMate, IPiece piece)
+        {
+            AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
+            Pawn pawn = new WhitePawn();
+            bool capture = false;
+            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, pawn, capture);
+
+            string output = generator.Convert(data);
+
+            Assert.AreEqual(expectedString, output);
+        }
+
+        [Test, TestCaseSource(typeof(AlgebraicNotationGeneratorTestParameters), "NonPawnGenerationCheckAndMateInvalidTestCases")]
+        public void NonPawnMoveTestInvalidCheckAndMate(string expectedString, Move move, bool check, bool checkMate, IPiece piece)
+        {
+            AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
+            Pawn pawn = new WhitePawn();
+            bool capture = false;
+            MoveGenerationData data = new MoveGenerationData(move, check, checkMate, pawn, capture);
+
+            string output = generator.Convert(data);
+
+            Assert.AreEqual(expectedString, output);
+        }
     }
 }
