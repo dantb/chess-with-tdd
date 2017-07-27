@@ -17,10 +17,10 @@ namespace ChessGameUI
             InitializeComponent();
             Board = board;
             _dragManager = new DragManager(Board, this);
-            DataContext = Board;
+            SetDataContext(Board);
         }
 
-        public IBoard Board { get; }
+        public IBoard Board { get; private set; }
 
         public event MoveProviderEventHandler MoveChosenEvent;
 
@@ -28,6 +28,13 @@ namespace ChessGameUI
         {
             MoveChosenEvent?.Invoke(this, e);
         }
+
+        private void SetDataContext(IBoard board)
+        {
+            DataContext = board;
+        }
+
+        #region Event Handlers
 
         private void Button_PreviewMouseMove(object sender, MouseEventArgs e)
         {
@@ -55,7 +62,7 @@ namespace ChessGameUI
                         {
                             Cursor = Cursors.No;
                         }
-                    }               
+                    }
                 }
             }
         }
@@ -141,5 +148,13 @@ namespace ChessGameUI
             _dragManager.LastButtonLeftMousePressedIn = sender as Button;
             e.Handled = true;
         }
+
+        private void UndoButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            IBoard newBoard = Board.UndoneMoveBoard();
+            SetDataContext(newBoard);
+        }
+
+        #endregion
     }
 }

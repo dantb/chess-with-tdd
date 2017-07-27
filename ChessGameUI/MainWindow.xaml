@@ -29,7 +29,9 @@
         </Button>
 
         <Button Grid.Row="0" Grid.Column="0"
-                Background="BlanchedAlmond">
+                Background="BlanchedAlmond" PreviewMouseLeftButtonUp="UndoButton_PreviewMouseLeftButtonUp">
+            <TextBlock x:Name="UndoTextBlock" Grid.Row="0" Text="Undo" FontSize="15" HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" Background="LightSteelBlue"/>
         </Button>
 
         <Button Grid.Row="2" Grid.Column="0" 

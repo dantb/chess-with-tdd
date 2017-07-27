@@ -41,6 +41,8 @@ namespace ChessGameController
 
             builder.RegisterType<MoveExecutor>().As<IMoveExecutor>().InstancePerLifetimeScope();
 
+            builder.RegisterType<PositionStateManager>().As<IPositionStateManager>().InstancePerLifetimeScope();
+
             Container = builder.Build();
         }
 

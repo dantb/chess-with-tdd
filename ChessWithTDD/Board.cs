@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using static ChessWithTDD.BoardConstants;
 
@@ -115,6 +116,16 @@ namespace ChessWithTDD
         public void SetSquare(ISquare square)
         {
             _squares[square.Row][square.Col] = square;
+        }
+
+        public IBoard UndoneMoveBoard()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBoard RedoneMoveBoard()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
