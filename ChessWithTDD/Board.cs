@@ -13,6 +13,10 @@ namespace ChessWithTDD
         private IBoardCache _boardCache;
         private IPositionStateManager _positionStateManager;
 
+        /// <summary>
+        /// The board should not be instantiated directly but should be resolved via the Autofac container builder.
+        /// This will resolve the tree of dependencies at run time, <see cref="ContainerConfiguration"/>
+        /// </summary>
         public Board(IStrictServiceLocator serviceLocator)
         {
             InitialiseBoardDimensions();

@@ -1,7 +1,6 @@
 ﻿using Autofac;
-using ChessWithTDD;
 
-namespace ChessGameController
+namespace ChessWithTDD
 {
     /// <summary>
     /// Container used to map abstract dependencies to their implementations.
