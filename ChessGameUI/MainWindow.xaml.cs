@@ -17,10 +17,8 @@ namespace ChessGameUI
         public BoardFrontEnd(IBoard board, Colour playerColour)
         {
             InitializeComponent();
-            Board = board;
-            _dragManager = new DragManager(Board, this);
             _positionStateManager = new PositionStateManager();
-            SetDataContext(Board);
+            SetDataContext(board);
         }
 
         public IBoard Board
@@ -30,6 +28,7 @@ namespace ChessGameUI
             {
                 _board = value;
                 _board.MoveAppliedEvent += _board_MoveAppliedEvent;
+                _dragManager = new DragManager(_board, this);
             }
         }
 
@@ -57,6 +56,7 @@ namespace ChessGameUI
 
             }
             DataContext = board;
+            Board = board;
         }
 
         #region Event Handlers
