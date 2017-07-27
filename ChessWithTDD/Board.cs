@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using static ChessWithTDD.BoardConstants;
 
@@ -28,6 +27,8 @@ namespace ChessWithTDD
             _positionStateManager = serviceLocator.GetServicePositionStateManager();
             _boardCache.InitialiseBoardCache(this);
         }
+
+        public event MoveAppliedEventHandler MoveAppliedEvent;
 
         #region Properties
 
@@ -112,7 +113,9 @@ namespace ChessWithTDD
         {
             _moveExecutor.ExecuteMove(this, fromSquare, toSquare);
 
-            _positionStateManager.SaveMove(fromSquare, toSquare, this);
+            MoveAppliedEventArgs e = new MoveAppliedEventArgs(
+                new MoveGenerationData(fromSquare, toSquare, this, toSquare.Piece));
+            MoveAppliedEvent?.Invoke(this, e);
 
             TurnCounter++;
         }
@@ -120,16 +123,6 @@ namespace ChessWithTDD
         public void SetSquare(ISquare square)
         {
             _squares[square.Row][square.Col] = square;
-        }
-
-        public IBoard UndoneMoveBoard()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IBoard RedoneMoveBoard()
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

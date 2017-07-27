@@ -11,16 +11,34 @@ namespace ChessGameUI
     public partial class BoardFrontEnd : Window, IMoveProvider
     {
         private DragManager _dragManager;
+        private PositionStateManager _positionStateManager;
+        private IBoard _board;
 
         public BoardFrontEnd(IBoard board, Colour playerColour)
         {
             InitializeComponent();
-            Board = board;
+            _board = board;
+            _board.MoveAppliedEvent += _board_MoveAppliedEvent;
             _dragManager = new DragManager(Board, this);
+            _positionStateManager = new PositionStateManager();
             SetDataContext(Board);
         }
 
-        public IBoard Board { get; private set; }
+        public IBoard Board
+        {
+            get { return _board; }
+            private set
+            {
+                _board.MoveAppliedEvent -= _board_MoveAppliedEvent;
+                _board = value;
+                _board.MoveAppliedEvent += _board_MoveAppliedEvent;
+            }
+        }
+
+        private void _board_MoveAppliedEvent(object sender, MoveAppliedEventArgs eventArgs)
+        {
+            _positionStateManager.SaveMove(eventArgs.Data);
+        }
 
         public event MoveProviderEventHandler MoveChosenEvent;
 
@@ -151,7 +169,7 @@ namespace ChessGameUI
 
         private void UndoButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            IBoard newBoard = Board.UndoneMoveBoard();
+            IBoard newBoard = _positionStateManager.UndoneMoveBoard();
             SetDataContext(newBoard);
         }
 

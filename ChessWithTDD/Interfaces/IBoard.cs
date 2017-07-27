@@ -4,6 +4,8 @@ namespace ChessWithTDD
 {
     public interface IBoard
     {
+        event MoveAppliedEventHandler MoveAppliedEvent;
+
         int RowCount { get; }
 
         int ColCount { get; }
@@ -68,16 +70,5 @@ namespace ChessWithTDD
         void SetSquare(ISquare square);
 
         void UpdateBoardCache();
-
-        /// <summary>
-        /// Returns a board with the last move undone, or an initialised board if there hasn't been a move.
-        /// </summary>
-        IBoard UndoneMoveBoard();
-
-        /// <summary>
-        /// Returns a board with the last move redone, or the latest board state possible if there are no moves
-        /// that can be redone (i.e. we're up to date)
-        /// </summary>
-        IBoard RedoneMoveBoard();
     }
 }

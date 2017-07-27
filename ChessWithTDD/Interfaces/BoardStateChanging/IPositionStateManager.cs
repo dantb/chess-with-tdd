@@ -2,7 +2,7 @@
 {
     public interface IPositionStateManager
     {
-        void SaveMove(ISquare fromSquare, ISquare toSquare, IBoard board);
+        void SaveMove(MoveGenerationData data);
 
         /// <summary>
         /// Returns a board with the last move undone, or an initialised board if there hasn't been a move.
