@@ -14,14 +14,34 @@ namespace ChessWithTDD
 
         bool CheckMate { get; set; }
 
-        void UpdateBoardCache();
-
         List<List<ISquare>> Squares { get; }
 
         /// <summary>
         /// Board updates that have not yet been cached
         /// </summary>
         List<ISquare> PendingUpdates { get; set; }
+
+        /// <summary>
+        /// Square of the king belonging to the team whose turn it currently is.
+        /// </summary>
+        ISquare MovingTeamKingSquare { get; }
+
+        /// <summary>
+        /// Square of the king belonging to the team not making a move.
+        /// </summary>
+        ISquare OtherTeamKingSquare { get; }
+
+        /// <summary>
+        /// Squares containing pieces of the team whose turn it currently is.
+        /// </summary>
+        HashSet<ISquare> MovingTeamPieceSquares { get; }
+
+        /// <summary>
+        /// Squares containing pieces of the team not making a move.
+        /// </summary>
+        HashSet<ISquare> OtherTeamPieceSquares { get; }
+
+        Colour TeamWithTurn { get; }
 
         /// <summary>
         /// Returns a clone of the square at position (row, col) on the board.
@@ -47,26 +67,6 @@ namespace ChessWithTDD
 
         void SetSquare(ISquare square);
 
-        /// <summary>
-        /// Square of the king belonging to the team whose turn it currently is.
-        /// </summary>
-        ISquare MovingTeamKingSquare { get; }
-
-        /// <summary>
-        /// Square of the king belonging to the team not making a move.
-        /// </summary>
-        ISquare OtherTeamKingSquare { get; }
-
-        /// <summary>
-        /// Squares containing pieces of the team whose turn it currently is.
-        /// </summary>
-        HashSet<ISquare> MovingTeamPieceSquares { get; }
-
-        /// <summary>
-        /// Squares containing pieces of the team not making a move.
-        /// </summary>
-        HashSet<ISquare> OtherTeamPieceSquares { get; }
-
-        Colour TeamWithTurn { get; }
+        void UpdateBoardCache();
     }
 }

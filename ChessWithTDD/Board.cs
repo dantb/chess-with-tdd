@@ -22,6 +22,8 @@ namespace ChessWithTDD
             _boardCache.InitialiseBoardCache(this);
         }
 
+        #region Properties
+
         public List<ISquare> PendingUpdates { get; set; } = new List<ISquare>();
 
         public bool InCheck { get; set; } = false;
@@ -76,6 +78,10 @@ namespace ChessWithTDD
             }
         }
 
+        #endregion
+
+        #region Public methods
+
         public ISquare GetSquare(int row, int col)
         {
             return _squares[row][col];
@@ -106,6 +112,8 @@ namespace ChessWithTDD
         {
             _squares[square.Row][square.Col] = square;
         }
+
+        #endregion
 
         private void InitialiseBoardDimensions()
         {
