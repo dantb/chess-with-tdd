@@ -2629,6 +2629,18 @@
             }
             </example>
         </member>
+        <member name="M:Autofac.Core.Lifetime.LifetimeScope.CreateScopeRestrictedRegistry(System.Object,System.Action{Autofac.ContainerBuilder})">
+            <summary>
+            Creates and setup the registry for a child scope.
+            </summary>
+            <param name="tag">The tag applied to the <see cref="T:Autofac.ILifetimeScope"/>.</param>
+            <param name="configurationAction">Action on a <see cref="T:Autofac.ContainerBuilder"/>
+            that adds component registrations visible only in the child scope.</param>
+            <returns>Registry to use for a child scope</returns>
+            <remarks>It is the responsibility of the caller to make sure that the registry is properly
+            disposed of. This is generally done by adding the registry to the <see cref="P:Autofac.Core.Lifetime.LifetimeScope.Disposer"/>
+            property of the child scope.</remarks>
+        </member>
         <member name="M:Autofac.Core.Lifetime.LifetimeScope.ResolveComponent(Autofac.Core.IComponentRegistration,System.Collections.Generic.IEnumerable{Autofac.Core.Parameter})">
             <summary>
             Resolve an instance of the provided registration within the context.

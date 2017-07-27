@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -62,6 +65,7 @@
     <Compile Include="BoardDependencies\PawnManagement\PawnManager.cs" />
     <Compile Include="BoardStateChanging\AlgebraicNotationGenerator.cs" />
     <Compile Include="BoardStateChanging\AlgebraicNotationParser.cs" />
+    <Compile Include="ContainerConfiguration.cs" />
     <Compile Include="Interfaces\BoardStateChanging\IAlgebraicNotationGenerator.cs" />
     <Compile Include="Interfaces\BoardStateChanging\IAlgebraicNotationParser.cs" />
     <Compile Include="BoardStateChanging\MoveGenerationData.cs" />
