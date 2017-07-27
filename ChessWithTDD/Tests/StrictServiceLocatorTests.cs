@@ -15,6 +15,7 @@ namespace ChessWithTDD.Tests
         private IMoveExecutor _moveExecutor;
         private IMoveValidator _moveValidator;
         private IPawnManager _pawnManager;
+        private IPositionStateManager _positionStateManager;
 
         [OneTimeSetUp]
         public void InstantiateServiceLocatorWithDependencies()
@@ -25,8 +26,10 @@ namespace ChessWithTDD.Tests
             _boardCache = GenerateMock<IBoardCache>();
             _checkManager = GenerateMock<ICheckManager>();
             _moveExecutor = GenerateMock<IMoveExecutor>();
+            _positionStateManager = GenerateMock<IPositionStateManager>();
             _serviceLocator =
-                new StrictServiceLocator(_boardCache, _boardInitialiser, _checkManager, _moveExecutor, _moveValidator, _pawnManager);
+                new StrictServiceLocator(_boardCache, _boardInitialiser, _checkManager, _moveExecutor,
+                    _moveValidator, _pawnManager, _positionStateManager);
         }
 
         [Test]

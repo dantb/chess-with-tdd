@@ -1,4 +1,6 @@
-﻿namespace ChessWithTDD
+﻿using System;
+
+namespace ChessWithTDD
 {
     public class StrictServiceLocator : IStrictServiceLocator
     {
@@ -8,13 +10,15 @@
         private IMoveExecutor _moveExecutor;
         private IMoveValidator _moveValidator;
         private IPawnManager _pawnManager;
+        private IPositionStateManager _positionStateManager;
 
         public StrictServiceLocator(IBoardCache boardCache, 
                                     IBoardInitialiser boardInitialiser,
                                     ICheckManager checkManager,
                                     IMoveExecutor moveExecutor,
                                     IMoveValidator moveValidator, 
-                                    IPawnManager pawnManager)
+                                    IPawnManager pawnManager,
+                                    IPositionStateManager positionStateManager)
         {
             _boardCache = boardCache;
             _boardInitialiser = boardInitialiser;
@@ -22,6 +26,7 @@
             _moveExecutor = moveExecutor;
             _moveValidator = moveValidator;
             _pawnManager = pawnManager;
+            _positionStateManager = positionStateManager;
         }
 
         public IBoardCache GetServiceBoardCache()
@@ -52,6 +57,11 @@
         public IPawnManager GetServicePawnManager()
         {
             return _pawnManager;
+        }
+
+        public IPositionStateManager GetServicePositionStateManager()
+        {
+            return _positionStateManager;
         }
     }
 }

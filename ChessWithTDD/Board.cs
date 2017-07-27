@@ -10,6 +10,7 @@ namespace ChessWithTDD
         private IMoveValidator _moveValidator;
         private IMoveExecutor _moveExecutor;
         private IBoardCache _boardCache;
+        private IPositionStateManager _positionStateManager;
 
         public Board(IStrictServiceLocator serviceLocator)
         {
@@ -19,6 +20,7 @@ namespace ChessWithTDD
             _moveExecutor = serviceLocator.GetServiceMoveExecutor();
             _moveValidator = serviceLocator.GetServiceMoveValidator();
             _boardCache = serviceLocator.GetServiceBoardCache();
+            _positionStateManager = serviceLocator.GetServicePositionStateManager();
             _boardCache.InitialiseBoardCache(this);
         }
 
@@ -104,6 +106,8 @@ namespace ChessWithTDD
         public void Apply(ISquare fromSquare, ISquare toSquare)
         {
             _moveExecutor.ExecuteMove(this, fromSquare, toSquare);
+
+            _positionStateManager.SaveMove(fromSquare, toSquare, this);
 
             TurnCounter++;
         }

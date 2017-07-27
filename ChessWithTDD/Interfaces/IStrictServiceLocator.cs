@@ -17,5 +17,7 @@
         IPawnManager GetServicePawnManager();
 
         IMoveExecutor GetServiceMoveExecutor();
+
+        IPositionStateManager GetServicePositionStateManager();
     }
 }
