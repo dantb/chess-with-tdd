@@ -9,7 +9,7 @@ namespace ChessWithTDD
     /// Input should use a '-' for a move, and an 'x' for a capture.
     /// See http://www.chesscorner.com/tutorial/basic/notation/notate.htm for more details.
     /// </summary>
-    public class AlgebraicNotationGenerator
+    public class AlgebraicNotationGenerator : IAlgebraicNotationGenerator
     {
         /// <summary>
         /// <para>Converts the move provided as input to its string representation. </para>
