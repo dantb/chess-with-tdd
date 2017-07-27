@@ -17,8 +17,7 @@ namespace ChessGameUI
         public BoardFrontEnd(IBoard board, Colour playerColour)
         {
             InitializeComponent();
-            _board = board;
-            _board.MoveAppliedEvent += _board_MoveAppliedEvent;
+            Board = board;
             _dragManager = new DragManager(Board, this);
             _positionStateManager = new PositionStateManager();
             SetDataContext(Board);
@@ -29,7 +28,6 @@ namespace ChessGameUI
             get { return _board; }
             private set
             {
-                _board.MoveAppliedEvent -= _board_MoveAppliedEvent;
                 _board = value;
                 _board.MoveAppliedEvent += _board_MoveAppliedEvent;
             }
@@ -49,6 +47,15 @@ namespace ChessGameUI
 
         private void SetDataContext(IBoard board)
         {
+            foreach (UIElement item in ChessGrid.Children)
+            {
+                Button button = (Button)item;
+                if (button.Content is Image)
+                {
+                    ((Image)button.Content).Opacity = 1;
+                }
+
+            }
             DataContext = board;
         }
 
@@ -170,6 +177,12 @@ namespace ChessGameUI
         private void UndoButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             IBoard newBoard = _positionStateManager.UndoneMoveBoard();
+            SetDataContext(newBoard);
+        }
+
+        private void RedoButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            IBoard newBoard = _positionStateManager.RedoneMoveBoard();
             SetDataContext(newBoard);
         }
 
