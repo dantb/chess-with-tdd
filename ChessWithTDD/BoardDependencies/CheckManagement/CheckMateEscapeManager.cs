@@ -24,6 +24,7 @@ namespace ChessWithTDD
                      SquareOnBoardAndKingCanEscape(theBoard, kingSquare, kingSquare.Row - 1, kingSquare.Col + 1) ||
                      SquareOnBoardAndKingCanEscape(theBoard, kingSquare, kingSquare.Row + 1, kingSquare.Col + 1))
             {
+                //escape diagonally
                 return true;
             }
 
