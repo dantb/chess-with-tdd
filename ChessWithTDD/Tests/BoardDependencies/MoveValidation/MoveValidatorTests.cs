@@ -24,7 +24,7 @@ namespace ChessWithTDD.Tests
                 .Return(false);
             IMoveIntoCheckValidator moveIntoCheckValidator = GenerateMock<IMoveIntoCheckValidator>();
             moveIntoCheckValidator.Stub(m => 
-                m.MoveIsIntoCheck(board, fromSquare, toSquare))
+                m.MoveCausesMovingTeamCheck(board, fromSquare, toSquare))
                 .Return(false);
 
             MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator, moveIntoCheckValidator);
@@ -49,7 +49,7 @@ namespace ChessWithTDD.Tests
                 .Return(false);
             IMoveIntoCheckValidator moveIntoCheckValidator = GenerateMock<IMoveIntoCheckValidator>();
             moveIntoCheckValidator.Stub(m =>
-                m.MoveIsIntoCheck(board, fromSquare, toSquare))
+                m.MoveCausesMovingTeamCheck(board, fromSquare, toSquare))
                 .Return(false);
 
             MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator, moveIntoCheckValidator);
@@ -74,7 +74,7 @@ namespace ChessWithTDD.Tests
                 .Return(true);
             IMoveIntoCheckValidator moveIntoCheckValidator = GenerateMock<IMoveIntoCheckValidator>();
             moveIntoCheckValidator.Stub(m =>
-                m.MoveIsIntoCheck(board, fromSquare, toSquare))
+                m.MoveCausesMovingTeamCheck(board, fromSquare, toSquare))
                 .Return(false);
 
             MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator, moveIntoCheckValidator);
@@ -99,7 +99,7 @@ namespace ChessWithTDD.Tests
                 .Return(false);
             IMoveIntoCheckValidator moveIntoCheckValidator = GenerateMock<IMoveIntoCheckValidator>();
             moveIntoCheckValidator.Stub(m =>
-                m.MoveIsIntoCheck(board, fromSquare, toSquare))
+                m.MoveCausesMovingTeamCheck(board, fromSquare, toSquare))
                 .Return(true);
 
             MoveValidator moveValidator = new MoveValidator(genericMoveValidator, multiMoveValidator, moveIntoCheckValidator);

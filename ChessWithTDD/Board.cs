@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using static ChessWithTDD.BoardConstants;
 
@@ -10,7 +11,7 @@ namespace ChessWithTDD
         private IMoveValidator _moveValidator;
         private IMoveExecutor _moveExecutor;
         private IBoardCache _boardCache;
-        private IPositionStateManager _positionStateManager;
+        private List<MoveGenerationData> _orderedMoveData = new List<MoveGenerationData>();
 
         /// <summary>
         /// The board should not be instantiated directly but should be resolved via the Autofac container builder.
@@ -24,7 +25,6 @@ namespace ChessWithTDD
             _moveExecutor = serviceLocator.GetServiceMoveExecutor();
             _moveValidator = serviceLocator.GetServiceMoveValidator();
             _boardCache = serviceLocator.GetServiceBoardCache();
-            _positionStateManager = serviceLocator.GetServicePositionStateManager();
             _boardCache.InitialiseBoardCache(this);
         }
 
@@ -86,6 +86,8 @@ namespace ChessWithTDD
             }
         }
 
+        public List<MoveGenerationData> OrderedMoveData { get { return _orderedMoveData; } }
+
         #endregion
 
         #region Public methods
@@ -102,19 +104,27 @@ namespace ChessWithTDD
 
         public bool MoveIsValid(ISquare fromSquare, ISquare toSquare)
         {
+            MoveIntoCheckValidator moveIntoCheckValidator = new MoveIntoCheckValidator();
             if (!_moveValidator.MoveIsValid(fromSquare, toSquare, this))
             {
                 return false;
             }
-            return fromSquare.Piece.CanMove(fromSquare, toSquare);
+            else if (!fromSquare.Piece.CanMove(fromSquare, toSquare))
+            {
+                return false;
+            }
+            //last validation we should do, assuming everything else is fine, is the validation requiring future board
+            //positions to evaluate - such as moving into check
+            return !moveIntoCheckValidator.MoveCausesMovingTeamCheck(this, fromSquare, toSquare);
         }      
 
         public void Apply(ISquare fromSquare, ISquare toSquare)
         {
             _moveExecutor.ExecuteMove(this, fromSquare, toSquare);
 
-            MoveAppliedEventArgs e = new MoveAppliedEventArgs(
-                new MoveGenerationData(fromSquare, toSquare, this, toSquare.Piece));
+            MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, toSquare.Piece);
+            _orderedMoveData.Add(data);
+            MoveAppliedEventArgs e = new MoveAppliedEventArgs(data);
             MoveAppliedEvent?.Invoke(this, e);
 
             TurnCounter++;

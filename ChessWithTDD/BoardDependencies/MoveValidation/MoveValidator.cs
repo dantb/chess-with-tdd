@@ -25,10 +25,10 @@
             {
                 return false;
             }
-            else if (_moveIntoCheckValidator.MoveIsIntoCheck(theBoard, fromSquare, toSquare))
-            {
-                return false;
-            }
+            //else if (_moveIntoCheckValidator.MoveCausesMovingTeamCheck(theBoard, fromSquare, toSquare))
+            //{
+            //    return false;
+            //}
             return true;
         }
     } 

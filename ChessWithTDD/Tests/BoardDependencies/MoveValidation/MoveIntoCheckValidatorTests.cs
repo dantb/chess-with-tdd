@@ -26,7 +26,7 @@ namespace ChessWithTDD.Tests
             board.Stub(b => b.MoveIsValid(blackPieceSquare, toSquare)).Return(true);
             MoveIntoCheckValidator moveIntoCheckValidator = new MoveIntoCheckValidator();
 
-            bool intoCheck = moveIntoCheckValidator.MoveIsIntoCheck(board, whiteKingSquare, toSquare);
+            bool intoCheck = moveIntoCheckValidator.MoveCausesMovingTeamCheck(board, whiteKingSquare, toSquare);
 
             board.AssertWasCalled(b => b.MoveIsValid(blackPieceSquare, toSquare));
             Assert.True(intoCheck);
@@ -49,7 +49,7 @@ namespace ChessWithTDD.Tests
             board.Stub(b => b.MoveIsValid(blackPieceSquare, toSquare)).Return(false);
             MoveIntoCheckValidator moveIntoCheckValidator = new MoveIntoCheckValidator();
 
-            bool intoCheck = moveIntoCheckValidator.MoveIsIntoCheck(board, whiteKingSquare, toSquare);
+            bool intoCheck = moveIntoCheckValidator.MoveCausesMovingTeamCheck(board, whiteKingSquare, toSquare);
 
             board.AssertWasCalled(b => b.MoveIsValid(blackPieceSquare, toSquare));
             Assert.False(intoCheck);

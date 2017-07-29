@@ -19,6 +19,11 @@ namespace ChessWithTDD
         List<List<ISquare>> Squares { get; }
 
         /// <summary>
+        /// Contains in order the moves applied to get the board into its current state
+        /// </summary>
+        List<MoveGenerationData> OrderedMoveData { get; }
+
+        /// <summary>
         /// Board updates that have not yet been cached
         /// </summary>
         List<ISquare> PendingUpdates { get; set; }
