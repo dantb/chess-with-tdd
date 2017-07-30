@@ -1,6 +1,7 @@
 ﻿using ChessWithTDD.Tests.TestHelpers;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System;
 using System.Collections.Generic;
 using static ChessWithTDD.Tests.TestHelpers.CommonTestMethods;
 using static Rhino.Mocks.MockRepository;
@@ -165,6 +166,55 @@ namespace ChessWithTDD.Tests
 
             Assert.True(isValidMove);
         }
+
+        [Test]
+        public void TestOrderingOfCallsInMoveIsValidMethod()
+        {
+            IMoveValidator mockMoveValidator = MockMoveValidator();
+            IMoveIntoCheckValidator moveIntoCheckValidator = MockMoveIntoCheckValidator();
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
+            serviceLocator.Stub(s => s.GetServiceMoveIntoCheckValidator()).Return(moveIntoCheckValidator).OverridePrevious();
+
+            IPiece pieceThatCanMove = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(pieceThatCanMove);
+            ISquare toSquare = MockSquare();
+            Board board = new Board(serviceLocator);
+
+            List<object> callOrder = new List<object>();
+
+            //Delegates used to add mocks to list
+            Func<ISquare, ISquare, IBoard, bool> callMoveValidator = (frSq, toSq, bo) =>
+            {
+                callOrder.Add(mockMoveValidator);
+                return true;
+            };
+
+            Func<ISquare, ISquare, bool> askPieceIfItCanMove = (fs, ts) =>
+            {
+                callOrder.Add(pieceThatCanMove);
+                return true;
+            };
+
+            Func<IBoard, ISquare, ISquare, bool> callMoveIntoCheckValidator = (bo, fs, ts) =>
+            {
+                callOrder.Add(moveIntoCheckValidator);
+                return false;
+            };
+
+            //Add mocks to list as they're called
+            mockMoveValidator.Stub(mmv => mmv.MoveIsValid(fromSquare, toSquare, board)).Do(callMoveValidator);
+            pieceThatCanMove.Stub(p => p.CanMove(fromSquare, toSquare)).Do(askPieceIfItCanMove);
+            moveIntoCheckValidator.Stub(mmv => mmv.MoveCausesMovingTeamCheck(board, fromSquare, toSquare)).Do(callMoveIntoCheckValidator);
+
+            //Act
+            bool isValidMove = board.MoveIsValid(fromSquare, toSquare);
+
+            Assert.AreEqual(callOrder[0], mockMoveValidator);
+            Assert.AreEqual(callOrder[1], pieceThatCanMove);
+            Assert.AreEqual(callOrder[2], moveIntoCheckValidator);
+        }
+
 
         #endregion Move validation
 

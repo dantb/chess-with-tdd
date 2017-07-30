@@ -116,8 +116,8 @@ namespace ChessWithTDD
             {
                 return false;
             }
-            //last validation we should do, assuming everything else is fine, is the validation requiring future board
-            //positions to evaluate - such as moving into check: TODO unit test this requirement
+
+            //this has a requirement of being the final validation - there is a unit test to ensure this correct ordering
             return !_moveIntoCheckValidator.MoveCausesMovingTeamCheck(this, fromSquare, toSquare);
         }      
 
