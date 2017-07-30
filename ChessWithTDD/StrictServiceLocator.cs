@@ -11,6 +11,7 @@ namespace ChessWithTDD
         private IMoveValidator _moveValidator;
         private IPawnManager _pawnManager;
         private IPositionStateManager _positionStateManager;
+        private IMoveIntoCheckValidator _moveIntoCheckValidator;
 
         public StrictServiceLocator(IBoardCache boardCache, 
                                     IBoardInitialiser boardInitialiser,
@@ -18,7 +19,8 @@ namespace ChessWithTDD
                                     IMoveExecutor moveExecutor,
                                     IMoveValidator moveValidator, 
                                     IPawnManager pawnManager,
-                                    IPositionStateManager positionStateManager)
+                                    IPositionStateManager positionStateManager,
+                                    IMoveIntoCheckValidator moveIntoCheckValidator)
         {
             _boardCache = boardCache;
             _boardInitialiser = boardInitialiser;
@@ -27,6 +29,7 @@ namespace ChessWithTDD
             _moveValidator = moveValidator;
             _pawnManager = pawnManager;
             _positionStateManager = positionStateManager;
+            _moveIntoCheckValidator = moveIntoCheckValidator;
         }
 
         public IBoardCache GetServiceBoardCache()
@@ -47,6 +50,11 @@ namespace ChessWithTDD
         public IMoveExecutor GetServiceMoveExecutor()
         {
             return _moveExecutor;
+        }
+
+        public IMoveIntoCheckValidator GetServiceMoveIntoCheckValidator()
+        {
+            return _moveIntoCheckValidator;
         }
 
         public IMoveValidator GetServiceMoveValidator()

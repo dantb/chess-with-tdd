@@ -16,20 +16,22 @@ namespace ChessWithTDD.Tests
         private IMoveValidator _moveValidator;
         private IPawnManager _pawnManager;
         private IPositionStateManager _positionStateManager;
+        private IMoveIntoCheckValidator _moveIntoCheckValidator;
 
         [OneTimeSetUp]
         public void InstantiateServiceLocatorWithDependencies()
         {
             _boardInitialiser = GenerateMock<IBoardInitialiser>();
-            _moveValidator = GenerateMock<IMoveValidator>();
             _pawnManager = GenerateMock<IPawnManager>();
             _boardCache = GenerateMock<IBoardCache>();
             _checkManager = GenerateMock<ICheckManager>();
+            _moveValidator = GenerateMock<IMoveValidator>();
             _moveExecutor = GenerateMock<IMoveExecutor>();
             _positionStateManager = GenerateMock<IPositionStateManager>();
+            _moveIntoCheckValidator = GenerateMock<IMoveIntoCheckValidator>();
             _serviceLocator =
                 new StrictServiceLocator(_boardCache, _boardInitialiser, _checkManager, _moveExecutor,
-                    _moveValidator, _pawnManager, _positionStateManager);
+                    _moveValidator, _pawnManager, _positionStateManager, _moveIntoCheckValidator);
         }
 
         [Test]
@@ -73,11 +75,19 @@ namespace ChessWithTDD.Tests
         }
 
         [Test]
-        public void MoveExecuterServiceIsImplemented()
+        public void MoveExecutorServiceIsImplemented()
         {
             IMoveExecutor moveExecutorService = _serviceLocator.GetServiceMoveExecutor();
 
             Assert.AreEqual(moveExecutorService, _moveExecutor);
+        }
+
+        [Test]
+        public void MoveIntoCheckValidatorServiceIsImplemented()
+        {
+            IMoveIntoCheckValidator moveIntoCheckValidator = _serviceLocator.GetServiceMoveIntoCheckValidator();
+
+            Assert.AreEqual(moveIntoCheckValidator, _moveIntoCheckValidator);
         }
     }
 }
