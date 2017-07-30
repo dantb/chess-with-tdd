@@ -11,6 +11,7 @@ namespace ChessWithTDD
         private IMoveValidator _moveValidator;
         private IMoveExecutor _moveExecutor;
         private IBoardCache _boardCache;
+        private IMoveIntoCheckValidator _moveIntoCheckValidator;
         private List<MoveGenerationData> _orderedMoveData = new List<MoveGenerationData>();
 
         /// <summary>
@@ -25,6 +26,7 @@ namespace ChessWithTDD
             _moveExecutor = serviceLocator.GetServiceMoveExecutor();
             _moveValidator = serviceLocator.GetServiceMoveValidator();
             _boardCache = serviceLocator.GetServiceBoardCache();
+            _moveIntoCheckValidator = serviceLocator.GetServiceMoveIntoCheckValidator();
             _boardCache.InitialiseBoardCache(this);
         }
 
@@ -106,7 +108,6 @@ namespace ChessWithTDD
 
         public bool MoveIsValid(ISquare fromSquare, ISquare toSquare)
         {
-            MoveIntoCheckValidator moveIntoCheckValidator = new MoveIntoCheckValidator();
             if (!_moveValidator.MoveIsValid(fromSquare, toSquare, this))
             {
                 return false;
@@ -117,7 +118,7 @@ namespace ChessWithTDD
             }
             //last validation we should do, assuming everything else is fine, is the validation requiring future board
             //positions to evaluate - such as moving into check: TODO unit test this requirement
-            return !moveIntoCheckValidator.MoveCausesMovingTeamCheck(this, fromSquare, toSquare);
+            return !_moveIntoCheckValidator.MoveCausesMovingTeamCheck(this, fromSquare, toSquare);
         }      
 
         public void Apply(ISquare fromSquare, ISquare toSquare)
