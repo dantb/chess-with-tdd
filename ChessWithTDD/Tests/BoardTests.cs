@@ -78,7 +78,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveValidatorIsCalledWhenMoveIsValidIsCalled()
         {
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
+            IMoveValidator mockMoveValidator = MockMoveValidator();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
             ISquare fromSquare = MockSquare();
@@ -93,7 +93,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveIsNotValidIfMoveValidatorReturnsFalse()
         {
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
+            IMoveValidator mockMoveValidator = MockMoveValidator();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
             ISquare fromSquare = MockSquare();
@@ -109,7 +109,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void MoveIsNotValidIfMoveValidatorReturnsTrueButFromSquarePieceCannotMove()
         {
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
+            IMoveValidator mockMoveValidator = MockMoveValidator();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
             IPiece pieceThatCannotMove = MockPiece();
@@ -125,17 +125,41 @@ namespace ChessWithTDD.Tests
         }
 
         [Test]
-        public void MoveIsValidIfMoveValidatorReturnsTrueAndFromSquarePieceCanMove()
+        public void MoveIsNotValidIfMoveValidatorAndPiecePassButMoveIntoCheckValidatorFails()
         {
-            IMoveValidator mockMoveValidator = GenerateMock<IMoveValidator>();
+            IMoveValidator mockMoveValidator = MockMoveValidator();
+            IMoveIntoCheckValidator moveIntoCheckValidator = MockMoveIntoCheckValidator();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
+            serviceLocator.Stub(s => s.GetServiceMoveIntoCheckValidator()).Return(moveIntoCheckValidator).OverridePrevious();
+            IPiece pieceThatCanMove = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece();
+            ISquare toSquare = MockSquare();
+            StubPieceCanMoveForSpecificSquares(pieceThatCanMove, true, fromSquare, toSquare);
+            Board board = new Board(serviceLocator);
+            mockMoveValidator.Stub(mmv => mmv.MoveIsValid(fromSquare, toSquare, board)).Return(true);
+            moveIntoCheckValidator.Stub(mmv => mmv.MoveCausesMovingTeamCheck(board, fromSquare, toSquare)).Return(true);
+
+            bool isValidMove = board.MoveIsValid(fromSquare, toSquare);
+
+            Assert.False(isValidMove);
+        }
+
+        [Test]
+        public void MoveIsValidIfAllValidationPasses()
+        {
+            IMoveValidator mockMoveValidator = MockMoveValidator();
+            IMoveIntoCheckValidator moveIntoCheckValidator = MockMoveIntoCheckValidator();
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
+            serviceLocator.Stub(s => s.GetServiceMoveIntoCheckValidator()).Return(moveIntoCheckValidator).OverridePrevious();
             IPiece pieceThatCanMove = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(pieceThatCanMove);
             ISquare toSquare = MockSquare();
             StubPieceCanMoveForSpecificSquares(pieceThatCanMove, true, fromSquare, toSquare);
             Board board = new Board(serviceLocator);
             mockMoveValidator.Stub(mmv => mmv.MoveIsValid(fromSquare, toSquare, board)).Return(true);
+            moveIntoCheckValidator.Stub(mmv => mmv.MoveCausesMovingTeamCheck(board, fromSquare, toSquare)).Return(false);
 
             bool isValidMove = board.MoveIsValid(fromSquare, toSquare);
 
