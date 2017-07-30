@@ -88,6 +88,8 @@ namespace ChessWithTDD
 
         public List<MoveGenerationData> OrderedMoveData { get { return _orderedMoveData; } }
 
+        public MoveGenerationData MoveWithoutCheckAndMateUpdated { get; set; }
+
         #endregion
 
         #region Public methods
@@ -114,7 +116,7 @@ namespace ChessWithTDD
                 return false;
             }
             //last validation we should do, assuming everything else is fine, is the validation requiring future board
-            //positions to evaluate - such as moving into check
+            //positions to evaluate - such as moving into check: TODO unit test this requirement
             return !moveIntoCheckValidator.MoveCausesMovingTeamCheck(this, fromSquare, toSquare);
         }      
 
@@ -123,11 +125,27 @@ namespace ChessWithTDD
             _moveExecutor.ExecuteMove(this, fromSquare, toSquare);
 
             MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, toSquare.Piece);
-            _orderedMoveData.Add(data);
             MoveAppliedEventArgs e = new MoveAppliedEventArgs(data);
             MoveAppliedEvent?.Invoke(this, e);
 
             TurnCounter++;
+
+            //should be the last thing to happen, since only now is the move application complete: TODO unit test this requirement
+            _orderedMoveData.Add(data);
+        }
+
+        public void ApplyWithoutUpdatingCheckAndMate(ISquare fromSquare, ISquare toSquare)
+        {
+            _moveExecutor.ExecuteMoveWithoutUpdatingCheckAndMate(this, fromSquare, toSquare);
+
+            MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, toSquare.Piece);
+            MoveAppliedEventArgs e = new MoveAppliedEventArgs(data);
+            MoveAppliedEvent?.Invoke(this, e);
+
+            TurnCounter++;
+
+            //should be the last thing to happen, since only now is the move application complete: TODO unit test this requirement
+            _orderedMoveData.Add(data);
         }
 
         public void SetSquare(ISquare square)

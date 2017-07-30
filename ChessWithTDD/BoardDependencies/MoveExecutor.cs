@@ -1,4 +1,6 @@
-﻿namespace ChessWithTDD
+﻿using System;
+
+namespace ChessWithTDD
 {
     public class MoveExecutor : IMoveExecutor
     {
@@ -13,6 +15,17 @@
 
         public void ExecuteMove(IBoard board, ISquare fromSquare, ISquare toSquare)
         {
+            ExecuteMoveWithoutUpdatingCheckAndMate(board, fromSquare, toSquare);
+
+            MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, board, toSquare.Piece);
+            board.MoveWithoutCheckAndMateUpdated = data;
+            //Evaluate check states after move has been applied
+            _checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
+            board.MoveWithoutCheckAndMateUpdated = null;
+        }
+
+        public void ExecuteMoveWithoutUpdatingCheckAndMate(IBoard board, ISquare fromSquare, ISquare toSquare)
+        {
             if (fromSquare.Piece is IPawn)
             {
                 _pawnManager.MakePawnSpecificAmendments(fromSquare, toSquare, board);
@@ -26,9 +39,6 @@
 
             //Update board cache for easy access to pieces
             board.UpdateBoardCache();
-
-            //Evaluate check states after move has been applied
-            _checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
         }
 
         private void ActualApply(IBoard theBoard, ISquare fromSquare, ISquare toSquare)

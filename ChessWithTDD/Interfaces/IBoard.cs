@@ -24,6 +24,12 @@ namespace ChessWithTDD
         List<MoveGenerationData> OrderedMoveData { get; }
 
         /// <summary>
+        /// This is to note that there is a move that has been applied to the board, but the check and checkmate
+        /// states haven't been updated yet. If everything is up to date this is null.
+        /// </summary>
+        MoveGenerationData MoveWithoutCheckAndMateUpdated { get; set; }
+
+        /// <summary>
         /// Board updates that have not yet been cached
         /// </summary>
         List<ISquare> PendingUpdates { get; set; }
@@ -71,6 +77,9 @@ namespace ChessWithTDD
         /// <param name="fromSquare">Square containing the piece to be moved.</param>
         /// <param name="toSquare">Square the piece will be moved to, capturing pieces as required.</param>
         void Apply(ISquare fromSquare, ISquare toSquare);
+
+        void ApplyWithoutUpdatingCheckAndMate(ISquare fromSquare, ISquare toSquare);
+
 
         void SetSquare(ISquare square);
 

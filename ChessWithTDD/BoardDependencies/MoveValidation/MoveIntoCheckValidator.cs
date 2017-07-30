@@ -58,9 +58,16 @@ namespace ChessWithTDD
                 ISquare ts = newBoard.GetSquare(data.Move.ToRow, data.Move.ToCol);
                 newBoard.Apply(fs, ts);
             }
+            if (theBoard.MoveWithoutCheckAndMateUpdated != null)
+            {
+                MoveGenerationData data = theBoard.MoveWithoutCheckAndMateUpdated;
+                ISquare fs = newBoard.GetSquare(data.Move.FromRow, data.Move.FromCol);
+                ISquare ts = newBoard.GetSquare(data.Move.ToRow, data.Move.ToCol);
+                newBoard.ApplyWithoutUpdatingCheckAndMate(fs, ts);
+            }
             ISquare newBoardFromSquare = newBoard.GetSquare(fromSquare.Row, fromSquare.Col);
             ISquare newBoardToSquare = newBoard.GetSquare(toSquare.Row, toSquare.Col);
-            newBoard.Apply(newBoardFromSquare, newBoardToSquare);
+            newBoard.ApplyWithoutUpdatingCheckAndMate(newBoardFromSquare, newBoardToSquare);
             return newBoard;
         }
     }
