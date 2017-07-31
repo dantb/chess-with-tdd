@@ -134,7 +134,7 @@ namespace ChessWithTDD.Tests
             serviceLocator.Stub(s => s.GetServiceMoveValidator()).Return(mockMoveValidator).OverridePrevious();
             serviceLocator.Stub(s => s.GetServiceMoveIntoCheckValidator()).Return(moveIntoCheckValidator).OverridePrevious();
             IPiece pieceThatCanMove = MockPiece();
-            ISquare fromSquare = MockSquareWithPiece();
+            ISquare fromSquare = MockSquareWithPiece(pieceThatCanMove);
             ISquare toSquare = MockSquare();
             StubPieceCanMoveForSpecificSquares(pieceThatCanMove, true, fromSquare, toSquare);
             Board board = new Board(serviceLocator);
