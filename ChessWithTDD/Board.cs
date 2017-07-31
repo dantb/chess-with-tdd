@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using static ChessWithTDD.BoardConstants;
 
@@ -12,11 +13,10 @@ namespace ChessWithTDD
         private IMoveExecutor _moveExecutor;
         private IBoardCache _boardCache;
         private IMoveIntoCheckValidator _moveIntoCheckValidator;
-        private List<MoveGenerationData> _orderedMoveData = new List<MoveGenerationData>();
 
         /// <summary>
         /// The board should not be instantiated directly but should be resolved via the Autofac container builder.
-        /// This will resolve the tree of dependencies at run time, <see cref="ContainerConfiguration"/>
+        /// This will resolve the tree of dependencies at run time, for mappings see <see cref="ContainerConfiguration"/>
         /// </summary>
         public Board(IStrictServiceLocator serviceLocator)
         {
@@ -88,7 +88,7 @@ namespace ChessWithTDD
             }
         }
 
-        public List<MoveGenerationData> OrderedMoveData { get { return _orderedMoveData; } }
+        public ObservableCollection<MoveGenerationData> OrderedMoveData { get; } = new ObservableCollection<MoveGenerationData>();
 
         public MoveGenerationData MoveWithoutCheckAndMateUpdated { get; set; }
 
@@ -116,37 +116,30 @@ namespace ChessWithTDD
             {
                 return false;
             }
-
-            //this has a requirement of being the final validation - there is a unit test to ensure this correct ordering
-            return !_moveIntoCheckValidator.MoveCausesMovingTeamCheck(this, fromSquare, toSquare);
+            else if (_moveIntoCheckValidator.MoveCausesMovingTeamCheck(this, fromSquare, toSquare))
+            {
+                //this has a requirement of being the final validation - there is a unit test to ensure this correct ordering
+                return false;
+            }
+            return true;
         }      
 
         public void Apply(ISquare fromSquare, ISquare toSquare)
         {
+            MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, fromSquare.Piece);
+
             _moveExecutor.ExecuteMove(this, fromSquare, toSquare);
 
-            MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, toSquare.Piece);
-            MoveAppliedEventArgs e = new MoveAppliedEventArgs(data);
-            MoveAppliedEvent?.Invoke(this, e);
-
-            TurnCounter++;
-
-            //should be the last thing to happen, since only now is the move application complete: TODO unit test this requirement
-            _orderedMoveData.Add(data);
+            DoPostMoveApplicationUpdates(data);
         }
 
         public void ApplyWithoutUpdatingCheckAndMate(ISquare fromSquare, ISquare toSquare)
         {
+            MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, fromSquare.Piece);
+
             _moveExecutor.ExecuteMoveWithoutUpdatingCheckAndMate(this, fromSquare, toSquare);
 
-            MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, toSquare.Piece);
-            MoveAppliedEventArgs e = new MoveAppliedEventArgs(data);
-            MoveAppliedEvent?.Invoke(this, e);
-
-            TurnCounter++;
-
-            //should be the last thing to happen, since only now is the move application complete: TODO unit test this requirement
-            _orderedMoveData.Add(data);
+            DoPostMoveApplicationUpdates(data);
         }
 
         public void SetSquare(ISquare square)
@@ -168,6 +161,17 @@ namespace ChessWithTDD
                 }
                 _squares.Add(rowOfBoard);
             }
+        }
+
+        private void DoPostMoveApplicationUpdates(MoveGenerationData data)
+        {
+            MoveAppliedEventArgs e = new MoveAppliedEventArgs(data);
+            MoveAppliedEvent?.Invoke(this, e);
+
+            TurnCounter++;
+
+            //should be the last thing to happen, since only now is the move application complete: there is a unit test for this requirement
+            OrderedMoveData.Add(data);
         }
     }
 }

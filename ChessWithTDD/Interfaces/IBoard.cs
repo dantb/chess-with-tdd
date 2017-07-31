@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ChessWithTDD
 {
@@ -21,7 +22,7 @@ namespace ChessWithTDD
         /// <summary>
         /// Contains in order the moves applied to get the board into its current state
         /// </summary>
-        List<MoveGenerationData> OrderedMoveData { get; }
+        ObservableCollection<MoveGenerationData> OrderedMoveData { get; }
 
         /// <summary>
         /// This is to note that there is a move that has been applied to the board, but the check and checkmate

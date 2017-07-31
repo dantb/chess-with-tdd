@@ -253,6 +253,213 @@ namespace ChessWithTDD.Tests
             Assert.AreEqual(board.TurnCounter, turnCounter + 1);
         }
 
+        [TestCase(1, 2, 3, 4, false, false, false)]
+        [TestCase(1, 2, 3, 4, false, true, false)]
+        [TestCase(1, 2, 3, 4, false, true, true)]
+        [TestCase(1, 2, 3, 4, true, false, false)]
+        [TestCase(1, 2, 3, 4, true, true, false)]
+        [TestCase(1, 2, 3, 4, true, true, true)]
+        [Test]
+        public void ApplyingMoveFiresMoveAppliedEvent(int rowFrom, int colFrom, int rowTo, int colTo, bool capture, bool check, bool checkMate)
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
+            ISquare toSquare = MockSquare(rowTo, colTo);
+            toSquare.Stub(ts => ts.ContainsPiece).Return(capture);
+            Board board = new Board(serviceLocator);
+            board.InCheck = check;
+            board.CheckMate = checkMate;
+            MoveAppliedEventArgs theArgs = null;
+            board.MoveAppliedEvent += (_, e) => { theArgs = e; };
+            
+            board.Apply(fromSquare, toSquare);
+
+            Assert.AreEqual(new Move(rowFrom, colFrom, rowTo, colTo), theArgs.Data.Move);
+            Assert.AreEqual(capture, theArgs.Data.Capture);
+            Assert.AreEqual(check, theArgs.Data.Check);
+            Assert.AreEqual(checkMate, theArgs.Data.CheckMate);
+            Assert.AreEqual(thePiece, theArgs.Data.Piece);
+        }
+
+        [TestCase(1, 2, 3, 4, true, false, false)]
+        [TestCase(1, 2, 3, 4, true, true, false)]
+        [Test]
+        public void ApplyingMoveAddsMoveDataToMoveListAtTheEnd(int rowFrom, int colFrom, int rowTo, int colTo, bool capture, bool check, bool checkMate)
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
+            ISquare toSquare = MockSquare(rowTo, colTo);
+            toSquare.Stub(ts => ts.ContainsPiece).Return(capture);
+            Board board = new Board(serviceLocator);
+            board.InCheck = check;
+            board.CheckMate = checkMate;
+            MoveAppliedEventArgs theArgs = null;
+            board.MoveAppliedEvent += (_, e) => { theArgs = e; };
+
+            board.Apply(fromSquare, toSquare);
+            Assert.AreEqual(theArgs.Data, board.OrderedMoveData[board.OrderedMoveData.Count - 1]);
+
+            board.Apply(fromSquare, toSquare);
+            Assert.AreEqual(theArgs.Data, board.OrderedMoveData[board.OrderedMoveData.Count - 1]);
+        }
+
+        [Test]
+        public void ApplyingWithoutCheckAndMateCallsMoveExecutorWithCorrectArguments()
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IMoveExecutor moveExecutor = MockMoveExecutor();
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(moveExecutor).OverridePrevious();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(thePiece);
+            ISquare toSquare = MockSquareWithPiece();
+            Board board = new Board(serviceLocator);
+            int turnCounter = board.TurnCounter;
+
+            board.ApplyWithoutUpdatingCheckAndMate(fromSquare, toSquare);
+
+            moveExecutor.AssertWasCalled(m => m.ExecuteMoveWithoutUpdatingCheckAndMate(board, fromSquare, toSquare));
+        }
+
+        [Test]
+        public void ApplyingWithoutCheckAndMateIncrementsTurnCounter()
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(thePiece);
+            ISquare toSquare = MockSquareWithPiece();
+            Board board = new Board(serviceLocator);
+            int turnCounter = board.TurnCounter;
+
+            board.ApplyWithoutUpdatingCheckAndMate(fromSquare, toSquare);
+
+            Assert.AreEqual(board.TurnCounter, turnCounter + 1);
+        }
+
+        [TestCase(1, 2, 3, 4, false, false, false)]
+        [TestCase(1, 2, 3, 4, false, true, false)]
+        [TestCase(1, 2, 3, 4, false, true, true)]
+        [TestCase(1, 2, 3, 4, true, false, false)]
+        [TestCase(1, 2, 3, 4, true, true, false)]
+        [TestCase(1, 2, 3, 4, true, true, true)]
+        [Test]
+        public void ApplyingWithoutCheckAndMateFiresMoveAppliedEvent(int rowFrom, int colFrom, int rowTo, int colTo, bool capture, bool check, bool checkMate)
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
+            ISquare toSquare = MockSquare(rowTo, colTo);
+            toSquare.Stub(ts => ts.ContainsPiece).Return(capture);
+            Board board = new Board(serviceLocator);
+            board.InCheck = check;
+            board.CheckMate = checkMate;
+            MoveAppliedEventArgs theArgs = null;
+            board.MoveAppliedEvent += (_, e) => { theArgs = e; };
+
+            board.ApplyWithoutUpdatingCheckAndMate(fromSquare, toSquare);
+
+            Assert.AreEqual(new Move(rowFrom, colFrom, rowTo, colTo), theArgs.Data.Move);
+            Assert.AreEqual(capture, theArgs.Data.Capture);
+            Assert.AreEqual(check, theArgs.Data.Check);
+            Assert.AreEqual(checkMate, theArgs.Data.CheckMate);
+            Assert.AreEqual(thePiece, theArgs.Data.Piece);
+        }
+
+        [TestCase(1, 2, 3, 4, true, false, false)]
+        [TestCase(1, 2, 3, 4, true, true, false)]
+        [Test]
+        public void ApplyingWithoutCheckAndMateAddsMoveDataToMoveListAtTheEnd(int rowFrom, int colFrom, int rowTo, int colTo, bool capture, bool check, bool checkMate)
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
+            ISquare toSquare = MockSquare(rowTo, colTo);
+            toSquare.Stub(ts => ts.ContainsPiece).Return(capture);
+            Board board = new Board(serviceLocator);
+            board.InCheck = check;
+            board.CheckMate = checkMate;
+            MoveAppliedEventArgs theArgs = null;
+            board.MoveAppliedEvent += (_, e) => { theArgs = e; };
+
+            board.ApplyWithoutUpdatingCheckAndMate(fromSquare, toSquare);
+            Assert.AreEqual(theArgs.Data, board.OrderedMoveData[board.OrderedMoveData.Count - 1]);
+
+            board.ApplyWithoutUpdatingCheckAndMate(fromSquare, toSquare);
+            Assert.AreEqual(theArgs.Data, board.OrderedMoveData[board.OrderedMoveData.Count - 1]);
+        }
+
+        [TestCase(1, 2, 3, 4, true, true, true)]
+        [Test]
+        public void TestOrderingOfCallsInApplyMethod(int rowFrom, int colFrom, int rowTo, int colTo, bool capture, bool check, bool checkMate)
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IMoveExecutor moveExecutor = MockMoveExecutor();
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(moveExecutor).OverridePrevious();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
+            ISquare toSquare = MockSquare(rowTo, colTo);
+            toSquare.Stub(ts => ts.ContainsPiece).Return(capture);
+            Board board = new Board(serviceLocator);
+            board.InCheck = check;
+            board.CheckMate = checkMate;
+
+
+            MoveAppliedEventArgs theArgs = null;
+            List<object> callOrder = new List<object>();
+            board.MoveAppliedEvent += (_, e) => 
+            {
+                theArgs = e;
+                callOrder.Add(e);
+            };
+
+            Action<IBoard, ISquare, ISquare> callOrderAddMoveExecutor = (b, fs, ts) => { callOrder.Add(moveExecutor); };
+            moveExecutor.Stub(me => me.ExecuteMove(board, fromSquare, toSquare)).Do(callOrderAddMoveExecutor);
+
+            board.OrderedMoveData.CollectionChanged += (_, e) => { callOrder.Add(e.NewItems[0]); };
+
+            board.Apply(fromSquare, toSquare);
+
+            Assert.AreEqual(moveExecutor, callOrder[0]);
+            Assert.AreEqual(theArgs, callOrder[1]);
+            Assert.AreEqual(theArgs.Data, callOrder[2]);
+        }
+
+        [TestCase(1, 2, 3, 4, true, true, true)]
+        [Test]
+        public void TestOrderingOfCallsInApplyWithoutCheckAndMateMethod(int rowFrom, int colFrom, int rowTo, int colTo, bool capture, bool check, bool checkMate)
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IMoveExecutor moveExecutor = MockMoveExecutor();
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(moveExecutor).OverridePrevious();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
+            ISquare toSquare = MockSquare(rowTo, colTo);
+            toSquare.Stub(ts => ts.ContainsPiece).Return(capture);
+            Board board = new Board(serviceLocator);
+            board.InCheck = check;
+            board.CheckMate = checkMate;
+
+            MoveAppliedEventArgs theArgs = null;
+            List<object> callOrder = new List<object>();
+            board.MoveAppliedEvent += (_, e) =>
+            {
+                theArgs = e;
+                callOrder.Add(e);
+            };
+
+            Action<IBoard, ISquare, ISquare> callOrderAddMoveExecutor = (b, fs, ts) => { callOrder.Add(moveExecutor); };
+            moveExecutor.Stub(me => me.ExecuteMoveWithoutUpdatingCheckAndMate(board, fromSquare, toSquare)).Do(callOrderAddMoveExecutor);
+
+            board.OrderedMoveData.CollectionChanged += (_, e) => { callOrder.Add(e.NewItems[0]); };
+
+            board.ApplyWithoutUpdatingCheckAndMate(fromSquare, toSquare);
+
+            Assert.AreEqual(moveExecutor, callOrder[0]);
+            Assert.AreEqual(theArgs, callOrder[1]);
+            Assert.AreEqual(theArgs.Data, callOrder[2]);
+        }
+
         #endregion Applying moves
 
 
