@@ -255,6 +255,7 @@ namespace ChessWithTDD.Tests
 
         #endregion Applying moves
 
+
         #region Properties
 
         [TestCase(1)]
