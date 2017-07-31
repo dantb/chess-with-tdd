@@ -9,51 +9,51 @@ namespace ChessWithTDD.Tests
     [TestFixture]
     public class MoveIntoCheckValidatorTests
     {
-        [Test]
-        public void MovingWhiteKingIntoCheckReturnsTrue()
-        {
-            IBoard board = MockBoard();
-            //set up white king
-            IKing whiteKing = MockKingWithColour(Colour.White);
-            ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
-            board.Stub(b => b.MovingTeamKingSquare).Return(whiteKingSquare);
-            //set up enemy black piece
-            IPiece blackPiece = MockPieceWithColour(Colour.Black);
-            ISquare blackPieceSquare = MockSquareWithPiece(blackPiece);
-            board.Stub(b => b.OtherTeamPieceSquares).Return(new HashSet<ISquare>() { blackPieceSquare });
-            //set up to square so black piece can move to it
-            ISquare toSquare = MockSquare();
-            board.Stub(b => b.MoveIsValid(blackPieceSquare, toSquare)).Return(true);
-            MoveIntoCheckValidator moveIntoCheckValidator = new MoveIntoCheckValidator();
+        //[Test]
+        //public void MovingWhiteKingIntoCheckReturnsTrue()
+        //{
+        //    IBoard board = MockBoard();
+        //    //set up white king
+        //    IKing whiteKing = MockKingWithColour(Colour.White);
+        //    ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
+        //    board.Stub(b => b.MovingTeamKingSquare).Return(whiteKingSquare);
+        //    //set up enemy black piece
+        //    IPiece blackPiece = MockPieceWithColour(Colour.Black);
+        //    ISquare blackPieceSquare = MockSquareWithPiece(blackPiece);
+        //    board.Stub(b => b.OtherTeamPieceSquares).Return(new HashSet<ISquare>() { blackPieceSquare });
+        //    //set up to square so black piece can move to it
+        //    ISquare toSquare = MockSquare();
+        //    board.Stub(b => b.MoveIsValid(blackPieceSquare, toSquare)).Return(true);
+        //    MoveIntoCheckValidator moveIntoCheckValidator = new MoveIntoCheckValidator();
 
-            bool intoCheck = moveIntoCheckValidator.MoveCausesMovingTeamCheck(board, whiteKingSquare, toSquare);
+        //    bool intoCheck = moveIntoCheckValidator.MoveCausesMovingTeamCheck(board, whiteKingSquare, toSquare);
 
-            board.AssertWasCalled(b => b.MoveIsValid(blackPieceSquare, toSquare));
-            Assert.True(intoCheck);
-        }
+        //    board.AssertWasCalled(b => b.MoveIsValid(blackPieceSquare, toSquare));
+        //    Assert.True(intoCheck);
+        //}
 
-        [Test]
-        public void MovingWhiteKingNotIntoCheckReturnsFalse()
-        {
-            IBoard board = MockBoard();
-            //set up white king
-            IKing whiteKing = MockKingWithColour(Colour.White);
-            ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
-            board.Stub(b => b.MovingTeamKingSquare).Return(whiteKingSquare);
-            //set up enemy black piece
-            IPiece blackPiece = MockPieceWithColour(Colour.Black);
-            ISquare blackPieceSquare = MockSquareWithPiece(blackPiece);
-            board.Stub(b => b.OtherTeamPieceSquares).Return(new HashSet<ISquare>() { blackPieceSquare });
-            //set up to square so black piece can move to it
-            ISquare toSquare = MockSquare();
-            board.Stub(b => b.MoveIsValid(blackPieceSquare, toSquare)).Return(false);
-            MoveIntoCheckValidator moveIntoCheckValidator = new MoveIntoCheckValidator();
+        //[Test]
+        //public void MovingWhiteKingNotIntoCheckReturnsFalse()
+        //{
+        //    IBoard board = MockBoard();
+        //    //set up white king
+        //    IKing whiteKing = MockKingWithColour(Colour.White);
+        //    ISquare whiteKingSquare = MockSquareWithPiece(whiteKing);
+        //    board.Stub(b => b.MovingTeamKingSquare).Return(whiteKingSquare);
+        //    //set up enemy black piece
+        //    IPiece blackPiece = MockPieceWithColour(Colour.Black);
+        //    ISquare blackPieceSquare = MockSquareWithPiece(blackPiece);
+        //    board.Stub(b => b.OtherTeamPieceSquares).Return(new HashSet<ISquare>() { blackPieceSquare });
+        //    //set up to square so black piece can move to it
+        //    ISquare toSquare = MockSquare();
+        //    board.Stub(b => b.MoveIsValid(blackPieceSquare, toSquare)).Return(false);
+        //    MoveIntoCheckValidator moveIntoCheckValidator = new MoveIntoCheckValidator();
 
-            bool intoCheck = moveIntoCheckValidator.MoveCausesMovingTeamCheck(board, whiteKingSquare, toSquare);
+        //    bool intoCheck = moveIntoCheckValidator.MoveCausesMovingTeamCheck(board, whiteKingSquare, toSquare);
 
-            board.AssertWasCalled(b => b.MoveIsValid(blackPieceSquare, toSquare));
-            Assert.False(intoCheck);
-        }
+        //    board.AssertWasCalled(b => b.MoveIsValid(blackPieceSquare, toSquare));
+        //    Assert.False(intoCheck);
+        //}
 
         //[Test]
         //public void MovingBlackKingIntoCheckReturnsTrue()
