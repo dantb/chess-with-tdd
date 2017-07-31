@@ -18,8 +18,6 @@
 
         IMoveExecutor GetServiceMoveExecutor();
 
-        IPositionStateManager GetServicePositionStateManager();
-
         IMoveIntoCheckValidator GetServiceMoveIntoCheckValidator();
     }
 }
