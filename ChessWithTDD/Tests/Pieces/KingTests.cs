@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Rhino.Mocks;
 using static ChessWithTDD.Tests.TestHelpers.CommonTestMethods;
 
 namespace ChessWithTDD.Tests
@@ -20,9 +21,9 @@ namespace ChessWithTDD.Tests
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
-            bool canPawnMove = king.CanMove(fromSquare, toSquare);
+            bool canKingMove = king.CanMove(fromSquare, toSquare);
 
-            Assert.True(canPawnMove);
+            Assert.True(canKingMove);
         }
 
         [TestCase(5, 2, 2, 2)]
@@ -33,9 +34,9 @@ namespace ChessWithTDD.Tests
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
-            bool canPawnMove = king.CanMove(fromSquare, toSquare);
+            bool canKingMove = king.CanMove(fromSquare, toSquare);
 
-            Assert.False(canPawnMove);
+            Assert.False(canKingMove);
         }
 
         [TestCase(2, 6, 2, 0)]
@@ -46,9 +47,9 @@ namespace ChessWithTDD.Tests
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
-            bool canPawnMove = king.CanMove(fromSquare, toSquare);
+            bool canKingMove = king.CanMove(fromSquare, toSquare);
 
-            Assert.False(canPawnMove);
+            Assert.False(canKingMove);
         }
 
         [TestCase(2, 5, 5, 2)]
@@ -62,9 +63,75 @@ namespace ChessWithTDD.Tests
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
-            bool canPawnMove = king.CanMove(fromSquare, toSquare);
+            bool canKingMove = king.CanMove(fromSquare, toSquare);
 
-            Assert.False(canPawnMove);
+            Assert.False(canKingMove);
+        }
+
+        [TestCase(5, 2, 2, 2)]
+        [TestCase(5, 2, 2, 5)]
+        [Test]
+        public void CastlingMoveValidatorIsCalledIfNotAdjacent(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            ICastlingMoveValidator castlingMoveValidator = MockCastlingMoveValidator();
+            IBoard board = MockBoard();
+            King king = new King(Colour.Invalid, castlingMoveValidator, board);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+
+            bool canKingMove = king.CanMove(fromSquare, toSquare);
+
+            castlingMoveValidator.AssertWasCalled(c => c.IsValidCastlingMove(king, board, fromSquare, toSquare));
+        }
+
+        [TestCase(3, 3, 2, 3)]
+        [TestCase(3, 3, 4, 4)]
+        [Test]
+        public void CastlingMoveValidatorIsNotCalledIfAdjacent(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            ICastlingMoveValidator castlingMoveValidator = MockCastlingMoveValidator();
+            IBoard board = MockBoard();
+            King king = new King(Colour.Invalid, castlingMoveValidator, board);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+
+            bool canKingMove = king.CanMove(fromSquare, toSquare);
+
+            castlingMoveValidator.AssertWasNotCalled(c => c.IsValidCastlingMove(king, board, fromSquare, toSquare));
+        }
+
+        [TestCase(5, 2, 2, 2)]
+        [TestCase(5, 2, 2, 5)]
+        [Test]
+        public void CanMoveReturnsTrueIfCastlingMoveValidatorReturnsTrueAndNotAdjacent(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            ICastlingMoveValidator castlingMoveValidator = MockCastlingMoveValidator();
+            IBoard board = MockBoard();
+            King king = new King(Colour.Invalid, castlingMoveValidator, board);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            castlingMoveValidator.Stub(c => c.IsValidCastlingMove(king, board, fromSquare, toSquare)).Return(true);
+
+            bool canKingMove = king.CanMove(fromSquare, toSquare);
+
+            Assert.True(canKingMove);
+        }
+
+        [TestCase(5, 2, 2, 2)]
+        [TestCase(5, 2, 2, 5)]
+        [Test]
+        public void CanMoveReturnsFalseIfCastlingMoveValidatorReturnsFalseAndNotAdjacent(int rowFrom, int colFrom, int rowTo, int colTo)
+        {
+            ICastlingMoveValidator castlingMoveValidator = MockCastlingMoveValidator();
+            IBoard board = MockBoard();
+            King king = new King(Colour.Invalid, castlingMoveValidator, board);
+            ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
+            ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
+            castlingMoveValidator.Stub(c => c.IsValidCastlingMove(king, board, fromSquare, toSquare)).Return(false);
+
+            bool canKingMove = king.CanMove(fromSquare, toSquare);
+
+            Assert.False(canKingMove);
         }
     }
 }
