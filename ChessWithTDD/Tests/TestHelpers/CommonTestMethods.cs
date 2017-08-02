@@ -114,6 +114,17 @@ namespace ChessWithTDD.Tests.TestHelpers
             return board;
         }
 
+        internal static void StubSquareOnBoardWithPiece(IBoard board, int row, int col, IPiece thePiece)
+        {
+            ISquare square = MockSquareWithPiece(row, col, thePiece);
+            board.Stub(b => b.GetSquare(row, col)).Return(square).Repeat.Any();
+        }
+
+        internal static void StubSquareOnBoardWithPiece(IBoard board, ISquare square)
+        {
+            board.Stub(b => b.GetSquare(square.Row, square.Col)).Return(square).Repeat.Any();
+        }
+
         internal static ISquare MockSquareWithoutPiece(int row, int col)
         {
             ISquare theSquare = GenerateMock<ISquare>();
@@ -185,6 +196,32 @@ namespace ChessWithTDD.Tests.TestHelpers
         internal static IKing MockKing()
         {
             return GenerateMock<IKing>();
+        }
+
+        internal static IKing MockKingWithHasMoved(bool hasMoved)
+        {
+            IKing king = GenerateMock<IKing>();
+            king.Stub(k => k.HasMoved).Return(hasMoved);
+            return king;
+        }
+
+        internal static IKing MockKingWithHasMovedAndCheckState(bool hasMoved, bool inCheckState)
+        {
+            IKing king = MockKingWithHasMoved(hasMoved);
+            king.Stub(k => k.InCheckState).Return(inCheckState);
+            return king;
+        }
+
+        internal static IRook MockRook()
+        {
+            return GenerateMock<IRook>();
+        }
+
+        internal static IRook MockRookWithHasMoved(bool hasMoved)
+        {
+            IRook rook = MockRook();
+            rook.Stub(r => r.HasMoved).Return(hasMoved);
+            return rook;
         }
 
         internal static IKnight MockKnight()

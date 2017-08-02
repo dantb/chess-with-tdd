@@ -94,6 +94,7 @@
     <Compile Include="Interfaces\BoardDependencies\PawnManagement\IPawnManager.cs" />
     <Compile Include="Interfaces\IStrictServiceLocator.cs" />
     <Compile Include="BoardDependencies\MoveExecutor.cs" />
+    <Compile Include="Interfaces\Pieces\IRook.cs" />
     <Compile Include="Pieces\BlackPawn.cs" />
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="BoardDependencies\BoardInitialiser.cs" />

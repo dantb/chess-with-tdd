@@ -13,6 +13,8 @@ namespace ChessWithTDD
 
         public bool IsValidCastlingMove(IKing king, IBoard board, ISquare fromSquare, ISquare toSquare)
         {
+            return false;
+
             throw new NotImplementedException();
         }
     }

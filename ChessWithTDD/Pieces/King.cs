@@ -1,4 +1,6 @@
-﻿namespace ChessWithTDD
+﻿using System;
+
+namespace ChessWithTDD
 {
     public class King : IKing
     {
@@ -16,6 +18,7 @@
         public Colour Colour { get { return _colour; } }
 
         public bool InCheckState { get; set; } = false;
+        public bool HasMoved { get; set; } = false;
 
         public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {
