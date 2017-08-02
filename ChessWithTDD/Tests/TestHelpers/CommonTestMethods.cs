@@ -66,6 +66,11 @@ namespace ChessWithTDD.Tests.TestHelpers
             return GenerateMock<IMoveIntoCheckValidator>();
         }
 
+        internal static ICastlingMoveValidator MockCastlingMoveValidator()
+        {
+            return GenerateMock<ICastlingMoveValidator>();
+        }
+
         internal static IBoard MockBoard()
         {
             return GenerateMock<IBoard>();

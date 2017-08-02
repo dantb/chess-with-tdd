@@ -4,6 +4,13 @@ namespace ChessWithTDD
 {
     public class BoardInitialiser : IBoardInitialiser
     {
+        private ICastlingMoveValidator _castlingMoveValidator;
+
+        public BoardInitialiser(ICastlingMoveValidator castlingMoveValidator)
+        {
+            _castlingMoveValidator = castlingMoveValidator;
+        }
+
         public void InitialiseBoardPieces(IBoard theBoard)
         {
             InitialiseWhitePawnRow(theBoard);
@@ -12,7 +19,7 @@ namespace ChessWithTDD
             InitialiseKnights(theBoard);
             InitialiseBishops(theBoard);
             InitialiseQueens(theBoard);
-            InitialiseKings(theBoard);
+            InitialiseKings(theBoard, _castlingMoveValidator);
         }
 
         private void InitialiseWhitePawnRow(IBoard theBoard)
@@ -109,16 +116,16 @@ namespace ChessWithTDD
             theBoard.SetSquare(square);
         }
 
-        private void InitialiseKings(IBoard theBoard)
+        private void InitialiseKings(IBoard theBoard, ICastlingMoveValidator castlingMoveValidator)
         {
-            InitialiseKing(Colour.White, WHITE_BACK_ROW, KING_COLUMN, theBoard);
+            InitialiseKing(Colour.White, WHITE_BACK_ROW, KING_COLUMN, theBoard, castlingMoveValidator);
 
-            InitialiseKing(Colour.Black, BLACK_BACK_ROW, KING_COLUMN, theBoard);
+            InitialiseKing(Colour.Black, BLACK_BACK_ROW, KING_COLUMN, theBoard, castlingMoveValidator);
         }
 
-        private void InitialiseKing(Colour theColour, int row, int col, IBoard theBoard)
+        private void InitialiseKing(Colour theColour, int row, int col, IBoard theBoard, ICastlingMoveValidator castlingMoveValidator)
         {
-            King king = new King(theColour);
+            King king = new King(theColour, castlingMoveValidator, theBoard);
             Square square = new Square(row, col);
             square.AddPiece(king);
             theBoard.SetSquare(square);

@@ -171,7 +171,7 @@ namespace ChessWithTDD.Tests
         public void BoardCacheInitialisedWithWhitePawnsCorrectly()
         {
             //Need a real initialised board
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser).OverridePrevious();
             Board board = new Board(serviceLocator);
@@ -190,7 +190,7 @@ namespace ChessWithTDD.Tests
         public void BoardCacheInitialisedWithBlackPawnsCorrectly()
         {
             //Need a real initialised board
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser).OverridePrevious();
             Board board = new Board(serviceLocator);
@@ -209,7 +209,7 @@ namespace ChessWithTDD.Tests
         public void BoardCacheInitialisedWithWhiteBackRowCorrectly()
         {
             //Need a real initialised board
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser).OverridePrevious();
             Board board = new Board(serviceLocator);
@@ -231,7 +231,7 @@ namespace ChessWithTDD.Tests
         public void BoardCacheInitialisedWithBlackBackRowCorrectly()
         {
             //Need a real initialised board
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceBoardInitialiser()).Return(boardInitialiser).OverridePrevious();
             Board board = new Board(serviceLocator);

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Rhino.Mocks;
 using static ChessWithTDD.BoardConstants;
+using static ChessWithTDD.Tests.TestHelpers.CommonTestMethods;
 using static Rhino.Mocks.MockRepository;
 
 namespace ChessWithTDD.Tests
@@ -12,7 +13,7 @@ namespace ChessWithTDD.Tests
         public void BoardWhitePawnRowSetupCorrectly()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
 
             //Act
@@ -34,7 +35,7 @@ namespace ChessWithTDD.Tests
         public void BoardBlackPawnRowSetupCorrectly()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
 
             //Act
@@ -56,7 +57,7 @@ namespace ChessWithTDD.Tests
         public void BoardWhiteRooksSetupCorrectly()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
 
             //Act
@@ -84,7 +85,7 @@ namespace ChessWithTDD.Tests
         public void BoardBlackRooksSetupCorrectly()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
 
             //Act
@@ -113,7 +114,7 @@ namespace ChessWithTDD.Tests
         public void BoardWhiteKnightsSetupCorrectly()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
 
             //Act
@@ -141,7 +142,7 @@ namespace ChessWithTDD.Tests
         public void BoardBlackKnightsSetupCorrectly()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
 
             //Act
@@ -169,7 +170,7 @@ namespace ChessWithTDD.Tests
         public void BoardWhiteBishopsSetupCorrectly()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
 
             //Act
@@ -197,7 +198,7 @@ namespace ChessWithTDD.Tests
         public void BoardBlackBishopsSetupCorrectly()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
 
             //Act
@@ -225,7 +226,7 @@ namespace ChessWithTDD.Tests
         public void BoardQueensSetupCorrectly()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
 
             //Act
@@ -253,7 +254,7 @@ namespace ChessWithTDD.Tests
         public void BoardKingsSetupCorrectly()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
 
             //Act
@@ -281,7 +282,7 @@ namespace ChessWithTDD.Tests
         public void BoardSetSquareCalledCorrectNumberOfTimesDuringInitialisation()
         {
             //Arrange
-            BoardInitialiser boardInitialiser = new BoardInitialiser();
+            BoardInitialiser boardInitialiser = new BoardInitialiser(MockCastlingMoveValidator());
             IBoard mockBoard = GenerateMock<IBoard>();
             int expectedCalls = 32;
             int actualCalls = 0;

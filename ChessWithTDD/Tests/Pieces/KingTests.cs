@@ -16,7 +16,7 @@ namespace ChessWithTDD.Tests
         [TestCase(3, 3, 2, 4)]
         public void KingCanMoveToAdjacentSquares(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            King king = new King(Colour.Invalid);
+            King king = new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard());
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
@@ -29,7 +29,7 @@ namespace ChessWithTDD.Tests
         [TestCase(2, 2, 5, 2)]
         public void KingCannotMoveVerticallyMoreThanOneSquare(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            King king = new King(Colour.Invalid);
+            King king = new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard());
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
@@ -42,7 +42,7 @@ namespace ChessWithTDD.Tests
         [TestCase(2, 2, 2, 7)]
         public void KingCannotMoveHorizontallyMoreThanOneSquare(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            King king = new King(Colour.Invalid);
+            King king = new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard());
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 
@@ -58,7 +58,7 @@ namespace ChessWithTDD.Tests
         [Test]
         public void KingCannotMoveDiagonallyMoreThanOneSquare(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            King king = new King(Colour.Invalid);
+            King king = new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard());
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, king);
             ISquare toSquare = MockSquareWithoutPiece(rowTo, colTo);
 

@@ -1,4 +1,6 @@
-﻿namespace ChessWithTDD.Tests.TestHelpers
+﻿using static ChessWithTDD.Tests.TestHelpers.CommonTestMethods;
+
+namespace ChessWithTDD.Tests.TestHelpers
 {
     internal class AlgebraicNotationGeneratorTestParameters
     {
@@ -91,14 +93,14 @@
         internal static object[] NonPawnMoveAndCaptureGenerationTestCases =
         {
             //king
-            new object[] { "Ka2-a4", new Move(1, 0, 3, 0), false, new King(Colour.Invalid) },
-            new object[] { "Kb2-b4", new Move(1, 1, 3, 1), false, new King(Colour.Invalid) },
-            new object[] { "Kc2-c4", new Move(1, 2, 3, 2), false, new King(Colour.Invalid) },
-            new object[] { "Kd2-d4", new Move(1, 3, 3, 3), false, new King(Colour.Invalid) },
-            new object[] { "Ke2xe4", new Move(1, 4, 3, 4), true, new King(Colour.Invalid) },
-            new object[] { "Kf2xf4", new Move(1, 5, 3, 5), true, new King(Colour.Invalid) },
-            new object[] { "Kg2xg4", new Move(1, 6, 3, 6), true, new King(Colour.Invalid) },
-            new object[] { "Kh2xh4", new Move(1, 7, 3, 7), true, new King(Colour.Invalid) },
+            new object[] { "Ka2-a4", new Move(1, 0, 3, 0), false, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "Kb2-b4", new Move(1, 1, 3, 1), false, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "Kc2-c4", new Move(1, 2, 3, 2), false, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "Kd2-d4", new Move(1, 3, 3, 3), false, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "Ke2xe4", new Move(1, 4, 3, 4), true, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "Kf2xf4", new Move(1, 5, 3, 5), true, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "Kg2xg4", new Move(1, 6, 3, 6), true, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "Kh2xh4", new Move(1, 7, 3, 7), true, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
 
             //queen
             new object[] { "Qa7-a5", new Move(6, 0, 4, 0), false, new Queen(Colour.Invalid) },
@@ -143,24 +145,24 @@
 
         internal static object[] NonPawnMoveAndCaptureGenerationInvalidMoveTestCases =
         {
-            new object[] { "", new Move(-1, 7, 5, 7), false, new King(Colour.Invalid) },
-            new object[] { "", new Move(6, -1, 5, 7), true, new King(Colour.Invalid) },
-            new object[] { "", new Move(6, 2, -1, 7), false, new King(Colour.Invalid) },
-            new object[] { "", new Move(6, 3, 5, -1), true, new King(Colour.Invalid) },
-            new object[] { "", new Move(8, 7, 5, 7), false, new King(Colour.Invalid) },
-            new object[] { "", new Move(6, 8, 5, 7), true, new King(Colour.Invalid) },
-            new object[] { "", new Move(6, 2, 8, 7), false, new King(Colour.Invalid) },
-            new object[] { "", new Move(6, 3, 5, 8), true, new King(Colour.Invalid) },
+            new object[] { "", new Move(-1, 7, 5, 7), false, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "", new Move(6, -1, 5, 7), true, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "", new Move(6, 2, -1, 7), false, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "", new Move(6, 3, 5, -1), true, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "", new Move(8, 7, 5, 7), false, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "", new Move(6, 8, 5, 7), true, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "", new Move(6, 2, 8, 7), false, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
+            new object[] { "", new Move(6, 3, 5, 8), true, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
         };
 
         internal static object[] NonPawnGenerationCheckAndMateTestCases =
         {
-            new object[] { "Ka2-b3", new Move(1, 0, 2, 1), false, false, new King(Colour.Invalid) },
+            new object[] { "Ka2-b3", new Move(1, 0, 2, 1), false, false, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
             new object[] { "Qb2-c3", new Move(1, 1, 2, 2), false, false, new Queen(Colour.Invalid) },
             new object[] { "Rc2-d3+", new Move(1, 2, 2, 3), true, false, new Rook(Colour.Invalid) },
             new object[] { "Nd2-e3+", new Move(1, 3, 2, 4), true, false, new Knight(Colour.Invalid) },
             new object[] { "Be2-f3#", new Move(1, 4, 2, 5), true, true, new Bishop(Colour.Invalid) },
-            new object[] { "Kf2-g3#", new Move(1, 5, 2, 6), true, true, new King(Colour.Invalid) },
+            new object[] { "Kf2-g3#", new Move(1, 5, 2, 6), true, true, new King(Colour.Invalid, MockCastlingMoveValidator(), MockBoard()) },
         };
 
         internal static object[] NonPawnGenerationCheckAndMateInvalidTestCases =

@@ -3,10 +3,14 @@
     public class King : IKing
     {
         private Colour _colour;
+        private ICastlingMoveValidator _castlingMoveValidator;
+        private IBoard _board;
 
-        public King(Colour colour)
+        public King(Colour colour, ICastlingMoveValidator castlingMoveValidator, IBoard board)
         {
             _colour = colour;
+            _castlingMoveValidator = castlingMoveValidator;
+            _board = board;
         }
 
         public Colour Colour { get { return _colour; } }
@@ -19,6 +23,10 @@
             {
                 return true;
             }
+            //else if (_castlingMoveValidator.IsValidCastlingMove(this, _board, fromSquare, toSquare))
+            //{
+
+            //}
             return false;
         }
     }
