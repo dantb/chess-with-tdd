@@ -107,6 +107,7 @@
     <Compile Include="Tests\BoardDependencies\CheckManagement\CheckMateEscapeManagerTests.cs" />
     <Compile Include="Tests\BoardDependencies\CheckManagement\CheckMateManagerTests.cs" />
     <Compile Include="Tests\BoardDependencies\MoveExecutorTests.cs" />
+    <Compile Include="Tests\BoardDependencies\MoveValidation\CastlingMoveValidatorTests.cs" />
     <Compile Include="Tests\BoardDependencies\MoveValidation\GenericMoveValidatorTests.cs" />
     <Compile Include="Tests\BoardDependencies\MoveValidation\MoveIntoCheckValidatorTests.cs" />
     <Compile Include="Tests\BoardDependencies\MoveValidation\MoveValidatorTests.cs" />
