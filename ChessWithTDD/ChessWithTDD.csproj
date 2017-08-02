@@ -67,6 +67,7 @@
     <Compile Include="BoardStateChanging\AlgebraicNotationParser.cs" />
     <Compile Include="BoardStateChanging\PositionStateManager.cs" />
     <Compile Include="ContainerConfiguration.cs" />
+    <Compile Include="Interfaces\BoardDependencies\MoveValidation\ICastlingMoveValidator.cs" />
     <Compile Include="Interfaces\BoardStateChanging\IAlgebraicNotationGenerator.cs" />
     <Compile Include="Interfaces\BoardStateChanging\IAlgebraicNotationParser.cs" />
     <Compile Include="BoardStateChanging\MoveGenerationData.cs" />
