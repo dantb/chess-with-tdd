@@ -1,6 +1,8 @@
-﻿namespace ChessWithTDD
+﻿using System;
+
+namespace ChessWithTDD
 {
-    public class Rook : IPiece
+    public class Rook : IRook
     {
         private Colour _colour;
 
@@ -10,6 +12,8 @@
         }
 
         public Colour Colour { get { return _colour; } }
+
+        public bool HasMoved { get; set; }
 
         public bool CanMove(ISquare fromSquare, ISquare toSquare)
         {

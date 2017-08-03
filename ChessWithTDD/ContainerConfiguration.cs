@@ -42,6 +42,8 @@ namespace ChessWithTDD
 
             builder.RegisterType<PositionStateManager>().As<IPositionStateManager>().InstancePerLifetimeScope();
 
+            builder.RegisterType<CastlingMoveValidator>().As<ICastlingMoveValidator>().InstancePerLifetimeScope();
+
             Container = builder.Build();
         }
 
