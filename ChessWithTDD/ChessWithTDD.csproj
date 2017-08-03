@@ -75,7 +75,6 @@
     <Compile Include="BoardStateChanging\MoveConversionData.cs" />
     <Compile Include="BoardStateChanging\ParsingConstants.cs" />
     <Compile Include="BoardStateChanging\PositionLoader.cs" />
-    <Compile Include="CloningExtensions.cs" />
     <Compile Include="Interfaces\BoardDependencies\IMoveExecutor.cs" />
     <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckMateEscapeManager.cs" />
     <Compile Include="Interfaces\BoardDependencies\MoveValidation\IMoveIntoCheckValidator.cs" />
