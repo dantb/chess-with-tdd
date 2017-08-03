@@ -8,164 +8,286 @@ namespace ChessWithTDD.Tests
     [TestFixture]
     public class CastlingMoveValidatorTests
     {
+        /// <summary>
+        /// The conditions for which castling is not allowed are listed below. 
+        /// The invalid case for this particular test is marked. The other conditions should all pass where possible - special cases marked with stars.
+        /// 
+        /// 1) Your king has been moved earlier in the game.                         *** TESTED HERE ***
+        /// 2) The rook that castles has been moved earlier in the game.
+        /// 3) There are pieces standing between your king and rook                  *** ContainsPiece is false by default. ***
+        /// 4) The king is in check.
+        /// 5) The king moves through a square that is attacked by a opponent piece. *** MoveIntoCheckValidator returns false by default. ***
+        /// 6) The king would be in check after castling.                            *** MoveIntoCheckValidator returns false by default. ***
+        /// 7) The king is not in the from square
+        /// 8) The to square is a different row to the king
+        /// 9) The to square is not 2 columns away from the king
+        /// 
+        /// </summary>
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL)] //white kingside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2, WHITE_BACK_ROW, LEFT_ROOK_COL)]  //white queenside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 2, BLACK_BACK_ROW, RIGHT_ROOK_COL)] //black kingside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL)]  //black queenside
         [Test]
-        public void InvalidCastleIfKingHasMoved()
-        {
-            CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
-            ISquare fromSquare = MockSquare();
-            ISquare toSquare = MockSquare();
-            IKing king = MockKingWithHasMoved(true);
-            IBoard board = MockBoard();
-
-            bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
-
-            Assert.False(isValidCastle);
-        }
-
-        [Test]
-        public void InvalidCastleIfKingIsNotInFromSquare()
-        {
-            CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
-            ISquare fromSquare = MockSquare();
-            ISquare toSquare = MockSquare();
-            IKing king = MockKingWithHasMoved(false);
-            IBoard board = MockBoard();
-
-            bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
-
-            Assert.False(isValidCastle);
-        }
-
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW + 1, KING_COLUMN + 2)] //different row
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW - 1, KING_COLUMN + 2)] //different row
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 1)]     //wrong col
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 3)]     //wrong col
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 1)]     //wrong col
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 3)]     //wrong col
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 1)]     //wrong col
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 3)]     //wrong col
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 1)]     //wrong col
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 3)]     //wrong col
-        [Test]
-        public void InvalidCastleIfToSquareIsNotTheSameRowAndTwoColsAwayFromKing(int kingRow, int kingCol, int toRow, int toCol)
+        public void InvalidCastleIfKingHasMoved(int kingRow, int kingCol, int toRow, int toCol, int rookRow, int rookCol)
         {
             CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
             ISquare toSquare = MockSquare(toRow, toCol);
-            IKing king = MockKingWithHasMoved(false);
+            IKing king = MockKingWithHasMovedAndCheckState(true, false);
             ISquare fromSquare = MockSquareWithPiece(kingRow, kingCol, king);
+            IRook rook = MockRookWithHasMoved(false);
+            ISquare rookSquare = MockSquareWithPiece(rookRow, rookCol, rook);
             IBoard board = MockBoard();
+            StubSquareOnBoard(board, fromSquare);
+            StubSquareOnBoard(board, toSquare);
+            StubSquareOnBoard(board, rookSquare);
 
             bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
 
             Assert.False(isValidCastle);
         }
 
+        /// <summary>
+        /// The conditions for which castling is not allowed are listed below. 
+        /// The invalid case for this particular test is marked. The other conditions should all pass where possible - special assumptions marked with stars.
+        /// 
+        /// 1) Your king has been moved earlier in the game.
+        /// 2) The rook that castles has been moved earlier in the game.
+        /// 3) There are pieces standing between your king and rook                  *** ContainsPiece is false by default. ***
+        /// 4) The king is in check.
+        /// 5) The king moves through a square that is attacked by a opponent piece. *** MoveIntoCheckValidator returns false by default. ***
+        /// 6) The king would be in check after castling.                            *** MoveIntoCheckValidator returns false by default. ***
+        /// 7) The king is not in the from square                                    *** TESTED HERE ***
+        /// 8) The to square is a different row to the king
+        /// 9) The to square is not 2 columns away from the king
+        /// 
+        /// </summary>
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL)] //white kingside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2, WHITE_BACK_ROW, LEFT_ROOK_COL)]  //white queenside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 2, BLACK_BACK_ROW, RIGHT_ROOK_COL)] //black kingside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL)]  //black queenside
         [Test]
-        public void InvalidCastleIfKingInCheck()
+        public void InvalidCastleIfKingIsNotInFromSquare(int kingRow, int kingCol, int toRow, int toCol, int rookRow, int rookCol)
         {
             CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
-            ISquare toSquare = MockSquare();
-            IKing king = MockKingWithHasMovedAndCheckState(false, true); // show explicitly the king hasn't moved
-            ISquare fromSquare = MockSquareWithPiece(king);
+            ISquare toSquare = MockSquare(toRow, toCol);
+            IKing king = MockKingWithHasMovedAndCheckState(false, false);
+            ISquare fromSquare = MockSquareWithPiece(kingRow, kingCol);
+            IRook rook = MockRookWithHasMoved(false);
+            ISquare rookSquare = MockSquareWithPiece(rookRow, rookCol, rook);
             IBoard board = MockBoard();
+            StubSquareOnBoard(board, fromSquare);
+            StubSquareOnBoard(board, toSquare);
+            StubSquareOnBoard(board, rookSquare);
 
             bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
 
             Assert.False(isValidCastle);
         }
 
-        [TestCase(WHITE_BACK_ROW)] // white king
-        [TestCase(BLACK_BACK_ROW)] // black king
+        /// <summary>
+        /// The conditions for which castling is not allowed are listed below. 
+        /// The invalid case for this particular test is marked. The other conditions should all pass where possible - special assumptions marked with stars.
+        /// 
+        /// 1) Your king has been moved earlier in the game.
+        /// 2) The rook that castles has been moved earlier in the game.
+        /// 3) There are pieces standing between your king and rook                  *** ContainsPiece is false by default. ***
+        /// 4) The king is in check.
+        /// 5) The king moves through a square that is attacked by a opponent piece. *** MoveIntoCheckValidator returns false by default. ***
+        /// 6) The king would be in check after castling.                            *** MoveIntoCheckValidator returns false by default. ***
+        /// 7) The king is not in the from square
+        /// 8) The to square is a different row to the king                          *** TESTED HERE ***
+        /// 9) The to square is not 2 columns away from the king                     *** TESTED HERE ***
+        /// 
+        /// </summary>
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW + 1, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL)] //white kingside row big
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW - 1, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL)] //white kingside row small
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 1, WHITE_BACK_ROW, RIGHT_ROOK_COL)] //white kingside col big
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 1, WHITE_BACK_ROW, RIGHT_ROOK_COL)] //white kingside col small
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW + 1, KING_COLUMN + 2, BLACK_BACK_ROW, RIGHT_ROOK_COL)] //black kingside row big
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW - 1, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL)]  //black queenside row small
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 1, BLACK_BACK_ROW, RIGHT_ROOK_COL)] //black kingside col big
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 1, BLACK_BACK_ROW, LEFT_ROOK_COL)]  //black queenside col small
         [Test]
-        public void InvalidKingSideCastleIfRightRookHasMoved(int kingRow)
+        public void InvalidCastleIfToSquareIsNotTheSameRowAndTwoColsAwayFromKing(int kingRow, int kingCol, int toRow, int toCol, int rookRow, int rookCol)
         {
             CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
-            ISquare toSquare = MockSquare();
-            IKing king = MockKingWithHasMovedAndCheckState(false, false); // show explicitly the king hasn't moved and isn't in check
-            ISquare fromSquare = MockSquareWithPiece(king);
+            ISquare toSquare = MockSquare(toRow, toCol);
+            IKing king = MockKingWithHasMovedAndCheckState(false, false);
+            ISquare fromSquare = MockSquareWithPiece(kingRow, kingCol, king);
+            IRook rook = MockRookWithHasMoved(false);
+            ISquare rookSquare = MockSquareWithPiece(rookRow, rookCol, rook);
+            IBoard board = MockBoard();
+            StubSquareOnBoard(board, fromSquare);
+            StubSquareOnBoard(board, toSquare);
+            StubSquareOnBoard(board, rookSquare);
+
+            bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
+
+            Assert.False(isValidCastle);
+        }
+
+
+        /// <summary>
+        /// The conditions for which castling is not allowed are listed below. 
+        /// The invalid case for this particular test is marked. The other conditions should all pass where possible - special assumptions marked with stars.
+        /// 
+        /// 1) Your king has been moved earlier in the game.
+        /// 2) The rook that castles has been moved earlier in the game.
+        /// 3) There are pieces standing between your king and rook                  *** ContainsPiece is false by default. ***
+        /// 4) The king is in check.                                                 *** TESTED HERE ***
+        /// 5) The king moves through a square that is attacked by a opponent piece. *** MoveIntoCheckValidator returns false by default. ***
+        /// 6) The king would be in check after castling.                            *** MoveIntoCheckValidator returns false by default. ***
+        /// 7) The king is not in the from square
+        /// 8) The to square is a different row to the king
+        /// 9) The to square is not 2 columns away from the king
+        /// 
+        /// </summary>
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL)] //white kingside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2, WHITE_BACK_ROW, LEFT_ROOK_COL)]  //white queenside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 2, BLACK_BACK_ROW, RIGHT_ROOK_COL)] //black kingside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL)]  //black queenside
+        [Test]
+        public void InvalidCastleIfKingInCheck(int kingRow, int kingCol, int toRow, int toCol, int rookRow, int rookCol)
+        {
+            CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
+            ISquare toSquare = MockSquare(toRow, toCol);
+            IKing king = MockKingWithHasMovedAndCheckState(false, true);
+            ISquare fromSquare = MockSquareWithPiece(kingRow, kingCol, king);
+            IRook rook = MockRookWithHasMoved(false);
+            ISquare rookSquare = MockSquareWithPiece(rookRow, rookCol, rook);
+            IBoard board = MockBoard();
+            StubSquareOnBoard(board, fromSquare);
+            StubSquareOnBoard(board, toSquare);
+            StubSquareOnBoard(board, rookSquare);
+
+            bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
+
+            Assert.False(isValidCastle);
+        }
+
+
+        /// <summary>
+        /// The conditions for which castling is not allowed are listed below. 
+        /// The invalid case for this particular test is marked. The other conditions should all pass where possible - special assumptions marked with stars.
+        /// 
+        /// 1) Your king has been moved earlier in the game.
+        /// 2) The rook that castles has been moved earlier in the game.             *** TESTED HERE ***
+        /// 3) There are pieces standing between your king and rook                  *** ContainsPiece is false by default. ***
+        /// 4) The king is in check.
+        /// 5) The king moves through a square that is attacked by a opponent piece. *** MoveIntoCheckValidator returns false by default. ***
+        /// 6) The king would be in check after castling.                            *** MoveIntoCheckValidator returns false by default. ***
+        /// 7) The king is not in the from square
+        /// 8) The to square is a different row to the king
+        /// 9) The to square is not 2 columns away from the king
+        /// 
+        /// </summary>
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL)] //white kingside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2, WHITE_BACK_ROW, LEFT_ROOK_COL)]  //white queenside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 2, BLACK_BACK_ROW, RIGHT_ROOK_COL)] //black kingside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL)]  //black queenside
+        [Test]
+        public void InvalidCastleIfRookHasMoved(int kingRow, int kingCol, int toRow, int toCol, int rookRow, int rookCol)
+        {
+            CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
+            ISquare toSquare = MockSquare(toRow, toCol);
+            IKing king = MockKingWithHasMovedAndCheckState(false, false);
+            ISquare fromSquare = MockSquareWithPiece(kingRow, kingCol, king);
             IRook rook = MockRookWithHasMoved(true);
-            IBoard board = MockBoardWithPieceInSquare(kingRow, RIGHT_ROOK_COL, rook);
+            ISquare rookSquare = MockSquareWithPiece(rookRow, rookCol, rook);
+            IBoard board = MockBoard();
+            StubSquareOnBoard(board, fromSquare);
+            StubSquareOnBoard(board, toSquare);
+            StubSquareOnBoard(board, rookSquare);
 
             bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
 
             Assert.False(isValidCastle);
         }
 
-        [TestCase(WHITE_BACK_ROW)] // white king
-        [TestCase(BLACK_BACK_ROW)] // black king
+        /// <summary>
+        /// The conditions for which castling is not allowed are listed below. 
+        /// The invalid case for this particular test is marked. The other conditions should all pass where possible - special assumptions marked with stars.
+        /// 
+        /// 1) Your king has been moved earlier in the game.
+        /// 2) The rook that castles has been moved earlier in the game.
+        /// 3) There are pieces standing between your king and rook                  *** TESTED HERE ***
+        /// 4) The king is in check.
+        /// 5) The king moves through a square that is attacked by a opponent piece. *** MoveIntoCheckValidator returns false by default. ***
+        /// 6) The king would be in check after castling.                            *** MoveIntoCheckValidator returns false by default. ***
+        /// 7) The king is not in the from square
+        /// 8) The to square is a different row to the king
+        /// 9) The to square is not 2 columns away from the king
+        /// 
+        /// </summary>
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL, WHITE_BACK_ROW, KING_COLUMN + 1)] //white kingside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL, WHITE_BACK_ROW, KING_COLUMN + 2)] //white kingside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2, WHITE_BACK_ROW, LEFT_ROOK_COL, WHITE_BACK_ROW, KING_COLUMN - 1)]  //white queenside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2, WHITE_BACK_ROW, LEFT_ROOK_COL, WHITE_BACK_ROW, KING_COLUMN - 2)]  //white queenside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2, WHITE_BACK_ROW, LEFT_ROOK_COL, WHITE_BACK_ROW, KING_COLUMN - 3)]  //white queenside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 2, BLACK_BACK_ROW, RIGHT_ROOK_COL, BLACK_BACK_ROW, KING_COLUMN + 1)] //black kingside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 2, BLACK_BACK_ROW, RIGHT_ROOK_COL, BLACK_BACK_ROW, KING_COLUMN + 2)] //black kingside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL, BLACK_BACK_ROW, KING_COLUMN - 1)]  //black queenside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL, BLACK_BACK_ROW, KING_COLUMN - 2)]  //black queenside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL, BLACK_BACK_ROW, KING_COLUMN - 3)]  //black queenside
         [Test]
-        public void InvalidQueenSideCastleIfLeftRookHasMoved(int kingRow)
+        public void InvalidCastleIfPieceBetweenKingAndRook(int kingRow, int kingCol, int toRow, int toCol, int rookRow, int rookCol, int blockedRow, int blockedCol)
         {
             CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
-            ISquare toSquare = MockSquare();
-            IKing king = MockKingWithHasMovedAndCheckState(false, false); // show explicitly the king hasn't moved and isn't in check
-            ISquare fromSquare = MockSquareWithPiece(king);
-            IRook rook = MockRookWithHasMoved(true);
-            IBoard board = MockBoardWithPieceInSquare(kingRow, LEFT_ROOK_COL, rook);
+            ISquare toSquare = MockSquare(toRow, toCol);
+            IKing king = MockKingWithHasMovedAndCheckState(false, false);
+            ISquare fromSquare = MockSquareWithPiece(kingRow, kingCol, king);
+            IRook rook = MockRookWithHasMoved(false);
+            ISquare rookSquare = MockSquareWithPiece(rookRow, rookCol, rook);
+            IBoard board = MockBoard();
+            StubSquareOnBoard(board, fromSquare);
+            StubSquareOnBoard(board, toSquare);
+            StubSquareOnBoard(board, rookSquare);
+            StubSquareOnBoardWithPiece(board, blockedRow, blockedCol, MockPiece()); //blocking piece
 
             bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
 
             Assert.False(isValidCastle);
         }
 
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, KING_COLUMN + 1)] // white king
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, KING_COLUMN + 2)] // white king
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, KING_COLUMN + 1)] // black king
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, KING_COLUMN + 2)] // black king
+        /// <summary>
+        /// The conditions for which castling is not allowed are listed below. 
+        /// The invalid case for this particular test is marked. The other conditions should all pass where possible - special assumptions marked with stars.
+        /// 
+        /// 1) Your king has been moved earlier in the game.
+        /// 2) The rook that castles has been moved earlier in the game.
+        /// 3) There are pieces standing between your king and rook                     *** ContainsPiece is false by default. ***
+        /// 4) The king is in check.
+        /// 5) The king moves through a square that is attacked by a opponent piece.    *** TESTED HERE ***
+        /// 6) The king would be in check after castling.                               *** TESTED HERE ***
+        /// 7) The king is not in the from square
+        /// 8) The to square is a different row to the king
+        /// 9) The to square is not 2 columns away from the king
+        /// 
+        /// </summary>
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL, WHITE_BACK_ROW, KING_COLUMN + 1)] //white kingside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL, WHITE_BACK_ROW, KING_COLUMN + 2)] //white kingside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2, WHITE_BACK_ROW, LEFT_ROOK_COL, WHITE_BACK_ROW, KING_COLUMN - 1)]  //white queenside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2, WHITE_BACK_ROW, LEFT_ROOK_COL, WHITE_BACK_ROW, KING_COLUMN - 2)]  //white queenside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 2, BLACK_BACK_ROW, RIGHT_ROOK_COL, BLACK_BACK_ROW, KING_COLUMN + 1)] //black kingside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 2, BLACK_BACK_ROW, RIGHT_ROOK_COL, BLACK_BACK_ROW, KING_COLUMN + 2)] //black kingside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL, BLACK_BACK_ROW, KING_COLUMN - 1)]  //black queenside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL, BLACK_BACK_ROW, KING_COLUMN - 2)]  //black queenside
         [Test]
-        public void InvalidKingSideCastleIfPieceBetweenKingAndRook(int kingRow, int kingCol,int blockedCol)
-        {
-            CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
-            ISquare toSquare = MockSquare();
-            IKing king = MockKingWithHasMovedAndCheckState(false, false); // show explicitly the king hasn't moved and isn't in check
-            ISquare fromSquare = MockSquareWithPiece(king);
-            IRook rook = MockRookWithHasMoved(false);                     // show explicitly the rook hasn't moved
-            IBoard board = MockBoardWithPieceInSquare(kingRow, RIGHT_ROOK_COL, rook);
-            StubSquareOnBoardWithPiece(board, kingRow, kingCol, king);
-            StubSquareOnBoardWithPiece(board, kingRow, blockedCol, MockPiece());
-
-            bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
-
-            Assert.False(isValidCastle);
-        }
-
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, KING_COLUMN - 1)] // white king
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, KING_COLUMN - 2)] // white king
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, KING_COLUMN - 1)] // black king
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, KING_COLUMN - 2)] // black king
-        [Test]
-        public void InvalidQueenSideCastleIfPieceBetweenKingAndRook(int kingRow, int kingCol, int blockedCol)
-        {
-            CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
-            ISquare toSquare = MockSquare();
-            IKing king = MockKingWithHasMovedAndCheckState(false, false); // show explicitly the king hasn't moved and isn't in check
-            ISquare fromSquare = MockSquareWithPiece(king);
-            IRook rook = MockRookWithHasMoved(false);                     // show explicitly the rook hasn't moved
-            IBoard board = MockBoardWithPieceInSquare(kingRow, LEFT_ROOK_COL, rook);
-            StubSquareOnBoardWithPiece(board, kingRow, kingCol, king);
-            StubSquareOnBoardWithPiece(board, kingRow, blockedCol, MockPiece());
-
-            bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
-
-            Assert.False(isValidCastle);
-        }
-
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, KING_COLUMN + 1)] // white king
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, KING_COLUMN + 2)] // white king
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, KING_COLUMN + 1)] // black king
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, KING_COLUMN + 2)] // black king
-        [Test]
-        public void InvalidKingSideCastleIfKingMovesThroughOrEndsUpOnAttackedSquare(int kingRow, int kingCol, int attackedCol)
+        public void InvalidCastleIfKingMovesThroughOrEndsUpOnAttackedSquare(int kingRow, int kingCol, int toRow, int toCol, int rookRow, int rookCol, int attackedRow, int attackedCol)
         {
             IMoveIntoCheckValidator moveIntoCheckValidator = MockMoveIntoCheckValidator();
             CastlingMoveValidator validator = new CastlingMoveValidator(moveIntoCheckValidator);
-            ISquare toSquare = MockSquare();
-            IKing king = MockKingWithHasMovedAndCheckState(false, false); // show explicitly the king hasn't moved and isn't in check
-            ISquare fromSquare = MockSquareWithPiece(king);
-            IRook rook = MockRookWithHasMoved(false);                     // show explicitly the rook hasn't moved
-            IBoard board = MockBoardWithPieceInSquare(kingRow, RIGHT_ROOK_COL, rook);
-            ISquare attackedSquare = MockSquare(kingRow, attackedCol);
-            StubSquareOnBoardWithPiece(board, attackedSquare);
+            ISquare toSquare = MockSquare(toRow, toCol);
+            IKing king = MockKingWithHasMovedAndCheckState(false, false);
+            ISquare fromSquare = MockSquareWithPiece(kingRow, kingCol, king);
+            IRook rook = MockRookWithHasMoved(false);
+            ISquare rookSquare = MockSquareWithPiece(rookRow, rookCol, rook);
+            IBoard board = MockBoard();
+            StubSquareOnBoard(board, fromSquare);
+            StubSquareOnBoard(board, toSquare);
+            StubSquareOnBoard(board, rookSquare);
+            ISquare attackedSquare = MockSquare(attackedRow, attackedCol);
+            StubSquareOnBoard(board, attackedSquare);
             moveIntoCheckValidator.Stub(m => m.MoveCausesMovingTeamCheck(board, fromSquare, attackedSquare)).Return(true);
 
             bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
@@ -173,55 +295,41 @@ namespace ChessWithTDD.Tests
             Assert.False(isValidCastle);
         }
 
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, KING_COLUMN - 1)] // white king
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, KING_COLUMN - 2)] // white king
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, KING_COLUMN - 1)] // black king
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, KING_COLUMN - 2)] // black king
+        /// <summary>
+        /// The conditions for which castling is not allowed are listed below. 
+        /// The invalid case for this particular test is marked. The other conditions should all pass where possible - special assumptions marked with stars.
+        /// 
+        /// 1) Your king has been moved earlier in the game.
+        /// 2) The rook that castles has been moved earlier in the game.
+        /// 3) There are pieces standing between your king and rook                     *** ContainsPiece is false by default. ***
+        /// 4) The king is in check.
+        /// 5) The king moves through a square that is attacked by a opponent piece.    *** MoveIntoCheckValidator returns false by default. ***
+        /// 6) The king would be in check after castling.                               *** MoveIntoCheckValidator returns false by default. ***
+        /// 7) The king is not in the from square
+        /// 8) The to square is a different row to the king
+        /// 9) The to square is not 2 columns away from the king
+        /// 
+        /// This tests the case that all of the above are not true, so we should have a valid castling move.
+        /// 
+        /// </summary>
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 2, WHITE_BACK_ROW, RIGHT_ROOK_COL)] //white kingside
+        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2, WHITE_BACK_ROW, LEFT_ROOK_COL)]  //white queenside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 2, BLACK_BACK_ROW, RIGHT_ROOK_COL)] //black kingside
+        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2, BLACK_BACK_ROW, LEFT_ROOK_COL)]  //black queenside
         [Test]
-        public void InvalidQueenSideCastleIfKingMovesThroughOrEndsUpOnAttackedSquare(int kingRow, int kingCol, int attackedCol)
+        public void ValidCastle(int kingRow, int kingCol, int toRow, int toCol, int rookRow, int rookCol)
         {
             IMoveIntoCheckValidator moveIntoCheckValidator = MockMoveIntoCheckValidator();
             CastlingMoveValidator validator = new CastlingMoveValidator(moveIntoCheckValidator);
-            ISquare toSquare = MockSquare();
-            IKing king = MockKingWithHasMovedAndCheckState(false, false); // show explicitly the king hasn't moved and isn't in check
-            ISquare fromSquare = MockSquareWithPiece(king);
-            IRook rook = MockRookWithHasMoved(false);                     // show explicitly the rook hasn't moved
-            IBoard board = MockBoardWithPieceInSquare(kingRow, LEFT_ROOK_COL, rook);
-            ISquare attackedSquare = MockSquare(kingRow, attackedCol);
-            StubSquareOnBoardWithPiece(board, attackedSquare);
-            moveIntoCheckValidator.Stub(m => m.MoveCausesMovingTeamCheck(board, fromSquare, attackedSquare)).Return(true);
-
-            bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
-
-            Assert.False(isValidCastle);
-        }
-
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN + 2)] 
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN + 2)] 
-        [Test]
-        public void ValidKingSideCastle(int kingRow, int kingCol, int toRow, int toCol)
-        {
-            CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
             ISquare toSquare = MockSquare(toRow, toCol);
             IKing king = MockKingWithHasMovedAndCheckState(false, false);
             ISquare fromSquare = MockSquareWithPiece(kingRow, kingCol, king);
+            IRook rook = MockRookWithHasMoved(false);
+            ISquare rookSquare = MockSquareWithPiece(rookRow, rookCol, rook);
             IBoard board = MockBoard();
-
-            bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
-
-            Assert.True(isValidCastle);
-        }
-
-        [TestCase(WHITE_BACK_ROW, KING_COLUMN, WHITE_BACK_ROW, KING_COLUMN - 2)] 
-        [TestCase(BLACK_BACK_ROW, KING_COLUMN, BLACK_BACK_ROW, KING_COLUMN - 2)] 
-        [Test]
-        public void ValidQueenSideCastle(int kingRow, int kingCol, int toRow, int toCol)
-        {
-            CastlingMoveValidator validator = new CastlingMoveValidator(MockMoveIntoCheckValidator());
-            ISquare toSquare = MockSquare(toRow, toCol);
-            IKing king = MockKingWithHasMovedAndCheckState(false, false);
-            ISquare fromSquare = MockSquareWithPiece(kingRow, kingCol, king);
-            IBoard board = MockBoard();
+            StubSquareOnBoard(board, fromSquare);
+            StubSquareOnBoard(board, toSquare);
+            StubSquareOnBoard(board, rookSquare);
 
             bool isValidCastle = validator.IsValidCastlingMove(king, board, fromSquare, toSquare);
 

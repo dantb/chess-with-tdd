@@ -114,15 +114,15 @@ namespace ChessWithTDD.Tests.TestHelpers
             return board;
         }
 
-        internal static void StubSquareOnBoardWithPiece(IBoard board, int row, int col, IPiece thePiece)
-        {
-            ISquare square = MockSquareWithPiece(row, col, thePiece);
-            board.Stub(b => b.GetSquare(row, col)).Return(square).Repeat.Any();
-        }
-
-        internal static void StubSquareOnBoardWithPiece(IBoard board, ISquare square)
+        internal static void StubSquareOnBoard(IBoard board, ISquare square)
         {
             board.Stub(b => b.GetSquare(square.Row, square.Col)).Return(square).Repeat.Any();
+        }
+
+        internal static void StubSquareOnBoardWithPiece(IBoard board, int row, int col, IPiece thePiece = null)
+        {
+            ISquare square = thePiece == null ? MockSquare(row, col) : MockSquareWithPiece(row, col, thePiece);
+            board.Stub(b => b.GetSquare(row, col)).Return(square).Repeat.Any();
         }
 
         internal static ISquare MockSquareWithoutPiece(int row, int col)
