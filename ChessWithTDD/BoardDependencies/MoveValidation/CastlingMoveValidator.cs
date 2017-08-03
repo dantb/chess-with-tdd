@@ -34,6 +34,7 @@ namespace ChessWithTDD
                     }
                 }
             }
+
             return false;
         }
 

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using static ChessWithTDD.Tests.TestHelpers.CommonTestMethods;
-using static ChessWithTDD.BoardConstants;
 using Rhino.Mocks;
+using static ChessWithTDD.BoardConstants;
+using static ChessWithTDD.Tests.TestHelpers.CommonTestMethods;
 
 namespace ChessWithTDD.Tests
 {

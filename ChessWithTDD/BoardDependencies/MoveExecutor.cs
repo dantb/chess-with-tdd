@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ChessWithTDD
+﻿namespace ChessWithTDD
 {
     public class MoveExecutor : IMoveExecutor
     {

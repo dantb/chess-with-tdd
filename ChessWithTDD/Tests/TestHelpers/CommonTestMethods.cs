@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using static ChessWithTDD.BoardConstants;
 using static Rhino.Mocks.MockRepository;
-using static ChessWithTDD.Tests.TestHelpers.RhinoMockExtensions;
 
 namespace ChessWithTDD.Tests.TestHelpers
 {
