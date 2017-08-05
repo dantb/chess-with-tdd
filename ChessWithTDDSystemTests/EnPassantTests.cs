@@ -1,8 +1,5 @@
-﻿using Autofac;
-using ChessWithTDD;
+﻿using ChessWithTDD;
 using NUnit.Framework;
-using System;
-using System.IO;
 using static ChessWithTDDSystemTests.CommonTestHelpers;
 
 namespace ChessWithTDDSystemTests

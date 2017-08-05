@@ -11,6 +11,8 @@ namespace ChessWithTDD.Tests
     [TestFixture]
     public class MoveExecutorTests
     {
+        #region Execute move unit tests
+
         [Test]
         public void WhenApplyMoveIsCalledAndFromSquareContainsAPawnCallPawnManager()
         {
@@ -92,6 +94,10 @@ namespace ChessWithTDD.Tests
 
             checkManager.AssertWasCalled(cm => cm.UpdateCheckAndCheckMateStates(board, toSquare));
         }
+
+        #endregion
+
+        #region Integration tests
 
         /// <summary>
         /// This is a system level test to ensure that the board cache is updated with black king after an apply.
@@ -191,6 +197,8 @@ namespace ChessWithTDD.Tests
             Assert.True(board.PendingUpdates.Contains(fromSquare));
             Assert.True(board.PendingUpdates.Contains(toSquare));
         }
+
+        #endregion
 
         /// <summary>
         /// This tests forces the order of the apply method to be a certain way.
