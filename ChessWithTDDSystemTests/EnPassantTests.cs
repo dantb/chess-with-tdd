@@ -11,6 +11,7 @@ namespace ChessWithTDDSystemTests
     {
         private const string EnPassantFolder = "EnPassant";
         private const string WhitePawnCapturesBlackPawnUsingEnPassantFile = "WhitePawnCapturesBlackPawnUsingEnPassant.txt";
+        private const string BlackPawnCapturesWhitePawnUsingEnPassantFile = "BlackPawnCapturesWhitePawnUsingEnPassant.txt";
 
         private string _positionFilesFolder;
         private PositionLoader _positionLoader;
@@ -25,13 +26,30 @@ namespace ChessWithTDDSystemTests
         [Test]
         public void WhitePawnCapturesBlackPawnUsingEnPassant()
         {
-            string path = Path.Combine(_positionFilesFolder, EnPassantFolder, WhitePawnCapturesBlackPawnUsingEnPassantFile);
+            string path = GetPositionFilePath(EnPassantFolder, WhitePawnCapturesBlackPawnUsingEnPassantFile);
             IBoard board = NewBoard();
 
             _positionLoader.LoadPositionIntoBoard(board, path);
 
             ISquare takenBlackPawnSquare = board.GetSquare(4, 5);
             Assert.False(takenBlackPawnSquare.ContainsPiece);
+        }
+
+        [Test]
+        public void BlackPawnCapturesWhitePawnUsingEnPassant()
+        {
+            string path = GetPositionFilePath(EnPassantFolder, BlackPawnCapturesWhitePawnUsingEnPassantFile);
+            IBoard board = NewBoard();
+
+            _positionLoader.LoadPositionIntoBoard(board, path);
+
+            ISquare takenBlackPawnSquare = board.GetSquare(3, 2);
+            Assert.False(takenBlackPawnSquare.ContainsPiece);
+        }
+
+        private string GetPositionFilePath(string folderName, string fileName)
+        {
+            return Path.Combine(_positionFilesFolder, folderName, fileName);
         }
 
         private IBoard NewBoard()

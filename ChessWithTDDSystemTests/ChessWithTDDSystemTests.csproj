@@ -62,6 +62,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PositionFiles\EnPassant\BlackPawnCapturesWhitePawnUsingEnPassant.txt" />
     <Content Include="PositionFiles\EnPassant\WhitePawnCapturesBlackPawnUsingEnPassant.txt" />
   </ItemGroup>
   <ItemGroup>
