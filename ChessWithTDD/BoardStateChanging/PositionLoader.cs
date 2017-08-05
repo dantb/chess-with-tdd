@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 
-namespace ChessGameController
+namespace ChessWithTDD
 {
     /// <summary>
     /// The position loader will load a position into a board from a text file
