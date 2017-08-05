@@ -81,8 +81,8 @@
     <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckMateEscapeManager.cs" />
     <Compile Include="Interfaces\BoardDependencies\MoveValidation\IMoveIntoCheckValidator.cs" />
     <Compile Include="Interfaces\BoardStateChanging\IPositionStateManager.cs" />
-    <Compile Include="Interfaces\IBoardCache.cs" />
-    <Compile Include="Interfaces\IBoardInitialiser.cs" />
+    <Compile Include="Interfaces\BoardDependencies\IBoardCache.cs" />
+    <Compile Include="Interfaces\BoardDependencies\IBoardInitialiser.cs" />
     <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckManager.cs" />
     <Compile Include="Interfaces\BoardDependencies\CheckManagement\ICheckMateManager.cs" />
     <Compile Include="Interfaces\BoardDependencies\PawnManagement\IEnPassantManager.cs" />
