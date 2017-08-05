@@ -62,11 +62,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PositionFiles\Castling\BlackKingCastlesKingSide.txt" />
+    <Content Include="PositionFiles\Castling\BlackKingCastlesQueenSide.txt" />
+    <Content Include="PositionFiles\Castling\WhiteKingCastlesKingSide.txt" />
+    <Content Include="PositionFiles\Castling\WhiteKingCastlesQueenSide.txt" />
     <Content Include="PositionFiles\EnPassant\BlackPawnCapturesWhitePawnUsingEnPassant.txt" />
     <Content Include="PositionFiles\EnPassant\WhitePawnCapturesBlackPawnUsingEnPassant.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PositionFiles\Castling\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

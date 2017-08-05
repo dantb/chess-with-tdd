@@ -1,0 +1,4 @@
+e2-e4,Nb8-c6
+Bf1-c4,d7-d5
+Ng1-f3,Ng8-f6
+Ke1-g1

@@ -1,0 +1,8 @@
+c2-c3,Nb8-c6
+b2-b4,d7-d5
+c3-c4,Bc8-g4
+Bc1-b2,f7-f5
+Qd1-c2,Ng8-h6
+h2-h4,e7-e5
+Bb2xe5,Bf8-d6
+Ng1-f3,Ke8-g8
