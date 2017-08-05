@@ -1,4 +1,7 @@
 ﻿using ChessWithTDD;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -184,6 +187,66 @@ namespace ChessGameUI
         {
             IBoard newBoard = _positionStateManager.RedoneMoveBoard();
             SetDataContext(newBoard);
+        }
+
+        private void SaveButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Castling_Successs_Position_1"; // Default file name
+            dlg.DefaultExt = ".txt"; // Default file extension
+            dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+
+                if (!File.Exists(filename))
+                {
+                    File.Create(filename).Close();
+                    string[] lines = GetAlgebraicNotationMovesFromBoardReadyForFile();
+                    File.WriteAllLines(filename, lines);
+                }
+                else
+                {
+                    MessageBox.Show("File exists, try again with a different name.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Failed to save position file");
+            }
+        }
+
+        private string[] GetAlgebraicNotationMovesFromBoardReadyForFile()
+        {
+            List<string> moves = new List<string>(Board.OrderedMoveData.Count);
+            AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
+            foreach (var move in Board.OrderedMoveData)
+            {
+                string moveInNotation = generator.Convert(move);
+                moves.Add(moveInNotation);
+            }
+
+            bool evenNumberOfMoves = moves.Count % 2 == 0;
+            int nearestEven = evenNumberOfMoves ? moves.Count : moves.Count + 1;
+            int linesNeeded = nearestEven / 2;
+            string[] lines = new string[linesNeeded];
+            for (int i = 0; i < linesNeeded - 1; i++)
+            {
+                string line = string.Concat(moves[i * 2], ",", moves[(i * 2) + 1]);
+                lines[i] = line;
+            }
+            //final line
+            string finalLine = evenNumberOfMoves
+                ? string.Concat(moves[moves.Count - 2], ",", moves[moves.Count - 1])
+                : moves[moves.Count - 1];
+            lines[lines.Length - 1] = finalLine;
+            return lines;
         }
 
         #endregion
