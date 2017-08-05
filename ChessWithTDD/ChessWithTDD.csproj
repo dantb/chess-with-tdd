@@ -66,6 +66,7 @@
     <Compile Include="BoardDependencies\PawnManagement\PawnManager.cs" />
     <Compile Include="BoardStateChanging\AlgebraicNotationGenerator.cs" />
     <Compile Include="BoardStateChanging\AlgebraicNotationParser.cs" />
+    <Compile Include="BoardStateChanging\PositionSaver.cs" />
     <Compile Include="BoardStateChanging\PositionStateManager.cs" />
     <Compile Include="ContainerConfiguration.cs" />
     <Compile Include="Interfaces\BoardDependencies\MoveValidation\ICastlingMoveValidator.cs" />
