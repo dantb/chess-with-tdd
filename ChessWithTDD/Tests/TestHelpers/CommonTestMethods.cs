@@ -49,6 +49,11 @@ namespace ChessWithTDD.Tests.TestHelpers
             return GenerateMock<ICheckManager>();
         }
 
+        internal static ICastlingExecutor MockCastlingExecutor()
+        {
+            return GenerateMock<ICastlingExecutor>();
+        }
+
         internal static IBoardInitialiser MockBoardInitialiser()
         {
             return GenerateMock<IBoardInitialiser>();

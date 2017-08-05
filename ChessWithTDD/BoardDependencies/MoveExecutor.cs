@@ -4,11 +4,13 @@
     {
         private IPawnManager _pawnManager;
         private ICheckManager _checkManager;
+        private ICastlingExecutor _castlingExecutor;
 
-        public MoveExecutor(IPawnManager pawnManager, ICheckManager checkManager)
+        public MoveExecutor(IPawnManager pawnManager, ICheckManager checkManager, ICastlingExecutor castlingExecutor)
         {
             _pawnManager = pawnManager;
             _checkManager = checkManager;
+            _castlingExecutor = castlingExecutor;
         }
 
         public void ExecuteMove(IBoard board, ISquare fromSquare, ISquare toSquare)
@@ -27,6 +29,11 @@
             if (fromSquare.Piece is IPawn)
             {
                 _pawnManager.MakePawnSpecificAmendments(fromSquare, toSquare, board);
+            }
+
+            if (fromSquare.Piece is IKing)
+            {
+                _castlingExecutor.ExecuteCastlingMove(fromSquare, toSquare, board);
             }
 
             //Squares that had been marked two turns ago should be unmarked

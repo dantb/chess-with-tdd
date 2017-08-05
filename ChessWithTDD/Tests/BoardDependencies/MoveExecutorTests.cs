@@ -16,13 +16,12 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledAndFromSquareContainsAPawnCallPawnManager()
         {
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            ICheckManager checkManager = MockCheckManager();
+            IPawnManager pawnManager = MockPawnManager();
             IPawn pawn = MockPawn();
             ISquare fromSquare = MockSquareWithPiece(pawn);
             ISquare toSquare = MockSquare();
             IBoard board = MockBoardWithGetSquareAndPendingUpdates();
-            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager);
+            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, MockCheckManager(), MockCastlingExecutor());
 
             moveExecutor.ExecuteMove(board, fromSquare, toSquare);
 
@@ -32,13 +31,12 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledAndFromSquareContainsAnyPieceDoNotCallPawnManager()
         {
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            ICheckManager checkManager = MockCheckManager();
+            IPawnManager pawnManager = MockPawnManager();
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
             IBoard board = MockBoardWithGetSquareAndPendingUpdates();
-            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager);
+            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, MockCheckManager(), MockCastlingExecutor());
 
             moveExecutor.ExecuteMove(board, fromSquare, toSquare);
 
@@ -46,17 +44,46 @@ namespace ChessWithTDD.Tests
         }
 
         [Test]
+        public void WhenApplyMoveIsCalledAndFromSquareContainsAKingCallCastlingExecutor()
+        {
+            ICastlingExecutor castlingExecutor = MockCastlingExecutor();
+            IKing king = MockKing();
+            ISquare fromSquare = MockSquareWithPiece(king);
+            ISquare toSquare = MockSquare();
+            IBoard board = MockBoardWithGetSquareAndPendingUpdates();
+            MoveExecutor moveExecutor = new MoveExecutor(MockPawnManager(), MockCheckManager(), castlingExecutor);
+
+            moveExecutor.ExecuteMove(board, fromSquare, toSquare);
+
+            castlingExecutor.AssertWasCalled(c => c.ExecuteCastlingMove(fromSquare, toSquare, board));
+        }
+
+        [Test]
+        public void WhenApplyMoveIsCalledAndFromSquareContainsAnyPieceDoNotCallCastlingExecutor()
+        {
+            ICastlingExecutor castlingExecutor = MockCastlingExecutor();
+            IPiece piece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(piece);
+            ISquare toSquare = MockSquare();
+            IBoard board = MockBoardWithGetSquareAndPendingUpdates();
+            MoveExecutor moveExecutor = new MoveExecutor(MockPawnManager(), MockCheckManager(), castlingExecutor);
+
+            moveExecutor.ExecuteMove(board, fromSquare, toSquare);
+
+            castlingExecutor.AssertWasNotCalled(c => c.ExecuteCastlingMove(fromSquare, toSquare, board));
+        }
+
+        [Test]
         public void WhenApplyMoveIsCalledUnmarkEnPassantSquaresIsCalledWithTurnCounter()
         {
             IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            ICheckManager checkManager = MockCheckManager();
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
             IBoard board = MockBoardWithGetSquareAndPendingUpdates();
             int turnCounter = 5;
             board.Stub(b => b.TurnCounter).Return(turnCounter);
-            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager);
+            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, MockCheckManager(), MockCastlingExecutor());
 
             moveExecutor.ExecuteMove(board, fromSquare, toSquare);
 
@@ -66,13 +93,11 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledUpdateBoardCacheIsCalled()
         {
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
-            ICheckManager checkManager = MockCheckManager();
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
             IBoard board = MockBoardWithGetSquareAndPendingUpdates();
-            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager);
+            MoveExecutor moveExecutor = new MoveExecutor(MockPawnManager(), MockCheckManager(), MockCastlingExecutor());
 
             moveExecutor.ExecuteMove(board, fromSquare, toSquare);
 
@@ -83,12 +108,11 @@ namespace ChessWithTDD.Tests
         public void WhenApplyMoveIsCalledUpdateCheckStatesIsCalled()
         {
             ICheckManager checkManager = GenerateMock<ICheckManager>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
             IPiece piece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(piece);
             ISquare toSquare = MockSquare();
             IBoard board = MockBoardWithGetSquareAndPendingUpdates();
-            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager);
+            MoveExecutor moveExecutor = new MoveExecutor(MockPawnManager(), checkManager, MockCastlingExecutor());
 
             moveExecutor.ExecuteMove(board, fromSquare, toSquare);
 
@@ -106,8 +130,6 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledBoardCacheUpdatesBlackKingSquareIfBlackKingInFromSquareIsCalled()
         {
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
             BoardCache boardCache = new BoardCache();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache).OverridePrevious();
@@ -119,7 +141,7 @@ namespace ChessWithTDD.Tests
             Board board = new Board(serviceLocator);
             board.SetSquare(fromSquare);
             board.SetSquare(toSquare);
-            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager);
+            MoveExecutor moveExecutor = new MoveExecutor(MockPawnManager(), MockCheckManager(), MockCastlingExecutor());
 
             moveExecutor.ExecuteMove(board, fromSquare, toSquare);
 
@@ -133,8 +155,6 @@ namespace ChessWithTDD.Tests
         [Test]
         public void WhenApplyMoveIsCalledBoardCacheUpdatesWhiteKingSquareIfWhiteKingInFromSquareIsCalled()
         {
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
             BoardCache boardCache = new BoardCache();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             serviceLocator.Stub(s => s.GetServiceBoardCache()).Return(boardCache).OverridePrevious();
@@ -146,7 +166,7 @@ namespace ChessWithTDD.Tests
             Board board = new Board(serviceLocator);
             board.SetSquare(fromSquare);
             board.SetSquare(toSquare);
-            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager);
+            MoveExecutor moveExecutor = new MoveExecutor(MockPawnManager(), MockCheckManager(), MockCastlingExecutor());
 
             moveExecutor.ExecuteMove(board, fromSquare, toSquare);
 
@@ -159,15 +179,13 @@ namespace ChessWithTDD.Tests
         [Test]
         public void ApplyMoveToBoardChangesBoardStateCorrectly(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             IPiece thePiece = MockPiece();
             IPiece capturedPiece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
             ISquare toSquare = MockSquareWithPiece(rowTo, colTo, capturedPiece);
             Board board = new Board(serviceLocator);
-            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager);
+            MoveExecutor moveExecutor = new MoveExecutor(MockPawnManager(), MockCheckManager(), MockCastlingExecutor());
 
             moveExecutor.ExecuteMove(board, fromSquare, toSquare);
 
@@ -182,15 +200,13 @@ namespace ChessWithTDD.Tests
         [Test]
         public void ApplyMoveAddsToAndFromSquaresToPendingUpdatesForBoard(int rowFrom, int colFrom, int rowTo, int colTo)
         {
-            ICheckManager checkManager = GenerateMock<ICheckManager>();
-            IPawnManager pawnManager = GenerateMock<IPawnManager>();
             IStrictServiceLocator serviceLocator = MockServiceLocator();
             IPiece thePiece = MockPiece();
             IPiece capturedPiece = MockPiece();
             ISquare fromSquare = MockSquareWithPiece(rowFrom, colFrom, thePiece);
             ISquare toSquare = MockSquareWithPiece(rowTo, colTo, capturedPiece);
             Board board = new Board(serviceLocator);
-            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager);
+            MoveExecutor moveExecutor = new MoveExecutor(MockPawnManager(), MockCheckManager(), MockCastlingExecutor());
 
             moveExecutor.ExecuteMove(board, fromSquare, toSquare);
 
@@ -229,7 +245,7 @@ namespace ChessWithTDD.Tests
             pawnManager.Stub(pm => pm.UnmarkEnPassantSquares(Arg<int>.Is.Anything)).Do(addPMUnmark);
             board.Stub(b => b.UpdateBoardCache()).Do(addB);
             checkManager.Stub(cm => cm.UpdateCheckAndCheckMateStates(board, toSquare)).Do(addCM);
-            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager);
+            MoveExecutor moveExecutor = new MoveExecutor(pawnManager, checkManager, MockCastlingExecutor());
 
             moveExecutor.ExecuteMove(board, fromSquare, toSquare);
 
