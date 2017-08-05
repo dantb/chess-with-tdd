@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CastlingTests.cs" />
+    <Compile Include="CommonTestHelpers.cs" />
     <Compile Include="EnPassantTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
