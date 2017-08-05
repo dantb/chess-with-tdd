@@ -8,7 +8,7 @@
         Title="Chess"
         WindowStyle="ThreeDBorderWindow"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Window.Resources>
         <local:PieceToImageConverter x:Key="PieceToImageConverter"/>
     </Window.Resources>

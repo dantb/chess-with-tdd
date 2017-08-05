@@ -1,7 +1,5 @@
 ﻿using ChessWithTDD;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -185,14 +183,28 @@ namespace ChessGameUI
 
         private void RedoButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            IBoard newBoard = _positionStateManager.RedoneMoveBoard();
+            IBoard newBoard = _positionStateManager.RedoneMoveBoard(Board);
             SetDataContext(newBoard);
         }
 
         private void SaveButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            ShowSavePositionDialogue();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Would you like to save this game?", "Save game", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                ShowSavePositionDialogue();
+            }
+        }
+
+        private void ShowSavePositionDialogue()
+        {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = "Castling_Successs_Position_1"; // Default file name
+            dlg.FileName = "Castling_Successs_Position1"; // Default file name
             dlg.DefaultExt = ".txt"; // Default file extension
             dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
 
@@ -203,50 +215,20 @@ namespace ChessGameUI
             if (result == true)
             {
                 // Save document
-                string filename = dlg.FileName;
+                string fileName = dlg.FileName;
 
-                if (!File.Exists(filename))
+                PositionSaver saver = new PositionSaver();
+                bool successfullySaved = saver.SavePositionFromBoard(Board, fileName);
+
+                if (successfullySaved)
                 {
-                    File.Create(filename).Close();
-                    string[] lines = GetAlgebraicNotationMovesFromBoardReadyForFile();
-                    File.WriteAllLines(filename, lines);
+                    MessageBox.Show("Position file was saved successfully.");
                 }
                 else
                 {
-                    MessageBox.Show("File exists, try again with a different name.");
+                    MessageBox.Show("Failed to save position file. If the file already exists, try again with a different name.");
                 }
             }
-            else
-            {
-                MessageBox.Show("Failed to save position file");
-            }
-        }
-
-        private string[] GetAlgebraicNotationMovesFromBoardReadyForFile()
-        {
-            List<string> moves = new List<string>(Board.OrderedMoveData.Count);
-            AlgebraicNotationGenerator generator = new AlgebraicNotationGenerator();
-            foreach (var move in Board.OrderedMoveData)
-            {
-                string moveInNotation = generator.Convert(move);
-                moves.Add(moveInNotation);
-            }
-
-            bool evenNumberOfMoves = moves.Count % 2 == 0;
-            int nearestEven = evenNumberOfMoves ? moves.Count : moves.Count + 1;
-            int linesNeeded = nearestEven / 2;
-            string[] lines = new string[linesNeeded];
-            for (int i = 0; i < linesNeeded - 1; i++)
-            {
-                string line = string.Concat(moves[i * 2], ",", moves[(i * 2) + 1]);
-                lines[i] = line;
-            }
-            //final line
-            string finalLine = evenNumberOfMoves
-                ? string.Concat(moves[moves.Count - 2], ",", moves[moves.Count - 1])
-                : moves[moves.Count - 1];
-            lines[lines.Length - 1] = finalLine;
-            return lines;
         }
 
         #endregion
