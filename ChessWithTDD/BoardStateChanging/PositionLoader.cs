@@ -36,9 +36,12 @@ namespace ChessGameController
                     {
                         string[] moves = line.Split(',');
                         MoveConversionData whiteMoveData = parser.Parse(moves[0]);
-                        MoveConversionData blackMoveData = parser.Parse((moves[1]));
                         TryToApplyMove(board, moves, whiteMoveData.Move);
-                        TryToApplyMove(board, moves, blackMoveData.Move);
+                        if (moves.Length == 2)
+                        {
+                            MoveConversionData blackMoveData = parser.Parse((moves[1]));
+                            TryToApplyMove(board, moves, blackMoveData.Move);
+                        }
                     }
                 }
                 else
