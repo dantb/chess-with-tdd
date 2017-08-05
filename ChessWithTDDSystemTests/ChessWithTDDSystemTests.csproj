@@ -61,5 +61,11 @@
       <Name>ChessWithTDD</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="PositionFiles\EnPassant\WhitePawnCapturesBlackPawnUsingEnPassant.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PositionFiles\Castling\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
