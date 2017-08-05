@@ -8,8 +8,14 @@ namespace ChessWithTDD
         Queue<MoveGenerationData> _doneMoveQueue = new Queue<MoveGenerationData>();
         Stack<MoveGenerationData> _undoneMoveStack = new Stack<MoveGenerationData>();
 
-        public IBoard RedoneMoveBoard()
+        public IBoard RedoneMoveBoard(IBoard oldBoard)
         {
+            if (_undoneMoveStack.Count == 0)
+            {
+                //nothing to redo
+                return oldBoard;
+            }
+
             using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
             {
                 IBoard board = scope.Resolve<IBoard>();

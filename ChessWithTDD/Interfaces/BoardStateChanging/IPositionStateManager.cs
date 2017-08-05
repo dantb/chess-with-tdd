@@ -13,6 +13,6 @@
         /// Returns a board with the last move redone, or the latest board state possible if there are no moves
         /// that can be redone (i.e. we're up to date)
         /// </summary>
-        IBoard RedoneMoveBoard();
+        IBoard RedoneMoveBoard(IBoard oldBoard);
     }
 }
