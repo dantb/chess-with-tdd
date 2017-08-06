@@ -74,6 +74,21 @@ namespace ChessWithTDD.Tests
         }
 
         [Test]
+        public void WhenApplyMoveIsCalledAndFromSquareContainsARookSetHasMovedTrue()
+        {
+            ICastlingExecutor castlingExecutor = MockCastlingExecutor();
+            IRook rook = MockRook();
+            ISquare fromSquare = MockSquareWithPiece(rook);
+            ISquare toSquare = MockSquare();
+            IBoard board = MockBoardWithGetSquareAndPendingUpdates();
+            MoveExecutor moveExecutor = new MoveExecutor(MockPawnManager(), MockCheckManager(), castlingExecutor);
+
+            moveExecutor.ExecuteMove(board, fromSquare, toSquare);
+
+            rook.AssertWasCalled(r => r.HasMoved = true);
+        }
+
+        [Test]
         public void WhenApplyMoveIsCalledUnmarkEnPassantSquaresIsCalledWithTurnCounter()
         {
             IPawnManager pawnManager = GenerateMock<IPawnManager>();

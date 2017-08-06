@@ -36,6 +36,11 @@
                 _castlingExecutor.ExecuteCastlingMove(fromSquare, toSquare, board);
             }
 
+            if (fromSquare.Piece is IRook)
+            {
+                (fromSquare.Piece as IRook).HasMoved = true;
+            }
+
             //Squares that had been marked two turns ago should be unmarked
             _pawnManager.UnmarkEnPassantSquares(board.TurnCounter);
 
