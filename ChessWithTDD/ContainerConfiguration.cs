@@ -44,6 +44,8 @@ namespace ChessWithTDD
 
             builder.RegisterType<CastlingMoveValidator>().As<ICastlingMoveValidator>().InstancePerLifetimeScope();
 
+            builder.RegisterType<CastlingExecutor>().As<ICastlingExecutor>().InstancePerLifetimeScope();
+
             Container = builder.Build();
         }
 
