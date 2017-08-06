@@ -29,6 +29,11 @@ namespace ChessWithTDD.Tests.TestHelpers
             return serviceLocator;
         }
 
+        internal static IEnPassantManager MockEnPassantManager()
+        {
+            return GenerateMock<IEnPassantManager>();
+        }
+
         internal static IMoveValidator MockMoveValidator()
         {
             return GenerateMock<IMoveValidator>();
