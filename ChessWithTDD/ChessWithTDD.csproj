@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="BoardDependencies\BoardCache.cs" />
     <Compile Include="BoardDependencies\BoardConstants.cs" />
+    <Compile Include="BoardDependencies\CastlingExecutor.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckManager.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckMateEscapeManager.cs" />
     <Compile Include="BoardDependencies\CheckManagement\CheckMateManager.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="SquareExtensions.cs" />
     <Compile Include="Tests\BoardDependencies\BoardCacheTests.cs" />
     <Compile Include="Tests\BoardDependencies\BoardInitialiserTests.cs" />
+    <Compile Include="Tests\BoardDependencies\CastlingExecutorTests.cs" />
     <Compile Include="Tests\BoardDependencies\CheckManagement\CheckManagerTests.cs" />
     <Compile Include="Tests\BoardDependencies\CheckManagement\CheckMateEscapeManagerTests.cs" />
     <Compile Include="Tests\BoardDependencies\CheckManagement\CheckMateManagerTests.cs" />
