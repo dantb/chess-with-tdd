@@ -113,27 +113,23 @@ namespace ChessGameController
             chessBoard.Close();
         }
 
-        private void BrowsePositionFilesButton_Click(object sender, EventArgs e)
+        private void LoadPositionButton_Click(object sender, EventArgs e)
         {
             if (BrowsePositionFileDialogue.ShowDialog() == DialogResult.OK)
             {
-                PositionFilePathTextBox.Text = BrowsePositionFileDialogue.FileName;
-                BrowsePositionFileDialogue.Reset();
-            }
-        }
-
-        private void LoadPositionButton_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(PositionFilePathTextBox.Text))
-            {
-                PositionLoader loader = new PositionLoader();
-                BoardFrontEnd boardUI = GetBoardUIWithNewUnderlyingBoard();
-                //now load up the position
-                if (loader.LoadPositionIntoBoard(boardUI.Board, PositionFilePathTextBox.Text))
+                string file = BrowsePositionFileDialogue.FileName;
+                if (!string.IsNullOrEmpty(file))
                 {
-                    RunChessGame(boardUI);
+                    PositionLoader loader = new PositionLoader();
+                    BoardFrontEnd boardUI = GetBoardUIWithNewUnderlyingBoard();
+                    //now load up the position
+                    if (loader.LoadPositionIntoBoard(boardUI.Board, file))
+                    {
+                        RunChessGame(boardUI);
+                    }
                 }
             }
+            BrowsePositionFileDialogue.Reset();
         }
     }
 }
