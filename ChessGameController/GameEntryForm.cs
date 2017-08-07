@@ -15,7 +15,8 @@ namespace ChessGameController
 
         private void StartGameButton_Click(object sender, EventArgs e)
         {
-            BoardFrontEnd chessBoardGUI = GetBoardUI();
+            IBoard theBoard = NewBoard();
+            BoardFrontEnd chessBoardGUI = GetBoardUI(theBoard);
             RunChessGame(chessBoardGUI);
         }
 
@@ -32,7 +33,14 @@ namespace ChessGameController
             }
         }
 
-        private BoardFrontEnd GetBoardUI()
+        private BoardFrontEnd GetBoardUI(IBoard board)
+        {
+            BoardFrontEnd chessBoardGUI = new BoardFrontEnd(board, BlackTeamRB.Checked ? Colour.Black : Colour.White, true);
+            chessBoardGUI.MoveChosenEvent += ChessBoardGUI_MoveChosenEvent;
+            return chessBoardGUI;
+        }
+
+        private BoardFrontEnd GetBoardUIWithNewUnderlyingBoard()
         {
             //Configure container and resolve a board
             ContainerConfiguration.Configure();
@@ -42,6 +50,16 @@ namespace ChessGameController
                 BoardFrontEnd chessBoardGUI = new BoardFrontEnd(board, BlackTeamRB.Checked ? Colour.Black : Colour.White, true);
                 chessBoardGUI.MoveChosenEvent += ChessBoardGUI_MoveChosenEvent;
                 return chessBoardGUI;
+            }
+        }
+
+        private IBoard NewBoard()
+        {
+            //Configure container and resolve a board
+            ContainerConfiguration.Configure();
+            using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
+            {
+                return scope.Resolve<IBoard>();
             }
         }
 
@@ -109,7 +127,7 @@ namespace ChessGameController
             if (!string.IsNullOrEmpty(PositionFilePathTextBox.Text))
             {
                 PositionLoader loader = new PositionLoader();
-                BoardFrontEnd boardUI = GetBoardUI();
+                BoardFrontEnd boardUI = GetBoardUIWithNewUnderlyingBoard();
                 //now load up the position
                 if (loader.LoadPositionIntoBoard(boardUI.Board, PositionFilePathTextBox.Text))
                 {
