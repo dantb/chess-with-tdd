@@ -152,24 +152,24 @@
             // WhiteTeamRB
             // 
             this.WhiteTeamRB.AutoSize = true;
+            this.WhiteTeamRB.Checked = true;
             this.WhiteTeamRB.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WhiteTeamRB.Location = new System.Drawing.Point(19, 58);
+            this.WhiteTeamRB.Location = new System.Drawing.Point(19, 33);
             this.WhiteTeamRB.Name = "WhiteTeamRB";
             this.WhiteTeamRB.Size = new System.Drawing.Size(60, 18);
             this.WhiteTeamRB.TabIndex = 5;
+            this.WhiteTeamRB.TabStop = true;
             this.WhiteTeamRB.Text = "White";
             this.WhiteTeamRB.UseVisualStyleBackColor = true;
             // 
             // BlackTeamRB
             // 
             this.BlackTeamRB.AutoSize = true;
-            this.BlackTeamRB.Checked = true;
             this.BlackTeamRB.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BlackTeamRB.Location = new System.Drawing.Point(19, 34);
+            this.BlackTeamRB.Location = new System.Drawing.Point(19, 57);
             this.BlackTeamRB.Name = "BlackTeamRB";
             this.BlackTeamRB.Size = new System.Drawing.Size(60, 18);
             this.BlackTeamRB.TabIndex = 4;
-            this.BlackTeamRB.TabStop = true;
             this.BlackTeamRB.Text = "Black";
             this.BlackTeamRB.UseVisualStyleBackColor = true;
             // 

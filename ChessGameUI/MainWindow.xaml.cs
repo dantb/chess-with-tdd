@@ -37,6 +37,8 @@ namespace ChessGameUI
             }
         }
 
+        public bool PlayerVersusPlayer { get { return _playerVersusPlayer; } }
+
         private void _board_MoveAppliedEvent(object sender, MoveAppliedEventArgs eventArgs)
         {
             _positionStateManager.SaveMove(eventArgs.Data);

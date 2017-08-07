@@ -89,6 +89,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChessEngine\ChessEngine.csproj">
+      <Project>{ED0E09C6-4FFA-43E9-96A2-B2C16E0377B3}</Project>
+      <Name>ChessEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChessGameUI\ChessGameUI.csproj">
       <Project>{f0e40b45-6b54-428b-a81b-27ba4a4e1bbf}</Project>
       <Name>ChessGameUI</Name>
