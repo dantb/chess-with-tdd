@@ -77,11 +77,13 @@ namespace ChessWithTDD
             if (square.Piece.Colour == Colour.White)
             {
                 _whitePieceSquares.Add(_theBoard.GetSquare(square.Row, square.Col));
+                _blackPieceSquares.Remove(square); //TODO UNIT TEST THIS REQUIREMENT - of course we have to remove from the other cache in capture case
                 squaresToRemoveFromUpdates.Add(square);
             }
             else if (square.Piece.Colour == Colour.Black)
             {
                 _blackPieceSquares.Add(_theBoard.GetSquare(square.Row, square.Col));
+                _whitePieceSquares.Remove(square); //TODO UNIT TEST THIS REQUIREMENT - of course we have to remove from the other cache in capture case
                 squaresToRemoveFromUpdates.Add(square);
             }
         }
