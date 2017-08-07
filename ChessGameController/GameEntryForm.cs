@@ -3,6 +3,7 @@ using ChessEngine;
 using ChessGameUI;
 using ChessWithTDD;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChessGameController
@@ -23,13 +24,13 @@ namespace ChessGameController
             RunChessGame(chessBoardGUI);
         }
 
-        private void RunChessGame(BoardFrontEnd chessBoardGUI)
+        private async void RunChessGame(BoardFrontEnd chessBoardGUI)
         {
             try
             {
                 if (BlackTeamRB.Checked)
                 {
-                    EngineApplyMove(chessBoardGUI.Board, chessBoardGUI);
+                    await EngineApplyMove(chessBoardGUI.Board, chessBoardGUI);
                 }
                 chessBoardGUI.ShowDialog();
             }
@@ -70,7 +71,7 @@ namespace ChessGameController
             }
         }
 
-        private void ChessBoardGUI_MoveChosenEvent(object sender, MoveProviderEventArgs e)
+        private async void ChessBoardGUI_MoveChosenEvent(object sender, MoveProviderEventArgs e)
         {
             BoardFrontEnd playingBoard = (BoardFrontEnd) sender;
             IBoard board = playingBoard.Board;
@@ -88,7 +89,7 @@ namespace ChessGameController
 
             if (!playingBoard.PlayerVersusPlayer)
             {
-                EngineApplyMove(board, playingBoard);
+                await EngineApplyMove(board, playingBoard);
             }
         }
 
@@ -105,24 +106,28 @@ namespace ChessGameController
             }
         }
 
-        private void EngineApplyMove(IBoard board, BoardFrontEnd chessBoard)
+        private async Task EngineApplyMove(IBoard board, BoardFrontEnd chessBoard)
         {
-            Move move = _chessEngine.CalculateBestMove(board);
-            ISquare fromSquare = board.GetSquare(move.FromRow, move.FromCol);
-            ISquare toSquare = board.GetSquare(move.ToRow, move.ToCol);
-            if (board.MoveIsValid(fromSquare, toSquare))
-            {
-                Colour teamThatMoved = board.TeamWithTurn;
-                board.Apply(fromSquare, toSquare);
-                if (board.CheckMate)
+            await Task.Run(() =>
                 {
-                    ShowCheckMateDialogue(teamThatMoved, chessBoard);
+                   Move move = _chessEngine.CalculateBestMove(board);
+                   ISquare fromSquare = board.GetSquare(move.FromRow, move.FromCol);
+                   ISquare toSquare = board.GetSquare(move.ToRow, move.ToCol);
+                   if (board.MoveIsValid(fromSquare, toSquare))
+                   {
+                       Colour teamThatMoved = board.TeamWithTurn;
+                       board.Apply(fromSquare, toSquare);
+                       if (board.CheckMate)
+                       {
+                           ShowCheckMateDialogue(teamThatMoved, chessBoard);
+                       }
+                   }
+                   else
+                   {
+                       ShowInvalidMoveDialogue(fromSquare, toSquare, " The chess engine chose an invalid move. Sort it out.");
+                   }
                 }
-            }
-            else
-            {
-                ShowInvalidMoveDialogue(fromSquare, toSquare, " The chess engine chose an invalid move. Sort it out.");
-            }
+            );
         }
 
         private void ShowInvalidMoveDialogue(ISquare fromSquare, ISquare toSquare, string extraMessage = "")

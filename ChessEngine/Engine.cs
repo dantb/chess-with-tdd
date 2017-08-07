@@ -1,5 +1,6 @@
 ﻿using ChessWithTDD;
 using System;
+using System.Threading;
 
 namespace ChessEngine
 {
@@ -17,12 +18,13 @@ namespace ChessEngine
                     {
                         if (board.MoveIsValid(ourTeamSquare, square))
                         {
+                            Thread.Sleep(5000);
                             return new Move(ourTeamSquare.Row, ourTeamSquare.Col, square.Row, square.Col);
                         }
                     }
                 }
             }
-
+            return new Move(0, 0, 0, 0);
             throw new NotImplementedException();
         }
     }
