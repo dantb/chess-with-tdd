@@ -17,6 +17,8 @@ namespace ChessWithTDD
 
         bool CheckMate { get; set; }
 
+        bool StaleMate { get; set; }
+
         List<List<ISquare>> Squares { get; }
 
         /// <summary>

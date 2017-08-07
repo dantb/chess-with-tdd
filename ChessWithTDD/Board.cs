@@ -39,6 +39,8 @@ namespace ChessWithTDD
 
         public bool CheckMate { get; set; } = false;
 
+        public bool StaleMate { get; set; } = false;
+
         public int TurnCounter { get; set; } = 0;
 
         public int ColCount { get { return _squares.Count; } }
@@ -125,20 +127,26 @@ namespace ChessWithTDD
 
         public void Apply(ISquare fromSquare, ISquare toSquare)
         {
-            MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, fromSquare.Piece);
+            if (!GameOver())
+            {
+                MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, fromSquare.Piece);
 
-            _moveExecutor.ExecuteMove(this, fromSquare, toSquare);
+                _moveExecutor.ExecuteMove(this, fromSquare, toSquare);
 
-            DoPostMoveApplicationUpdates(data);
+                DoPostMoveApplicationUpdates(data);
+            }
         }
 
         public void ApplyWithoutUpdatingCheckAndMate(ISquare fromSquare, ISquare toSquare)
         {
-            MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, fromSquare.Piece);
+            if (!GameOver())
+            {
+                MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, this, fromSquare.Piece);
 
-            _moveExecutor.ExecuteMoveWithoutUpdatingCheckAndMate(this, fromSquare, toSquare);
+                _moveExecutor.ExecuteMoveWithoutUpdatingCheckAndMate(this, fromSquare, toSquare);
 
-            DoPostMoveApplicationUpdates(data);
+                DoPostMoveApplicationUpdates(data);
+            }
         }
 
         public void SetSquare(ISquare square)
@@ -147,6 +155,11 @@ namespace ChessWithTDD
         }
 
         #endregion
+
+        private bool GameOver()
+        {
+            return CheckMate || StaleMate;
+        }
 
         private void InitialiseBoardDimensions()
         {

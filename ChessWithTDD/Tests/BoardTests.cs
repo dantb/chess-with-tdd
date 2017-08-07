@@ -239,6 +239,42 @@ namespace ChessWithTDD.Tests
         }
 
         [Test]
+        public void ApplyingMoveDoesNotCallMoveExecutorIfCheckMate()
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IMoveExecutor moveExecutor = MockMoveExecutor();
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(moveExecutor).OverridePrevious();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(thePiece);
+            ISquare toSquare = MockSquareWithPiece();
+            Board board = new Board(serviceLocator);
+            board.CheckMate = true;
+            int turnCounter = board.TurnCounter;
+
+            board.Apply(fromSquare, toSquare);
+
+            moveExecutor.AssertWasNotCalled(m => m.ExecuteMove(board, fromSquare, toSquare));
+        }
+
+        [Test]
+        public void ApplyingMoveDoesNotCallMoveExecutorIfStaleMate()
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IMoveExecutor moveExecutor = MockMoveExecutor();
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(moveExecutor).OverridePrevious();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(thePiece);
+            ISquare toSquare = MockSquareWithPiece();
+            Board board = new Board(serviceLocator);
+            board.StaleMate = true;
+            int turnCounter = board.TurnCounter;
+
+            board.Apply(fromSquare, toSquare);
+
+            moveExecutor.AssertWasNotCalled(m => m.ExecuteMove(board, fromSquare, toSquare));
+        }
+
+        [Test]
         public void ApplyingMoveIncrementsTurnCounter()
         {
             IStrictServiceLocator serviceLocator = MockServiceLocator();
@@ -255,10 +291,8 @@ namespace ChessWithTDD.Tests
 
         [TestCase(1, 2, 3, 4, false, false, false)]
         [TestCase(1, 2, 3, 4, false, true, false)]
-        [TestCase(1, 2, 3, 4, false, true, true)]
         [TestCase(1, 2, 3, 4, true, false, false)]
         [TestCase(1, 2, 3, 4, true, true, false)]
-        [TestCase(1, 2, 3, 4, true, true, true)]
         [Test]
         public void ApplyingMoveFiresMoveAppliedEvent(int rowFrom, int colFrom, int rowTo, int colTo, bool capture, bool check, bool checkMate)
         {
@@ -323,6 +357,42 @@ namespace ChessWithTDD.Tests
         }
 
         [Test]
+        public void ApplyingWithoutCheckAndMateDoesNotCallMoveExecutorIfCheckMate()
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IMoveExecutor moveExecutor = MockMoveExecutor();
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(moveExecutor).OverridePrevious();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(thePiece);
+            ISquare toSquare = MockSquareWithPiece();
+            Board board = new Board(serviceLocator);
+            board.CheckMate = true;
+            int turnCounter = board.TurnCounter;
+
+            board.ApplyWithoutUpdatingCheckAndMate(fromSquare, toSquare);
+
+            moveExecutor.AssertWasNotCalled(m => m.ExecuteMoveWithoutUpdatingCheckAndMate(board, fromSquare, toSquare));
+        }
+
+        [Test]
+        public void ApplyingWithoutCheckAndMateDoesNotCallMoveExecutorIfStaleMate()
+        {
+            IStrictServiceLocator serviceLocator = MockServiceLocator();
+            IMoveExecutor moveExecutor = MockMoveExecutor();
+            serviceLocator.Stub(s => s.GetServiceMoveExecutor()).Return(moveExecutor).OverridePrevious();
+            IPiece thePiece = MockPiece();
+            ISquare fromSquare = MockSquareWithPiece(thePiece);
+            ISquare toSquare = MockSquareWithPiece();
+            Board board = new Board(serviceLocator);
+            board.StaleMate = true;
+            int turnCounter = board.TurnCounter;
+
+            board.ApplyWithoutUpdatingCheckAndMate(fromSquare, toSquare);
+
+            moveExecutor.AssertWasNotCalled(m => m.ExecuteMoveWithoutUpdatingCheckAndMate(board, fromSquare, toSquare));
+        }
+
+        [Test]
         public void ApplyingWithoutCheckAndMateIncrementsTurnCounter()
         {
             IStrictServiceLocator serviceLocator = MockServiceLocator();
@@ -339,10 +409,8 @@ namespace ChessWithTDD.Tests
 
         [TestCase(1, 2, 3, 4, false, false, false)]
         [TestCase(1, 2, 3, 4, false, true, false)]
-        [TestCase(1, 2, 3, 4, false, true, true)]
         [TestCase(1, 2, 3, 4, true, false, false)]
         [TestCase(1, 2, 3, 4, true, true, false)]
-        [TestCase(1, 2, 3, 4, true, true, true)]
         [Test]
         public void ApplyingWithoutCheckAndMateFiresMoveAppliedEvent(int rowFrom, int colFrom, int rowTo, int colTo, bool capture, bool check, bool checkMate)
         {
@@ -389,7 +457,7 @@ namespace ChessWithTDD.Tests
             Assert.AreEqual(theArgs.Data, board.OrderedMoveData[board.OrderedMoveData.Count - 1]);
         }
 
-        [TestCase(1, 2, 3, 4, true, true, true)]
+        [TestCase(1, 2, 3, 4, true, true, false)]
         [Test]
         public void TestOrderingOfCallsInApplyMethod(int rowFrom, int colFrom, int rowTo, int colTo, bool capture, bool check, bool checkMate)
         {
@@ -425,7 +493,7 @@ namespace ChessWithTDD.Tests
             Assert.AreEqual(theArgs.Data, callOrder[2]);
         }
 
-        [TestCase(1, 2, 3, 4, true, true, true)]
+        [TestCase(1, 2, 3, 4, true, true, false)]
         [Test]
         public void TestOrderingOfCallsInApplyWithoutCheckAndMateMethod(int rowFrom, int colFrom, int rowTo, int colTo, bool capture, bool check, bool checkMate)
         {
