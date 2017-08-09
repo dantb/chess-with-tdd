@@ -5,7 +5,7 @@ using Autofac;
 
 namespace ChessEngine
 {
-    public class Engine : IMoveProvider
+    public class Engine
     {
         private static Dictionary<Type, double> PieceTypeToPoints = new Dictionary<Type, double>()
         {
@@ -17,8 +17,6 @@ namespace ChessEngine
             { typeof(Queen), 90 },
             { typeof(King), 900 }
         };
-
-        public event MoveProviderEventHandler MoveChosenEvent;
 
         public Move CalculateBestMove(IBoard board)
         {
