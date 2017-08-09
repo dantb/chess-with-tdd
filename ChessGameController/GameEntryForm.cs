@@ -55,7 +55,7 @@ namespace ChessGameController
             using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
             {
                 IBoard board = scope.Resolve<IBoard>();
-                BoardFrontEnd chessBoardGUI = new BoardFrontEnd(board, BlackTeamRB.Checked ? Colour.Black : Colour.White, true);
+                BoardFrontEnd chessBoardGUI = new BoardFrontEnd(board, BlackTeamRB.Checked ? Colour.Black : Colour.White, RadioButtonPVP.Checked);
                 chessBoardGUI.MoveChosenEvent += ChessBoardGUI_MoveChosenEvent;
                 return chessBoardGUI;
             }
