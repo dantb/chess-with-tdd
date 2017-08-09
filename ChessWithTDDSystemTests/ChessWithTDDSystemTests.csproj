@@ -76,6 +76,7 @@
     <Content Include="PositionFiles\PawnPromotion\BlackPawnPromotion.txt" />
     <Content Include="PositionFiles\PawnPromotion\WhitePawnPromotion.txt" />
     <Content Include="PositionFiles\PawnPromotion\WhitePawnPromotionCausingCheckMateInSixTurns.txt" />
+    <Content Include="PositionFiles\Stalemate\BlackKingCannotMoveStalemate.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
