@@ -94,12 +94,14 @@ namespace ChessWithTDD
             {
                 _whiteKingSquare = _theBoard.GetSquare(square.Row, square.Col);
                 _whitePieceSquares.Add(square);
+                _blackPieceSquares.Remove(square);
                 squaresToRemoveFromUpdates.Add(square);
             }
             else if (square.Piece.Colour == Colour.Black)
             {
                 _blackKingSquare = _theBoard.GetSquare(square.Row, square.Col);
                 _blackPieceSquares.Add(square);
+                _whitePieceSquares.Remove(square);
                 squaresToRemoveFromUpdates.Add(square);
             }
         }
@@ -122,6 +124,7 @@ namespace ChessWithTDD
             _blackPieceSquares.Add(theBoard.GetSquare(BLACK_BACK_ROW, LEFT_KNIGHT_COL));
             _blackPieceSquares.Add(theBoard.GetSquare(BLACK_BACK_ROW, RIGHT_KNIGHT_COL));
             _blackPieceSquares.Add(theBoard.GetSquare(BLACK_BACK_ROW, QUEEN_COLUMN));
+            _blackPieceSquares.Add(theBoard.GetSquare(BLACK_BACK_ROW, KING_COLUMN));
         }
 
         private void InitialiseWhiteBackRow(IBoard theBoard)
@@ -133,6 +136,7 @@ namespace ChessWithTDD
             _whitePieceSquares.Add(theBoard.GetSquare(WHITE_BACK_ROW, LEFT_KNIGHT_COL));
             _whitePieceSquares.Add(theBoard.GetSquare(WHITE_BACK_ROW, RIGHT_KNIGHT_COL));
             _whitePieceSquares.Add(theBoard.GetSquare(WHITE_BACK_ROW, QUEEN_COLUMN));
+            _whitePieceSquares.Add(theBoard.GetSquare(WHITE_BACK_ROW, KING_COLUMN));
         }
     }
 }

@@ -32,6 +32,24 @@ namespace ChessWithTDD.Tests
         }
 
         [Test]
+        public void BlackKingSquareInPendingUpdatesThatPreviouslyWasInWhitePieceCacheIsRemoved()
+        {
+            IKing theKing = MockKingWithColour(Colour.Black);
+            ISquare kingSquare = MockSquareWithPiece(4, 4, theKing);
+            IBoard board = MockBoard();
+            List<ISquare> pendingUpdates = new List<ISquare> { kingSquare };
+            board.Stub(b => b.PendingUpdates).Return(pendingUpdates);
+            board.Stub(b => b.GetSquare(kingSquare.Row, kingSquare.Col)).Return(kingSquare);
+            BoardCache boardCache = new BoardCache();
+            boardCache.WhitePieceSquares.Add(kingSquare);
+            boardCache.InitialiseBoardCache(board);
+
+            boardCache.UpdateBoardCache();
+
+            Assert.False(boardCache.WhitePieceSquares.Contains(kingSquare));
+        }
+
+        [Test]
         public void WhiteKingIsSavedToWhiteKingSquareAndWhitePiecesIfInPendingUpdatesOfBoardAndUpdatesCleared()
         {
             IKing theKing = MockKingWithColour(Colour.White);
@@ -48,6 +66,24 @@ namespace ChessWithTDD.Tests
             Assert.AreEqual(boardCache.WhiteKingSquare, kingSquare);
             Assert.AreEqual(pendingUpdates.Count, 0);
             Assert.True(boardCache.WhitePieceSquares.Contains(kingSquare));
+        }
+
+        [Test]
+        public void WhiteKingSquareInPendingUpdatesThatPreviouslyWasInBlackPieceCacheIsRemoved()
+        {
+            IKing theKing = MockKingWithColour(Colour.White);
+            ISquare kingSquare = MockSquareWithPiece(4, 4, theKing);
+            IBoard board = MockBoard();
+            List<ISquare> pendingUpdates = new List<ISquare> { kingSquare };
+            board.Stub(b => b.PendingUpdates).Return(pendingUpdates);
+            board.Stub(b => b.GetSquare(kingSquare.Row, kingSquare.Col)).Return(kingSquare);
+            BoardCache boardCache = new BoardCache();
+            boardCache.BlackPieceSquares.Add(kingSquare);
+            boardCache.InitialiseBoardCache(board);
+
+            boardCache.UpdateBoardCache();
+
+            Assert.False(boardCache.BlackPieceSquares.Contains(kingSquare));
         }
 
         [Test]
@@ -102,6 +138,25 @@ namespace ChessWithTDD.Tests
             Assert.False(pendingUpdates.Contains(square));
         }
 
+
+        [Test]
+        public void SquareInPendingUpdatesWithWhitePieceThatWasInBlackPieceCacheIsRemoved()
+        {
+            IPiece piece = MockPieceWithColour(Colour.White);
+            ISquare square = MockSquareWithPiece(piece);
+            IBoard board = MockBoard();
+            List<ISquare> pendingUpdates = new List<ISquare> { square };
+            board.Stub(b => b.PendingUpdates).Return(pendingUpdates);
+            board.Stub(b => b.GetSquare(square.Row, square.Col)).Return(square);
+            BoardCache boardCache = new BoardCache();
+            boardCache.BlackPieceSquares.Add(square);
+            boardCache.InitialiseBoardCache(board);
+
+            boardCache.UpdateBoardCache();
+
+            Assert.False(boardCache.BlackPieceSquares.Contains(square));
+        }
+
         [Test]
         public void SquareInPendingUpdatesWithBlackPieceIsAddedToBlackPieceCacheAndRemovedFromPendingUpdates()
         {
@@ -118,6 +173,24 @@ namespace ChessWithTDD.Tests
 
             Assert.True(boardCache.BlackPieceSquares.Contains(square));
             Assert.False(pendingUpdates.Contains(square));
+        }
+
+        [Test]
+        public void SquareInPendingUpdatesWithBlackPieceThatWasInWhitePieceCacheIsRemoved()
+        {
+            IPiece piece = MockPieceWithColour(Colour.Black);
+            ISquare square = MockSquareWithPiece(piece);
+            IBoard board = MockBoard();
+            List<ISquare> pendingUpdates = new List<ISquare> { square };
+            board.Stub(b => b.PendingUpdates).Return(pendingUpdates);
+            board.Stub(b => b.GetSquare(square.Row, square.Col)).Return(square);
+            BoardCache boardCache = new BoardCache();
+            boardCache.WhitePieceSquares.Add(square);
+            boardCache.InitialiseBoardCache(board);
+
+            boardCache.UpdateBoardCache();
+
+            Assert.False(boardCache.WhitePieceSquares.Contains(square));
         }
 
         #endregion Update cache tests
@@ -146,6 +219,7 @@ namespace ChessWithTDD.Tests
             boardCache.InitialiseBoardCache(board);
 
             Assert.AreEqual(boardCache.WhiteKingSquare, whiteKingSquare);
+            Assert.True(boardCache.WhitePieceSquares.Contains(whiteKingSquare));
         }
 
         [Test]
@@ -160,6 +234,7 @@ namespace ChessWithTDD.Tests
             boardCache.InitialiseBoardCache(board);
 
             Assert.AreEqual(boardCache.BlackKingSquare, blackKingSquare);
+            Assert.True(boardCache.BlackPieceSquares.Contains(blackKingSquare));
         }
 
         #region Board cache system level initialisation
