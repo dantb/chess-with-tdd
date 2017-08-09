@@ -1,0 +1,12 @@
+e2-e4,a7-a5
+Bf1-c4,a5-a4
+Ng1-f3,a4-a3
+b2xa3,Ra8xa3
+Nb1xa3,b7-b5
+Bc4xb5,c7-c5
+Qd1-e2,c5-c4
+Qe2xc4,e7-e5
+Nf3xe5,Bf8xa3
+Bc1xa3,f7-f5
+Qc4-c5,f5xe4
+Qc5-f8

@@ -24,13 +24,13 @@ namespace ChessGameController
             RunChessGame(chessBoardGUI);
         }
 
-        private async void RunChessGame(BoardFrontEnd chessBoardGUI)
+        private void RunChessGame(BoardFrontEnd chessBoardGUI)
         {
             try
             {
                 if (BlackTeamRB.Checked)
                 {
-                    await EngineApplyMove(chessBoardGUI.Board, chessBoardGUI);
+                    EngineApplyMove(chessBoardGUI.Board, chessBoardGUI);
                 }
                 chessBoardGUI.ShowDialog();
             }
@@ -71,7 +71,7 @@ namespace ChessGameController
             }
         }
 
-        private async void ChessBoardGUI_MoveChosenEvent(object sender, MoveProviderEventArgs e)
+        private void ChessBoardGUI_MoveChosenEvent(object sender, MoveProviderEventArgs e)
         {
             BoardFrontEnd playingBoard = (BoardFrontEnd) sender;
             IBoard board = playingBoard.Board;
@@ -86,11 +86,6 @@ namespace ChessGameController
             {
                 ShowInvalidMoveDialogue(fromSquare, toSquare);
             }
-
-            if (!playingBoard.PlayerVersusPlayer)
-            {
-                await EngineApplyMove(board, playingBoard);
-            }
         }
 
 
@@ -104,12 +99,19 @@ namespace ChessGameController
             {
                 ShowCheckMateDialogue(teamThatMoved, chessBoard);
             }
+            else
+            {
+                if (!chessBoard.PlayerVersusPlayer)
+                {
+                    EngineApplyMove(board, chessBoard);
+                }
+            }
         }
 
-        private async Task EngineApplyMove(IBoard board, BoardFrontEnd chessBoard)
+        private void EngineApplyMove(IBoard board, BoardFrontEnd chessBoard)
         {
-            await Task.Run(() =>
-                {
+            Task.Run(() =>
+               {
                    Move move = _chessEngine.CalculateBestMove(board);
                    ISquare fromSquare = board.GetSquare(move.FromRow, move.FromCol);
                    ISquare toSquare = board.GetSquare(move.ToRow, move.ToCol);
@@ -126,8 +128,8 @@ namespace ChessGameController
                    {
                        ShowInvalidMoveDialogue(fromSquare, toSquare, " The chess engine chose an invalid move. Sort it out.");
                    }
-                }
-            );
+               }
+           );
         }
 
         private void ShowInvalidMoveDialogue(ISquare fromSquare, ISquare toSquare, string extraMessage = "")
