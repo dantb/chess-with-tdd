@@ -1,0 +1,12 @@
+a2-a3,d7-d5
+a3-a4,Nb8-c6
+a4-a5,Bc8-g4
+a5-a6,b7xa6
+Ra1xa6,Nc6-b4
+Ra6xa7,Ra8xa7
+b2-b3,Ra7-a1
+c2-c3,Nb4-a2
+b3-b4,Bg4-f5
+b4-b5,Ra1xb1
+b5-b6,Na2xc1
+Qd1xc1,Rb1xc1
