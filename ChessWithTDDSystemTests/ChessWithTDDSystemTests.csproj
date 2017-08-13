@@ -52,6 +52,7 @@
     <Compile Include="EnPassantTests.cs" />
     <Compile Include="GeneralTests.cs" />
     <Compile Include="PawnPromotionTests.cs" />
+    <Compile Include="PerformanceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +79,7 @@
     <Content Include="PositionFiles\GeneralTests\EngineTakesAgesToMoveKing.txt" />
     <Content Include="PositionFiles\GeneralTests\FullGamePlayingTheEngine.txt" />
     <Content Include="PositionFiles\GeneralTests\FullGamePlayingTheEngine2.txt" />
+    <Content Include="PositionFiles\GeneralTests\FullGameToCheckMate_1.txt" />
     <Content Include="PositionFiles\GeneralTests\WeirdRookCheckmateOfWhiteKing.txt" />
     <Content Include="PositionFiles\GeneralTests\WhiteRookChecksBlackKingCausesEngineToCrash.txt" />
     <Content Include="PositionFiles\PawnPromotion\BlackPawnPromotion.txt" />
