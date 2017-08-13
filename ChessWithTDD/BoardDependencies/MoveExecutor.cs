@@ -17,10 +17,22 @@
         {
             ExecuteMoveWithoutUpdatingCheckAndMate(board, fromSquare, toSquare);
 
+            UpdateCheckAndMateStates(board, fromSquare, toSquare);
+        }
+
+        private void UpdateCheckAndMateStates(IBoard board, ISquare fromSquare, ISquare toSquare)
+        {
             MoveGenerationData data = new MoveGenerationData(fromSquare, toSquare, board, toSquare.Piece);
+
+            // TODO : During the updating of check and mate states we'll need to "fake" apply this current move, to get the board's
+            // positioning correct but without the check and mate being updated (had these been included this would cause a stack overflow)
+            // This cannot be the best solution to this problem, the TODO is fix this in a nicer way
             board.MoveWithoutCheckAndMateUpdated = data;
+
             //Evaluate check states after move has been applied
             _checkManager.UpdateCheckAndCheckMateStates(board, toSquare);
+
+            // reset the data back to null (no fake move needs to be applied now)
             board.MoveWithoutCheckAndMateUpdated = null;
         }
 

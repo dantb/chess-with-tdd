@@ -35,7 +35,7 @@ namespace ChessWithTDDSystemTests
         }
 
         [Test]
-        public void BlackKingAboutToBeInCheckMateWithoutBeingInCheck()
+        public void BlackKingCannotMoveSoStalemateOutcome()
         {
             string path = GetPositionFilePath(GeneralTestsFolder, BlackKingCannotMoveSoStalemateOutcomeFile);
             IBoard board = NewBoard();
