@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="CastlingTests.cs" />
     <Compile Include="CommonTestHelpers.cs" />
+    <Compile Include="DeepCopyByExpressionTreesTests.cs" />
     <Compile Include="EnPassantTests.cs" />
     <Compile Include="GeneralTests.cs" />
     <Compile Include="PawnPromotionTests.cs" />
@@ -73,6 +74,12 @@
     <Content Include="PositionFiles\EnPassant\BlackPawnCapturesWhitePawnUsingEnPassant.txt" />
     <Content Include="PositionFiles\EnPassant\WhitePawnCapturesBlackPawnUsingEnPassant.txt" />
     <Content Include="PositionFiles\GeneralTests\BlackKingBeforeMovingInFrontOfWhitePawn.txt" />
+    <Content Include="PositionFiles\GeneralTests\BlackKingCannotMoveSoStalemateOutcome.txt" />
+    <Content Include="PositionFiles\GeneralTests\EngineTakesAgesToMoveKing.txt" />
+    <Content Include="PositionFiles\GeneralTests\FullGamePlayingTheEngine.txt" />
+    <Content Include="PositionFiles\GeneralTests\FullGamePlayingTheEngine2.txt" />
+    <Content Include="PositionFiles\GeneralTests\WeirdRookCheckmateOfWhiteKing.txt" />
+    <Content Include="PositionFiles\GeneralTests\WhiteRookChecksBlackKingCausesEngineToCrash.txt" />
     <Content Include="PositionFiles\PawnPromotion\BlackPawnPromotion.txt" />
     <Content Include="PositionFiles\PawnPromotion\WhitePawnPromotion.txt" />
     <Content Include="PositionFiles\PawnPromotion\WhitePawnPromotionCausingCheckMateInSixTurns.txt" />

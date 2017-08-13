@@ -70,6 +70,7 @@
     <Compile Include="BoardStateChanging\PositionSaver.cs" />
     <Compile Include="BoardStateChanging\PositionStateManager.cs" />
     <Compile Include="ContainerConfiguration.cs" />
+    <Compile Include="DeepCopyByExpressionTrees.cs" />
     <Compile Include="Interfaces\BoardDependencies\ICastlingExecutor.cs" />
     <Compile Include="Interfaces\BoardDependencies\MoveValidation\ICastlingMoveValidator.cs" />
     <Compile Include="Interfaces\BoardStateChanging\IAlgebraicNotationGenerator.cs" />
