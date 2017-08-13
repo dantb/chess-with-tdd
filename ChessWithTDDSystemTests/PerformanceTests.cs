@@ -19,15 +19,21 @@ namespace ChessWithTDDSystemTests
             string path = GetPositionFilePath(GeneralTestsFolder, FullGameToCheckMate_1File);
 
             // load up without cloning
-            IBoard board = NewBoard();
+            ContainerConfiguration.ConfigureWithMoveIntoCheckValidatorUsingOldImplementation();
+            IBoard board;
+            using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
+            {
+                board = scope.Resolve<IBoard>();
+            }
             Stopwatch swWithoutCloning = new Stopwatch();
             swWithoutCloning.Start();
             PositionLoaderService.LoadPositionIntoBoard(board, path);
             swWithoutCloning.Stop();
             double withoutCloningTime = swWithoutCloning.ElapsedMilliseconds;
 
+            // now with cloning (which is now the default implementation)
             IBoard secondBoard;
-            ContainerConfiguration.ConfigureWithMoveIntoCheckValidatorUsingCloningImplementation();
+            ContainerConfiguration.Configure();
             using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
             {
                 secondBoard = scope.Resolve<IBoard>();

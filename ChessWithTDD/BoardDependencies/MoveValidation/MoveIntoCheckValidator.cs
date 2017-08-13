@@ -1,8 +1,13 @@
 ﻿using Autofac;
+using System;
 using System.Windows.Forms;
 
 namespace ChessWithTDD
 {
+    /// <summary>
+    /// Use the cloning version of this class - it has hugely improved performance
+    /// </summary>
+    [Obsolete]
     public class MoveIntoCheckValidator : IMoveIntoCheckValidator
     {
         public bool MoveCausesMovingTeamCheck(IBoard theBoard, ISquare fromSquare, ISquare toSquare)

@@ -33,7 +33,7 @@ namespace ChessWithTDD
             builder.RegisterType<MoveValidator>().As<IMoveValidator>().InstancePerLifetimeScope();
             builder.RegisterType<GenericMoveValidator>().As<IGenericMoveValidator>().InstancePerLifetimeScope();
             builder.RegisterType<MultiSquareMoveValidator>().As<IMultiSquareMoveValidator>().InstancePerLifetimeScope();
-            builder.RegisterType<MoveIntoCheckValidator>().As<IMoveIntoCheckValidator>().InstancePerLifetimeScope();
+            builder.RegisterType<MoveIntoCheckValidatorUsingCloning>().As<IMoveIntoCheckValidator>().InstancePerLifetimeScope();
 
             builder.RegisterType<PawnManager>().As<IPawnManager>().InstancePerLifetimeScope();
             builder.RegisterType<EnPassantManager>().As<IEnPassantManager>().InstancePerLifetimeScope();
@@ -49,7 +49,7 @@ namespace ChessWithTDD
             Container = builder.Build();
         }
 
-        public static void ConfigureWithMoveIntoCheckValidatorUsingCloningImplementation()
+        public static void ConfigureWithMoveIntoCheckValidatorUsingOldImplementation()
         {
             var builder = new ContainerBuilder();
 
@@ -71,7 +71,7 @@ namespace ChessWithTDD
             builder.RegisterType<MoveValidator>().As<IMoveValidator>().InstancePerLifetimeScope();
             builder.RegisterType<GenericMoveValidator>().As<IGenericMoveValidator>().InstancePerLifetimeScope();
             builder.RegisterType<MultiSquareMoveValidator>().As<IMultiSquareMoveValidator>().InstancePerLifetimeScope();
-            builder.RegisterType<MoveIntoCheckValidatorUsingCloning>().As<IMoveIntoCheckValidator>().InstancePerLifetimeScope();
+            builder.RegisterType<MoveIntoCheckValidator>().As<IMoveIntoCheckValidator>().InstancePerLifetimeScope();
 
             builder.RegisterType<PawnManager>().As<IPawnManager>().InstancePerLifetimeScope();
             builder.RegisterType<EnPassantManager>().As<IEnPassantManager>().InstancePerLifetimeScope();
