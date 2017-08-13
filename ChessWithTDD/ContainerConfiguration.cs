@@ -21,8 +21,8 @@ namespace ChessWithTDD
             //service locator
             builder.RegisterType<StrictServiceLocator>().As<IStrictServiceLocator>();
 
-            //the services themselves. They should have one instance per board, which is the context of 
-            //the lifetime scope 
+            // The services themselves. They should have one instance per board, which is the context of 
+            // the lifetime scope 
             builder.RegisterType<BoardCache>().As<IBoardCache>().InstancePerLifetimeScope();
             builder.RegisterType<BoardInitialiser>().As<IBoardInitialiser>().InstancePerLifetimeScope();
 
@@ -34,6 +34,44 @@ namespace ChessWithTDD
             builder.RegisterType<GenericMoveValidator>().As<IGenericMoveValidator>().InstancePerLifetimeScope();
             builder.RegisterType<MultiSquareMoveValidator>().As<IMultiSquareMoveValidator>().InstancePerLifetimeScope();
             builder.RegisterType<MoveIntoCheckValidator>().As<IMoveIntoCheckValidator>().InstancePerLifetimeScope();
+
+            builder.RegisterType<PawnManager>().As<IPawnManager>().InstancePerLifetimeScope();
+            builder.RegisterType<EnPassantManager>().As<IEnPassantManager>().InstancePerLifetimeScope();
+
+            builder.RegisterType<MoveExecutor>().As<IMoveExecutor>().InstancePerLifetimeScope();
+
+            builder.RegisterType<PositionStateManager>().As<IPositionStateManager>().InstancePerLifetimeScope();
+
+            builder.RegisterType<CastlingMoveValidator>().As<ICastlingMoveValidator>().InstancePerLifetimeScope();
+
+            builder.RegisterType<CastlingExecutor>().As<ICastlingExecutor>().InstancePerLifetimeScope();
+
+            Container = builder.Build();
+        }
+
+        public static void ConfigureWithMoveIntoCheckValidatorUsingCloningImplementation()
+        {
+            var builder = new ContainerBuilder();
+
+            //board itself
+            builder.RegisterType<Board>().As<IBoard>();
+
+            //service locator
+            builder.RegisterType<StrictServiceLocator>().As<IStrictServiceLocator>();
+
+            // The services themselves. They should have one instance per board, which is the context of 
+            // the lifetime scope 
+            builder.RegisterType<BoardCache>().As<IBoardCache>().InstancePerLifetimeScope();
+            builder.RegisterType<BoardInitialiser>().As<IBoardInitialiser>().InstancePerLifetimeScope();
+
+            builder.RegisterType<CheckManager>().As<ICheckManager>().InstancePerLifetimeScope();
+            builder.RegisterType<CheckMateManager>().As<ICheckMateManager>().InstancePerLifetimeScope();
+            builder.RegisterType<CheckMateEscapeManager>().As<ICheckMateEscapeManager>().InstancePerLifetimeScope();
+
+            builder.RegisterType<MoveValidator>().As<IMoveValidator>().InstancePerLifetimeScope();
+            builder.RegisterType<GenericMoveValidator>().As<IGenericMoveValidator>().InstancePerLifetimeScope();
+            builder.RegisterType<MultiSquareMoveValidator>().As<IMultiSquareMoveValidator>().InstancePerLifetimeScope();
+            builder.RegisterType<MoveIntoCheckValidatorUsingCloning>().As<IMoveIntoCheckValidator>().InstancePerLifetimeScope();
 
             builder.RegisterType<PawnManager>().As<IPawnManager>().InstancePerLifetimeScope();
             builder.RegisterType<EnPassantManager>().As<IEnPassantManager>().InstancePerLifetimeScope();

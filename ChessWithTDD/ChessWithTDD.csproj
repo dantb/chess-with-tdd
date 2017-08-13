@@ -60,6 +60,7 @@
     <Compile Include="BoardDependencies\CheckManagement\CheckMateManager.cs" />
     <Compile Include="BoardDependencies\MoveValidation\CastlingMoveValidator.cs" />
     <Compile Include="BoardDependencies\MoveValidation\MoveIntoCheckValidator.cs" />
+    <Compile Include="BoardDependencies\MoveValidation\MoveIntoCheckValidatorUsingCloning.cs" />
     <Compile Include="BoardDependencies\PawnManagement\EnPassantManager.cs" />
     <Compile Include="BoardDependencies\MoveValidation\GenericMoveValidator.cs" />
     <Compile Include="BoardDependencies\MoveValidation\MoveValidator.cs" />
