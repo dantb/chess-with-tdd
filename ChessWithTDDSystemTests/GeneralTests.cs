@@ -51,7 +51,7 @@ namespace ChessWithTDDSystemTests
             Assert.That(whiteRookSquare.Piece is Rook && whiteRookSquare.Piece.Colour == Colour.White);
 
             ISquare blackQueenSquare = board.GetSquare(0, 3);
-            Assert.That(blackKingSquare.Piece is Queen && blackKingSquare.Piece.Colour == Colour.Black);
+            Assert.That(blackQueenSquare.Piece is Queen && blackQueenSquare.Piece.Colour == Colour.Black);
 
             // move rook to take queen
             board.Apply(whiteRookSquare, blackQueenSquare);

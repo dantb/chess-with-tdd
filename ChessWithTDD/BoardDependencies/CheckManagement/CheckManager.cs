@@ -24,6 +24,29 @@
                 (kingUnderThreatSquare.Piece as IKing).InCheckState = true;
                 theBoard.CheckMate = _checkMateManager.BoardIsInCheckMate(theBoard, threateningSquare);
             }
+            else
+            {
+                // not under threat right now, but the board could still be in a state of stalemate
+                theBoard.StaleMate = BoardIsInStaleMate(theBoard);
+            }
+        }
+
+        private bool BoardIsInStaleMate(IBoard theBoard)
+        {
+            foreach (ISquare movingTeamSquare in theBoard.OtherTeamPieceSquares)
+            {
+                foreach (var row in theBoard.Squares)
+                {
+                    foreach (ISquare square in row)
+                    {
+                        if (theBoard.MoveIsValid(movingTeamSquare, square))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         private void RemoveCheckStates(IBoard theBoard)
