@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Autofac;
 using ChessWithTDD;
-using Autofac;
+using System;
+using System.Collections.Generic;
 
 namespace ChessEngine
 {

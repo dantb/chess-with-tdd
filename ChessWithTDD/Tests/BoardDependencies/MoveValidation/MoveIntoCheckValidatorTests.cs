@@ -1,7 +1,4 @@
 ﻿using NUnit.Framework;
-using Rhino.Mocks;
-using System.Collections.Generic;
-using static ChessWithTDD.Tests.TestHelpers.CommonTestMethods;
 
 
 namespace ChessWithTDD.Tests
