@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ChessEngine
 {
-    public class Engine
+    public partial class Engine
     {
         private static Dictionary<Type, double> PieceTypeToPoints = new Dictionary<Type, double>()
         {
@@ -20,28 +20,22 @@ namespace ChessEngine
 
         public Move CalculateBestMove(IBoard board)
         {
-            List<SquaresForMoves> validMoves = new List<SquaresForMoves>();
+            List<MoveData> validMoves = GetValidMovesFromBoard(board);
 
-            foreach (ISquare ourTeamSquare in board.MovingTeamPieceSquares)
-            {
-                foreach (var row in board.Squares)
-                {
-                    foreach (ISquare square in row)
-                    {
-                        if (board.MoveIsValid(ourTeamSquare, square))
-                        {
-                            validMoves.Add(new SquaresForMoves(ourTeamSquare, square));
-                        }
-                    }
-                }
-            }
+            MoveData bestMove = CalculateMoveWithHighestPoints(board, validMoves);
 
+            return new Move(bestMove.FromSquare.Row, bestMove.FromSquare.Col, bestMove.ToSquare.Row, bestMove.ToSquare.Col);
+        }
+
+        private MoveData CalculateMoveWithHighestPoints(IBoard board, List<MoveData> validMoves)
+        {
             double bestMovePoints = -9999999;
-            SquaresForMoves bestMove = null;
+            MoveData bestMove = null;
 
-            foreach (SquaresForMoves validMove in validMoves)
+            foreach (MoveData validMove in validMoves)
             {
                 IBoard newBoard = GetNewBoardWithThisMoveApplied(board, validMove.FromSquare, validMove.ToSquare);
+
                 // make this negative since the team whose turn it is is now the other team
                 double boardValue = -1 * EvaluateBoard(newBoard, PieceTypeToPoints);
                 if (bestMovePoints < boardValue)
@@ -51,7 +45,34 @@ namespace ChessEngine
                 }
             }
 
-            return new Move(bestMove.FromSquare.Row, bestMove.FromSquare.Col, bestMove.ToSquare.Row, bestMove.ToSquare.Col);
+            // we have no move, something went horribly wrong
+            if (bestMove == null)
+            {
+                throw new MoveNotFoundException("No move could be found for the board provided.");
+            }
+
+            return bestMove;
+        }
+
+        private static List<MoveData> GetValidMovesFromBoard(IBoard board)
+        {
+            List<MoveData> validMoves = new List<MoveData>();
+
+            foreach (ISquare ourTeamSquare in board.MovingTeamPieceSquares)
+            {
+                foreach (var row in board.Squares)
+                {
+                    foreach (ISquare square in row)
+                    {
+                        if (board.MoveIsValid(ourTeamSquare, square))
+                        {
+                            validMoves.Add(new MoveData(ourTeamSquare, square));
+                        }
+                    }
+                }
+            }
+
+            return validMoves;
         }
 
         /// <summary>
@@ -92,17 +113,6 @@ namespace ChessEngine
             ISquare newBoardToSquare = newBoard.GetSquare(toSquare.Row, toSquare.Col);
             newBoard.Apply(newBoardFromSquare, newBoardToSquare);
             return newBoard;
-        }
-
-        public class SquaresForMoves
-        {
-            public ISquare FromSquare { get; }
-            public ISquare ToSquare { get; }
-            public SquaresForMoves(ISquare fromSquare, ISquare toSquare)
-            {
-                FromSquare = fromSquare;
-                ToSquare = toSquare;
-            }
         }
     }
 }
