@@ -10,7 +10,7 @@ namespace ChessGameController
 {
     public partial class GameEntryForm : Form
     {
-        private Engine _chessEngine = new Engine();
+        private Engine _chessEngine = new Engine(new BasicCaptureStrategy());
 
         public GameEntryForm()
         {
