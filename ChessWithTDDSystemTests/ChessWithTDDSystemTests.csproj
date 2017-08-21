@@ -72,6 +72,7 @@
     <Content Include="PositionFiles\Castling\BlackKingCastlesQueenSide.txt" />
     <Content Include="PositionFiles\Castling\WhiteKingCastlesKingSide.txt" />
     <Content Include="PositionFiles\Castling\WhiteKingCastlesQueenSide.txt" />
+    <Content Include="PositionFiles\EngineTests\MinmaxAlgorithmFailsToCheckmateDueToBugInCloning.txt" />
     <Content Include="PositionFiles\EnPassant\BlackPawnCapturesWhitePawnUsingEnPassant.txt" />
     <Content Include="PositionFiles\EnPassant\WhitePawnCapturesBlackPawnUsingEnPassant.txt" />
     <Content Include="PositionFiles\GeneralTests\BlackKingBeforeMovingInFrontOfWhitePawn.txt" />

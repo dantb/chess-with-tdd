@@ -20,7 +20,7 @@ namespace ChessEngine
                 IBoard newBoard = GetNewBoardWithThisMoveApplied(board, validMove.FromSquare, validMove.ToSquare);
 
                 // make this negative since the team whose turn it is is now the other team
-                double boardValue = -1 * EvaluateBoard(newBoard, StrategyBase.PieceTypeToPoints);
+                double boardValue = -1 * EvaluateBoard(newBoard, PieceTypeToPoints);
                 if (bestMovePoints < boardValue)
                 {
                     bestMovePoints = boardValue;

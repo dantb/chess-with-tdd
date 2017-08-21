@@ -47,6 +47,8 @@
     <Compile Include="MoveData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\BasicCaptureStrategy.cs" />
+    <Compile Include="Strategies\MinimaxStrategy.cs" />
+    <Compile Include="MoveValue.cs" />
     <Compile Include="Strategies\StrategyBase.cs" />
   </ItemGroup>
   <ItemGroup>
