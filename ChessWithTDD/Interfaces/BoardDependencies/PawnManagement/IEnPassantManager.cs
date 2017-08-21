@@ -7,5 +7,7 @@
         void CapturePieceThroughEnPassantIfApplicable(ISquare fromSquare, ISquare toSquare, IBoard theBoard);
 
         void UnmarkEnPassantSquares(int turnCounter);
+
+        bool MoveIsInvalidEnPassantCapture(ISquare fromSquare, ISquare toSquare, IBoard theBoard);
     }
 }

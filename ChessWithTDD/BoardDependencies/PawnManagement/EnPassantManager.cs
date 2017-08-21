@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ChessWithTDD
 {
@@ -31,6 +32,49 @@ namespace ChessWithTDD
             {
                 MarkSquareWithEnPassantAndAddToDictionary(fromSquare.Row - 1, fromSquare.Col, theBoard);
             }
+        }
+
+        public bool MoveIsInvalidEnPassantCapture(ISquare fromSquare, ISquare toSquare, IBoard theBoard)
+        {
+            if (fromSquare.Piece is IPawn)
+            {
+                int rowDiff = Math.Abs(fromSquare.Row - toSquare.Row);
+                int colDiff = Math.Abs(fromSquare.Col - toSquare.Col);
+
+                if (rowDiff == colDiff)
+                {
+                    // diagonal move
+                    if (!toSquare.ContainsPiece)
+                    {
+                        if (!toSquare.HasEnPassantMark)
+                        {
+                            // can't move diagonally if no piece or en passant mark
+                            return true;
+                        }
+                        else
+                        {
+                            // does have en passant mark, now check the board
+                            if (fromSquare.Piece.Colour == Colour.White)
+                            {
+                                ISquare blackPawnSquare = theBoard.GetSquare(toSquare.Row - 1, toSquare.Col);
+                                if (!(blackPawnSquare.Piece is IPawn) || blackPawnSquare.Piece.Colour == Colour.White)
+                                {
+                                    return true;
+                                }
+                            }
+                            else
+                            {
+                                ISquare whitePawnSquare = theBoard.GetSquare(toSquare.Row + 1, toSquare.Col);
+                                if (!(whitePawnSquare.Piece is IPawn) || whitePawnSquare.Piece.Colour == Colour.Black)
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         public void UnmarkEnPassantSquares(int turnCounter)

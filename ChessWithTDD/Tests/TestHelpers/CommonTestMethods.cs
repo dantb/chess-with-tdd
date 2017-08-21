@@ -248,6 +248,13 @@ namespace ChessWithTDD.Tests.TestHelpers
             return GenerateMock<IPawn>();
         }
 
+        internal static IPawn MockPawnWithColour(Colour colour)
+        {
+            IPawn pawn = GenerateMock<IPawn>();
+            pawn.Stub(p => p.Colour).Return(colour);
+            return pawn;
+        }
+
         internal static IPawn MockPawnWithHasMoved(bool hasMoved)
         {
             IPawn pawn = GenerateMock<IPawn>();
